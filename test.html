@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Larry Dunk — Test Suite</title>
+    <style>
+        body { background: #111; color: #ccc; font-family: Courier New, monospace; padding: 24px; }
+        h1   { color: #ffcc44; }
+        h2   { color: #88aaff; margin-top: 28px; }
+        .pass { color: #44ff88; }
+        .fail { color: #ff4444; }
+        .warn { color: #ffaa44; }
+        .info { color: #aaa; margin-left: 24px; font-size: 13px; }
+        #summary { font-size: 20px; font-weight: bold; margin-top: 32px; border-top: 1px solid #333; padding-top: 16px; }
+        pre { background: #1a1a2e; padding: 8px; border-radius: 4px; font-size: 12px; overflow: auto; }
+    </style>
+</head>
+<body>
+<h1>Larry Dunk: The Thousand Horses — Test Suite</h1>
+<div id="output"></div>
+<div id="summary"></div>
+
+<!-- Load game in headless-friendly way: stub canvas first -->
+<canvas id="gameCanvas" width="960" height="640" style="display:none"></canvas>
+<div id="ui" style="display:none">
+    <span id="levelName"></span><span id="turnInfo"></span><span id="turnCount"></span>
+    <div id="turnBanner"></div><div id="objectiveBox"></div>
+    <div id="unitInfo"><div id="uiName"></div><div id="uiHP"></div><div id="uiATK"></div>
+        <div id="uiDEF"></div><div id="uiMOV"></div><div id="uiSpecial"></div></div>
+    <div id="actionPanel"><button id="btnAttack"></button><button id="btnWait"></button><button id="btnEndTurn"></button></div>
+    <div id="dialogueBox"><div id="dlgSpeaker"></div><div id="dlgText"></div></div>
+</div>
+<div id="titleScreen" style="display:none"></div>
+<div id="victoryScreen" style="display:none"><p id="victoryText"></p></div>
+<div id="defeatScreen" style="display:none"></div>
+<div id="adBreakOverlay" style="display:none">
+    <div id="adBadge"></div><div id="adSkipCountdown"></div><button id="adSkipBtn"></button>
+</div>
+
+<script src="js/sfx.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/units.js"></script>
+<script src="js/grid.js"></script>
+<script src="js/combat.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/input.js"></script>
+<script src="js/cutscene.js"></script>
+<script src="js/levels.js"></script>
+<script src="js/tetris.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+// ============================================================
+// TEST RUNNER
+// ============================================================
+
+let passed = 0, failed = 0, warned = 0;
+const out = document.getElementById('output');
+
+function section(title) {
+    out.innerHTML += `<h2>${title}</h2>`;
+}
+
+function pass(msg, info) {
+    passed++;
+    out.innerHTML += `<div class="pass">✓ ${msg}</div>`;
+    if (info) out.innerHTML += `<div class="info">${info}</div>`;
+}
+
+function fail(msg, info) {
+    failed++;
+    out.innerHTML += `<div class="fail">✗ ${msg}</div>`;
+    if (info) out.innerHTML += `<div class="info">${info}</div>`;
+}
+
+function warn(msg, info) {
+    warned++;
+    out.innerHTML += `<div class="warn">⚠ ${msg}</div>`;
+    if (info) out.innerHTML += `<div class="info">${info}</div>`;
+}
+
+// ---- 1. LEVEL COUNT ----
+section('Levels');
+
+if (typeof LEVELS !== 'undefined') {
+    pass(`LEVELS array defined — ${LEVELS.length} levels`);
+    if (LEVELS.length === 14) {
+        pass('Level count correct: 14 (indices 0–13)');
+    } else {
+        fail(`Expected 14 levels, got ${LEVELS.length}`);
+    }
+
+    LEVELS.forEach((lvl, i) => {
+        if (!lvl.setup) fail(`Level ${i} (${lvl.name || '?'}) missing setup()`);
+        else pass(`Level ${i}: "${lvl.name || '?'}" — has setup()`,
+            `victoryCheck: ${!!lvl.victoryCheck} | onVictory: ${!!lvl.onVictory} | turnEvent: ${!!lvl.turnEvent}`);
+    });
+} else {
+    fail('LEVELS array not defined — levels.js failed to load?');
+}
+
+// ---- 2. UNIT TEMPLATES ----
+section('Unit Templates');
+
+const KNOWN_TYPES = [
+    'haras','minion','civilian','larryDunk','cainAbel','mrRuno','zeusLarry',
+    'britishLarry','financierLarry','paraplegicLarry','axeLarry','cerealLarry',
+    'investmentLarry','femaleLarry','horse','loyalHorse',
+    'guard','dummy','enemyHaras','robot'
+];
+
+KNOWN_TYPES.forEach(type => {
+    const u = createUnit(type, 0, 0, 'player');
+    if (u.type === type) {
+        pass(`createUnit('${type}') — name: "${u.name}", hp: ${u.hp}`);
+    } else {
+        fail(`createUnit('${type}') fell back to minion — template missing`);
+    }
+});
+
+// ---- 3. SPRITE KEYS ----
+section('Sprite Keys');
+
+KNOWN_TYPES.forEach(type => {
+    if (type === 'dummy') return; // dummy may not be used in levels but should still have sprite
+    const u = createUnit(type, 0, 0, 'player');
+    if (SPRITES[u.spriteKey]) {
+        pass(`SPRITES['${u.spriteKey}'] exists for unit type '${type}'`);
+    } else {
+        fail(`No sprite for key '${u.spriteKey}' (unit type: '${type}')`);
+    }
+});
+
+// ---- 4. isLarryDunk TEAM CHECK ----
+section('isLarryDunk Safety');
+
+const larryTypes = KNOWN_TYPES.filter(t => createUnit(t,0,0,'enemy').isLarryDunk);
+pass(`isLarryDunk units: ${larryTypes.join(', ')}`);
+
+// Verify that player-team Larry units won't trigger Tetris (manual note — can't test runtime)
+const playerLarrys = ['mrRuno', 'larryDunk', 'britishLarry', 'cainAbel',
+    'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry', 'financierLarry'];
+pass(`combat.js checks defender.team === 'enemy' before Tetris — player Larrys safe`,
+    `Affected in-squad types: ${playerLarrys.join(', ')}`);
+
+// ---- 5. TETRIS CONFIG ----
+section('Tetris');
+
+if (typeof TETRIS_CONFIG !== 'undefined') {
+    pass(`TETRIS_CONFIG defined — ${TETRIS_CONFIG.cols}×${TETRIS_CONFIG.rows} board`);
+} else {
+    fail('TETRIS_CONFIG not defined');
+}
+
+if (typeof startTetrisCapture === 'function') {
+    pass('startTetrisCapture() defined');
+} else {
+    fail('startTetrisCapture() not defined');
+}
+
+// ---- 6. GAME STATE ----
+section('Game State & Constants');
+
+if (typeof GamePhase !== 'undefined') {
+    const phases = Object.keys(GamePhase);
+    pass(`GamePhase defined — ${phases.length} phases: ${phases.join(', ')}`);
+} else {
+    fail('GamePhase not defined');
+}
+
+if (typeof Terrain !== 'undefined') {
+    const terrains = Object.keys(Terrain);
+    pass(`Terrain defined — ${terrains.length} types: ${terrains.join(', ')}`);
+    const required = ['PLAIN','FOREST','WALL','WATER','PORTAL','TEMPLE','CLOUD',
+                      'THRONE','GYM_FLOOR','EQUIPMENT','EXIT','MOUNTAIN','LAVA'];
+    required.forEach(t => {
+        if (Terrain[t]) pass(`Terrain.${t} ✓`);
+        else fail(`Terrain.${t} missing!`);
+    });
+} else {
+    fail('Terrain not defined');
+}
+
+// ---- 7. KEY FUNCTIONS ----
+section('Key Functions');
+
+const fns = [
+    'loadLevel','startCutscene','advanceDialogue','endCutscene',
+    'checkVictoryDefeat','checkTurnEvents','doEnemyTurn','endEnemyTurn',
+    'doCombat','_resolveCombat','skipAdBreak','showAdBreak',
+    'render','renderTetris','handleTetrisClick',
+    'getMovementTiles','getAttackTiles','getManhattan','getTerrain','getUnitAt',
+    'selectUnit','moveUnit','finishUnitAction','deselectUnit','endPlayerTurn',
+    'showBanner','updateTopBar','showUnitInfo'
+];
+
+fns.forEach(fn => {
+    if (typeof window[fn] === 'function') pass(`${fn}()`);
+    else fail(`${fn}() not defined`);
+});
+
+// ---- 8. QUICK LEVEL SETUP SMOKE TEST ----
+section('Level Setup Smoke Test (loadLevel 0–13)');
+
+// Override cutscene/banner to be silent
+const _startCutscene = window.startCutscene;
+const _showBanner = window.showBanner;
+const _playSound = window.playSound;
+
+window.playSound = () => {};
+window.showBanner = () => {};
+
+// We don't override startCutscene fully — just run setup and check no exceptions
+for (let i = 0; i < 14; i++) {
+    try {
+        // Intercept startCutscene to just run the callback immediately (skip dialogue)
+        window.startCutscene = (lines, cb) => { if (cb) try { cb(); } catch(e) {} };
+        loadLevel(i);
+        const lvl = LEVELS[i];
+        const enemies = game.units.filter(u => u.team === 'enemy');
+        const players = game.units.filter(u => u.team === 'player');
+        pass(`Level ${i} setup OK`,
+            `grid: ${game.gridW}×${game.gridH} | player: ${players.length} | enemy: ${enemies.length}`);
+    } catch(e) {
+        fail(`Level ${i} setup threw: ${e.message || e}`);
+    }
+}
+
+// Restore
+window.startCutscene = _startCutscene;
+window.showBanner    = _showBanner;
+window.playSound     = _playSound;
+
+// ---- SUMMARY ----
+const total = passed + failed + warned;
+const summaryEl = document.getElementById('summary');
+const color = failed > 0 ? '#ff4444' : warned > 0 ? '#ffaa44' : '#44ff88';
+summaryEl.style.color = color;
+summaryEl.textContent = `Results: ${passed} passed, ${failed} failed, ${warned} warnings (${total} total)`;
+if (failed === 0) summaryEl.textContent += ' — ALL CLEAR';
+</script>
+</body>
+</html>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Larry Dunk — Sprite Preview</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: #1a1a2e;
+    font-family: 'Courier New', monospace;
+    color: #e0e0e0;
+    padding: 32px;
+}
+h1 { color: #ffcc33; font-size: 22px; margin-bottom: 6px; letter-spacing: 2px; }
+.subtitle { color: #666; font-size: 11px; margin-bottom: 28px; }
+.grid { display: flex; flex-wrap: wrap; gap: 28px; }
+.sprite-card { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.sprite-card canvas {
+    image-rendering: auto;
+    border: 1px solid #2a2a4a;
+    border-radius: 6px;
+    background: #0d0d1e;
+}
+.label { font-size: 11px; color: #aaa; text-align: center; max-width: 140px; line-height: 1.4; }
+.label.player  { color: #88ccff; }
+.label.enemy   { color: #ff8888; }
+.label.neutral { color: #ffcc44; }
+.note { font-size: 10px; color: #555; text-align: center; max-width: 140px; margin-top: 2px; }
+.section { margin-bottom: 40px; }
+.section h2 {
+    color: #4a4a8a; font-size: 11px; letter-spacing: 3px;
+    margin-bottom: 18px; border-bottom: 1px solid #1e1e3e; padding-bottom: 5px;
+}
+</style>
+</head>
+<body>
+<h1>LARRY DUNK — SPRITE PREVIEW</h1>
+<p class="subtitle">Smooth vector-style. All eyes: black dots. Horses: fixed.</p>
+<div id="sections"></div>
+
+<script>
+const TILE = 96;
+
+// ---- SHAPE HELPERS (explicit ctx) ----
+
+function circle(ctx, x, y, r) {
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+}
+function ellipse(ctx, x, y, rx, ry) {
+    ctx.beginPath(); ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
+}
+function rRect(ctx, x, y, w, h, r) {
+    ctx.beginPath(); ctx.roundRect(x, y, w, h, r); ctx.fill();
+}
+
+// ---- SHARED ----
+
+function eyes(ctx, cx, cy, u) {
+    ctx.fillStyle = '#111';
+    circle(ctx, cx - u * 2, cy, u * 1.3);
+    circle(ctx, cx + u * 2, cy, u * 1.3);
+}
+
+function brow(ctx, cx, y, u, type) {
+    ctx.strokeStyle = '#2a1a08';
+    ctx.lineWidth = Math.max(0.8, u * 0.75);
+    ctx.lineCap = 'round';
+    if (type === 'flat') {
+        ctx.beginPath(); ctx.moveTo(cx - u*3.2, y - u*0.3); ctx.lineTo(cx - u*0.8, y - u*0.3); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + u*0.8, y - u*0.3); ctx.lineTo(cx + u*3.2, y - u*0.3); ctx.stroke();
+    } else if (type === 'raised') {
+        ctx.beginPath(); ctx.moveTo(cx - u*3.5, y + u*0.4); ctx.quadraticCurveTo(cx - u*2, y - u*1.3, cx - u*0.8, y + u*0.1); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + u*0.8, y + u*0.1); ctx.quadraticCurveTo(cx + u*2, y - u*1.3, cx + u*3.5, y + u*0.4); ctx.stroke();
+    } else if (type === 'evil') {
+        ctx.beginPath(); ctx.moveTo(cx - u*3.2, y + u*0.1); ctx.lineTo(cx - u*0.8, y - u*0.8); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + u*0.8, y - u*0.8); ctx.lineTo(cx + u*3.2, y + u*0.1); ctx.stroke();
+    }
+    ctx.lineCap = 'butt'; ctx.lineWidth = 1;
+}
+
+function nose(ctx, cx, y, u) {
+    ctx.fillStyle = 'rgba(70,35,12,0.28)';
+    circle(ctx, cx - u * 0.8, y, u * 0.52);
+    circle(ctx, cx + u * 0.8, y, u * 0.52);
+}
+
+function mouth(ctx, cx, y, u, type) {
+    ctx.strokeStyle = 'rgba(50,20,8,0.75)';
+    ctx.lineWidth = Math.max(0.6, u * 0.55);
+    ctx.lineCap = 'round';
+    if (type === 'stern') {
+        ctx.beginPath(); ctx.moveTo(cx - u*1.8, y); ctx.lineTo(cx + u*1.8, y); ctx.stroke();
+    } else if (type === 'smirk') {
+        ctx.beginPath(); ctx.moveTo(cx - u*1.5, y + u*0.2); ctx.quadraticCurveTo(cx + u*0.2, y, cx + u*2, y - u*1); ctx.stroke();
+    }
+    ctx.lineCap = 'butt'; ctx.lineWidth = 1;
+}
+
+function head(ctx, cx, headY, u, skinColor, hairColor) {
+    ctx.fillStyle = hairColor;
+    ellipse(ctx, cx, headY - u * 1.2, u * 6, u * 6.5);
+    ctx.fillStyle = skinColor;
+    ellipse(ctx, cx, headY, u * 5, u * 5.5);
+}
+
+function suit(ctx, cx, bodyTop, u, color) {
+    ctx.fillStyle = color;
+    rRect(ctx, cx - u * 6, bodyTop, u * 12, u * 6, u * 1.5);
+}
+
+function legs(ctx, cx, legTop, u, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(cx - u * 5, legTop, u * 3.5, u * 3);
+    ctx.fillRect(cx + u * 1.5, legTop, u * 3.5, u * 3);
+}
+
+// ---- SPRITE DRAW FUNCTIONS ----
+
+function drawSprite_haras(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
+    suit(ctx, cx, y + u * 13, u, '#1a3a8a');
+    ctx.fillStyle = '#333333';
+    ellipse(ctx, cx, headY - u * 2.5, u * 6.5, u * 7.5);
+    ctx.fillStyle = '#8B5E3C';
+    ellipse(ctx, cx, headY, u * 5, u * 5.5);
+    eyes(ctx, cx, headY + u * 0.5, u);
+    legs(ctx, cx, y + u * 17.5, u, '#0a0a20');
+}
+
+function drawSprite_civilian(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
+    ctx.fillStyle = '#556677';
+    rRect(ctx, cx - u * 5.5, y + u * 13, u * 11, u * 6, u * 1.5);
+    ctx.fillStyle = '#2a1a08';
+    ellipse(ctx, cx, headY - u * 1.8, u * 5.5, u * 5);
+    ctx.fillStyle = '#cc9966';
+    ellipse(ctx, cx, headY, u * 4.8, u * 5.2);
+    eyes(ctx, cx, headY + u * 0.5, u);
+    ctx.fillStyle = '#2a3a5a';
+    ctx.fillRect(cx - u * 4.5, y + u * 17.5, u * 3.5, u * 3);
+    ctx.fillRect(cx + u * 1, y + u * 17.5, u * 3.5, u * 3);
+}
+
+function drawSprite_minion(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
+    ctx.fillStyle = '#cc9900';
+    rRect(ctx, cx - u * 6, y + u * 13, u * 12, u * 6, u * 1.5);
+    // Simple neat brown hair
+    ctx.fillStyle = '#5a3a10';
+    ellipse(ctx, cx, headY - u * 1.2, u * 5.5, u * 6);
+    ctx.fillStyle = '#ddb090';
+    ellipse(ctx, cx, headY, u * 5, u * 5.5);
+    eyes(ctx, cx, headY + u * 0.5, u);
+    legs(ctx, cx, y + u * 17.5, u, '#1a1a1a');
+}
+
+function drawSprite_larryDunk(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
+    suit(ctx, cx, y + u * 13, u, '#1a44aa');
+    // Red tie
+    ctx.fillStyle = '#cc2222';
+    ctx.beginPath();
+    ctx.moveTo(cx - u*1.5, y + u*13); ctx.lineTo(cx + u*1.5, y + u*13);
+    ctx.lineTo(cx + u, y + u*18.5); ctx.lineTo(cx, y + u*19.5); ctx.lineTo(cx - u, y + u*18.5);
+    ctx.closePath(); ctx.fill();
+    // Wild blond hair
+    ctx.fillStyle = '#F0B840';
+    ctx.beginPath(); ctx.arc(cx, headY - u, u * 7.5, Math.PI * 0.8, Math.PI * 2.2); ctx.fill();
+    circle(ctx, cx - u * 5.5, headY - u * 0.5, u * 3);
+    circle(ctx, cx + u * 5.5, headY - u * 0.5, u * 3);
+    // Orange-tan skin
+    ctx.fillStyle = '#E8A060';
+    ellipse(ctx, cx, headY, u * 5, u * 5.5);
+    eyes(ctx, cx, headY + u * 0.5, u);
+    legs(ctx, cx, y + u * 17.5, u, '#111111');
+}
+
+function drawSprite_cainAbel(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2;
+    const lx = cx - u * 4.5, rx = cx + u * 4.5, headY = y + u * 7.5;
+    ctx.fillStyle = '#1a44aa';
+    rRect(ctx, cx - u*9, y + u*13, u*18, u*6, u*1.5);
+    ctx.fillStyle = '#cc2222'; ctx.fillRect(cx - u*1.5, y + u*13, u*3, u*5.5);
+    function ldHead(hx) {
+        ctx.fillStyle = '#F0B840';
+        ctx.beginPath(); ctx.arc(hx, headY - u*0.5, u*5.5, Math.PI*0.85, Math.PI*2.15); ctx.fill();
+        ctx.fillStyle = '#E8A060'; ellipse(ctx, hx, headY, u*3.8, u*4.2);
+        eyes(ctx, hx, headY + u*0.5, u * 0.75);
+    }
+    ldHead(lx); ldHead(rx);
+    ctx.fillStyle = '#111111';
+    ctx.fillRect(cx - u*7, y + u*17.5, u*4, u*3);
+    ctx.fillRect(cx + u*3, y + u*17.5, u*4, u*3);
+}
+
+function drawSprite_mrRuno(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 8;
+    // HUGE BICEPS
+    ctx.fillStyle = '#8B5E3C';
+    ellipse(ctx, cx - u*8.5, y + u*13.5, u*4.5, u*5.5);
+    ellipse(ctx, cx + u*8.5, y + u*13.5, u*4.5, u*5.5);
+    ctx.fillStyle = '#7a5030';
+    ellipse(ctx, cx - u*9, y + u*18, u*2.8, u*2.2);
+    ellipse(ctx, cx + u*9, y + u*18, u*2.8, u*2.2);
+    // Navy suit (center)
+    ctx.fillStyle = '#1a3a8a';
+    rRect(ctx, cx - u*4.5, y + u*12.5, u*9, u*7, u*1.5);
+    // Lapels
+    ctx.fillStyle = '#e0e0e0';
+    ctx.beginPath();
+    ctx.moveTo(cx - u*2.5, y + u*12.5); ctx.lineTo(cx, y + u*16); ctx.lineTo(cx + u*2.5, y + u*12.5);
+    ctx.fill();
+    ctx.fillStyle = '#1a3a8a';
+    ctx.beginPath();
+    ctx.moveTo(cx - u*1.2, y + u*12.5); ctx.lineTo(cx, y + u*15); ctx.lineTo(cx + u*1.2, y + u*12.5);
+    ctx.fill();
+    // Head: same brown as Haras, black hair
+    head(ctx, cx, headY, u, '#8B5E3C', '#111111');
+    eyes(ctx, cx, headY + u * 0.5, u);
+    // Dark trousers
+    ctx.fillStyle = '#0a1a4a';
+    ctx.fillRect(cx - u*4, y + u*18.5, u*3.5, u*2.5);
+    ctx.fillRect(cx + u*0.5, y + u*18.5, u*3.5, u*2.5);
+}
+
+function drawSprite_zeusLarry(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
+    // TOGA (no crown)
+    ctx.fillStyle = '#f2eede';
+    rRect(ctx, cx - u*6.5, y + u*13, u*13, u*8, u*2);
+    ctx.fillStyle = '#e8e0cc';
+    rRect(ctx, cx - u*6.5, y + u*10.5, u*5, u*4, u*1.5);
+    // Bare right arm
+    ctx.fillStyle = '#E8A060';
+    ellipse(ctx, cx + u*7, y + u*15, u*2, u*3.5);
+    // Gold band
+    ctx.fillStyle = '#c8a020';
+    ctx.fillRect(cx - u*6.5, y + u*13, u*13, u*1.5);
+    // Drape lines
+    ctx.strokeStyle = '#d0c4a8'; ctx.lineWidth = Math.max(0.5, u*0.5);
+    ctx.beginPath(); ctx.moveTo(cx - u*2, y + u*14.5); ctx.lineTo(cx - u*4, y + u*21); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx + u*1, y + u*14.5); ctx.lineTo(cx + u*2.5, y + u*21); ctx.stroke();
+    ctx.lineWidth = 1;
+    // Wild blond hair
+    ctx.fillStyle = '#F0B840';
+    ctx.beginPath(); ctx.arc(cx, headY - u, u*7.5, Math.PI*0.8, Math.PI*2.2); ctx.fill();
+    circle(ctx, cx - u*5.5, headY - u*0.5, u*3);
+    circle(ctx, cx + u*5.5, headY - u*0.5, u*3);
+    // Orange-tan skin
+    ctx.fillStyle = '#E8A060'; ellipse(ctx, cx, headY, u*5, u*5.5);
+    eyes(ctx, cx, headY + u * 0.5, u);
+}
+
+function drawSprite_britishLarry(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 10;
+    // Red coat
+    ctx.fillStyle = '#cc1111';
+    rRect(ctx, cx - u*6.5, y + u*14, u*13, u*7, u*1.5);
+    // Gold epaulettes
+    ctx.fillStyle = '#c8a020';
+    ellipse(ctx, cx - u*6, y + u*14.5, u*2.5, u*1.5);
+    ellipse(ctx, cx + u*6, y + u*14.5, u*2.5, u*1.5);
+    // Gold buttons
+    [y + u*15, y + u*17.5, y + u*20].forEach(by => { ctx.fillStyle = '#c8a020'; circle(ctx, cx, by, u*0.8); });
+    // Top hat: brim + cylinder + band
+    ctx.fillStyle = '#111';
+    ctx.fillRect(cx - u*6.5, y + u*2.5, u*13, u*1.5);
+    ctx.fillRect(cx - u*4.5, y - u*5,   u*9,  u*8);
+    ctx.fillStyle = '#444';
+    ctx.fillRect(cx - u*4.5, y + u*1.5,  u*9,  u*1);
+    // Blond peeking out under hat
+    ctx.fillStyle = '#F0B840';
+    circle(ctx, cx - u*5, y + u*3.5, u*2);
+    circle(ctx, cx + u*5, y + u*3.5, u*2);
+    // Head (no hair oval — hat covers it)
+    ctx.fillStyle = '#E8A060';
+    ellipse(ctx, cx, headY, u*5, u*5.5);
+    // Monocle: gold circle + chain
+    ctx.strokeStyle = '#c8a020'; ctx.lineWidth = Math.max(0.8, u*0.7);
+    ctx.beginPath(); ctx.arc(cx + u*2.2, headY + u*0.5, u*2, 0, Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx + u*4.2, headY + u*0.5); ctx.lineTo(cx + u*5.5, headY + u*2.5); ctx.stroke();
+    ctx.lineWidth = 1;
+    eyes(ctx, cx, headY + u*0.5, u);
+    brow(ctx, cx, headY - u*1.0, u, 'flat');
+    nose(ctx, cx, headY + u*1.6, u);
+    mouth(ctx, cx, headY + u*2.9, u, 'stern');
+    legs(ctx, cx, y + u*19.5, u, '#0a0a20');
+}
+
+function drawSprite_financierLarry(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
+    // Cream linen suit
+    ctx.fillStyle = '#f0ead8';
+    rRect(ctx, cx - u*6.5, y + u*13, u*13, u*7, u*1.5);
+    // Open collar V
+    ctx.fillStyle = '#e0c890';
+    ctx.beginPath(); ctx.moveTo(cx - u*2, y + u*13); ctx.lineTo(cx, y + u*16.5); ctx.lineTo(cx + u*2, y + u*13); ctx.fill();
+    // Light blond slicked hair
+    ctx.fillStyle = '#ffe88a';
+    ctx.beginPath(); ctx.arc(cx, headY - u, u*7.5, Math.PI*0.8, Math.PI*2.2); ctx.fill();
+    circle(ctx, cx - u*5.5, headY - u*0.5, u*3);
+    circle(ctx, cx + u*5.5, headY - u*0.5, u*3);
+    // Deep tan skin
+    ctx.fillStyle = '#C8703A';
+    ellipse(ctx, cx, headY, u*5, u*5.5);
+    // Gold-framed sunglasses
+    ctx.fillStyle = '#111';
+    rRect(ctx, cx - u*4, headY + u*0.2, u*3.5, u*2, u*0.8);
+    rRect(ctx, cx + u*0.5, headY + u*0.2, u*3.5, u*2, u*0.8);
+    ctx.strokeStyle = '#c8a020'; ctx.lineWidth = Math.max(0.5, u*0.4);
+    ctx.strokeRect(cx - u*4, headY + u*0.2, u*3.5, u*2);
+    ctx.strokeRect(cx + u*0.5, headY + u*0.2, u*3.5, u*2);
+    ctx.lineWidth = 1;
+    brow(ctx, cx, headY - u*0.8, u, 'raised');
+    nose(ctx, cx, headY + u*1.6, u);
+    mouth(ctx, cx, headY + u*2.9, u, 'smirk');
+    legs(ctx, cx, y + u*18.5, u, '#e0d4b0');
+}
+
+function drawSprite_paraplegicLarry(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 7.5;
+    ctx.fillStyle = '#cc2222';
+    ctx.beginPath(); ctx.moveTo(cx - u*3.5, y + u*11.5); ctx.lineTo(cx - u*9, y + u*22); ctx.lineTo(cx - u*1.5, y + u*22); ctx.lineTo(cx - u*3, y + u*11.5); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(cx + u*3, y + u*11.5); ctx.lineTo(cx + u*1.5, y + u*22); ctx.lineTo(cx + u*9, y + u*22); ctx.lineTo(cx + u*3.5, y + u*11.5); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#2a2a2a';
+    circle(ctx, cx - u*6.5, y + u*18, u*3.2); circle(ctx, cx + u*6.5, y + u*18, u*3.2);
+    ctx.strokeStyle = '#888'; ctx.lineWidth = Math.max(0.8, u*0.7);
+    ctx.beginPath(); ctx.arc(cx - u*6.5, y + u*18, u*2.5, 0, Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx + u*6.5, y + u*18, u*2.5, 0, Math.PI*2); ctx.stroke();
+    ctx.lineWidth = 1;
+    ctx.fillStyle = '#999'; ctx.fillRect(cx - u*6.5, y + u*14.5, u*0.9, u*5); ctx.fillRect(cx + u*5.6, y + u*14.5, u*0.9, u*5); ctx.fillRect(cx - u*6.5, y + u*13.5, u*13, u*1);
+    ctx.fillStyle = '#446688'; ctx.fillRect(cx - u*5.5, y + u*15, u*11, u*2.5);
+    ctx.fillStyle = '#1144cc'; rRect(ctx, cx - u*4.5, y + u*10.5, u*9, u*5.5, u);
+    ctx.fillStyle = '#ffcc00'; circle(ctx, cx, y + u*12.5, u*2); ctx.fillStyle = '#1144cc'; circle(ctx, cx, y + u*12.5, u*1.1);
+    ctx.fillStyle = '#aaa'; ctx.fillRect(cx - u*5.5, y + u*12, u*1, u*4); ctx.fillRect(cx + u*4.5, y + u*12, u*1, u*4);
+    ctx.fillStyle = '#0033aa'; ctx.fillRect(cx - u*3.5, y + u*15.5, u*3, u*2.5); ctx.fillRect(cx + u*0.5, y + u*15.5, u*3, u*2.5);
+    ctx.fillStyle = '#F0B840';
+    ctx.beginPath(); ctx.arc(cx, headY - u*0.5, u*6.5, Math.PI*0.8, Math.PI*2.2); ctx.fill();
+    circle(ctx, cx - u*5, headY, u*2.5); circle(ctx, cx + u*5, headY, u*2.5);
+    ctx.fillStyle = '#E8A060'; ellipse(ctx, cx, headY + u*0.5, u*4.5, u*5);
+    eyes(ctx, cx, headY + u*1, u);
+}
+
+function drawSprite_axeLarry(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
+    ctx.fillStyle = '#4a2808'; ctx.fillRect(cx + u*4.5, y + u*10, u*1.8, u*12);
+    ctx.fillStyle = '#c0c0c0';
+    ctx.beginPath(); ctx.moveTo(cx + u*4.5, y + u*10); ctx.lineTo(cx + u*10, y + u*8); ctx.lineTo(cx + u*10.5, y + u*14); ctx.lineTo(cx + u*4.5, y + u*13); ctx.closePath(); ctx.fill();
+    suit(ctx, cx, y + u * 13, u, '#1a44aa');
+    ctx.fillStyle = '#cc2222';
+    ctx.beginPath(); ctx.moveTo(cx - u*1.5, y + u*13); ctx.lineTo(cx + u*1.5, y + u*13); ctx.lineTo(cx + u, y + u*18); ctx.lineTo(cx, y + u*19); ctx.lineTo(cx - u, y + u*18); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#aa0000';
+    circle(ctx, cx - u*3, y + u*14.5, u*0.9); circle(ctx, cx + u*1.5, y + u*13.5, u*0.7); circle(ctx, cx - u*1, y + u*17, u*0.6);
+    ctx.fillStyle = '#F0B840';
+    ctx.beginPath(); ctx.arc(cx, headY - u, u * 7.5, Math.PI * 0.8, Math.PI * 2.2); ctx.fill();
+    circle(ctx, cx - u * 5.5, headY - u * 0.5, u * 3); circle(ctx, cx + u * 5.5, headY - u * 0.5, u * 3);
+    ctx.fillStyle = '#E8A060'; ellipse(ctx, cx, headY, u * 5, u * 5.5);
+    eyes(ctx, cx, headY + u * 0.5, u);
+    brow(ctx, cx, headY - u * 1.0, u, 'evil');
+    legs(ctx, cx, y + u * 17.5, u, '#111111');
+}
+
+function drawSprite_cerealLarry(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 11;
+    ctx.fillStyle = '#ffffff'; rRect(ctx, cx - u*4.5, y + u*1, u*9, u*6, u*1.5); ctx.fillRect(cx - u*4, y + u*5.5, u*8, u*2.5);
+    ctx.fillStyle = '#ffcc00'; ctx.fillRect(cx - u*4, y + u*7, u*8, u*1.2);
+    ctx.fillStyle = '#ffcc00'; circle(ctx, cx, y + u*3.5, u*1.5);
+    ctx.fillStyle = '#ee6622'; rRect(ctx, cx - u*6, y + u*13.5, u*12, u*7, u*1.5);
+    ctx.fillStyle = '#ffee44';
+    circle(ctx, cx - u*3, y + u*15.5, u*1.3); circle(ctx, cx + u*2.5, y + u*15, u*1.1);
+    circle(ctx, cx - u*0.5, y + u*18, u*1.2); circle(ctx, cx + u*3.5, y + u*17.5, u*1);
+    ctx.fillStyle = '#F0B840';
+    ctx.beginPath(); ctx.arc(cx, headY - u, u * 6.5, Math.PI * 0.8, Math.PI * 2.2); ctx.fill();
+    circle(ctx, cx - u * 5, headY - u * 0.5, u * 2.8); circle(ctx, cx + u * 5, headY - u * 0.5, u * 2.8);
+    ctx.fillStyle = '#E8A060'; ellipse(ctx, cx, headY, u * 4.8, u * 5.2);
+    eyes(ctx, cx, headY + u * 0.5, u);
+    brow(ctx, cx, headY - u * 0.8, u, 'raised');
+    ctx.fillStyle = '#ffffff'; circle(ctx, cx - u*7, y + u*15.5, u*2); circle(ctx, cx + u*7, y + u*15.5, u*2);
+    legs(ctx, cx, y + u * 19, u, '#cc5500');
+}
+
+function drawSprite_investmentLarry(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
+    ctx.fillStyle = '#2a1a08'; rRect(ctx, cx + u*5, y + u*14.5, u*5.5, u*3.5, u*0.5);
+    ctx.fillStyle = '#5a4020'; ctx.fillRect(cx + u*6.5, y + u*13.5, u*2.5, u*1.2);
+    ctx.fillStyle = '#c8a020'; ctx.fillRect(cx + u*6.5, y + u*16, u*2.5, u*0.5);
+    ctx.fillStyle = '#1a1a22'; rRect(ctx, cx - u * 6, y + u * 13, u * 12, u * 6, u * 1.5);
+    ctx.fillStyle = '#eeeeee';
+    ctx.beginPath(); ctx.moveTo(cx - u*1.8, y + u*13); ctx.lineTo(cx, y + u*15.5); ctx.lineTo(cx + u*1.8, y + u*13); ctx.fill();
+    ctx.fillStyle = '#8b0000';
+    ctx.beginPath(); ctx.moveTo(cx - u*1.2, y + u*13); ctx.lineTo(cx + u*1.2, y + u*13); ctx.lineTo(cx + u*0.8, y + u*18); ctx.lineTo(cx, y + u*19); ctx.lineTo(cx - u*0.8, y + u*18); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#c8a020'; ctx.fillRect(cx - u*0.8, y + u*15.5, u*1.6, u*0.6);
+    ctx.fillStyle = '#F0B840';
+    ctx.beginPath(); ctx.arc(cx, headY - u, u * 7.5, Math.PI * 0.8, Math.PI * 2.2); ctx.fill();
+    circle(ctx, cx - u * 5.5, headY - u * 0.5, u * 3); circle(ctx, cx + u * 5.5, headY - u * 0.5, u * 3);
+    ctx.fillStyle = '#E8A060'; ellipse(ctx, cx, headY, u * 5, u * 5.5);
+    eyes(ctx, cx, headY + u * 0.5, u);
+    brow(ctx, cx, headY - u * 1.0, u, 'flat');
+    legs(ctx, cx, y + u * 17.5, u, '#111118');
+}
+
+function drawSprite_femaleLarry(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
+    ctx.fillStyle = '#F0B840'; ellipse(ctx, cx - u*7, headY + u*3, u*2.5, u*5.5); ellipse(ctx, cx + u*7, headY + u*3, u*2.5, u*5.5);
+    ctx.fillStyle = '#cc4488'; rRect(ctx, cx - u*6, y + u*13, u*12, u*6, u*1.5);
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.moveTo(cx - u*2, y + u*13); ctx.lineTo(cx, y + u*16.5); ctx.lineTo(cx + u*2, y + u*13); ctx.fill();
+    ctx.fillStyle = '#cc4488';
+    ctx.beginPath(); ctx.moveTo(cx - u*0.8, y + u*13); ctx.lineTo(cx, y + u*15.5); ctx.lineTo(cx + u*0.8, y + u*13); ctx.fill();
+    ctx.fillStyle = '#1a1a1a';
+    ctx.beginPath(); ctx.moveTo(cx - u*5.5, y + u*18); ctx.lineTo(cx - u*7, y + u*22); ctx.lineTo(cx + u*7, y + u*22); ctx.lineTo(cx + u*5.5, y + u*18); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#E8A060'; ctx.fillRect(cx - u*4, y + u*21.5, u*2.2, u*2); ctx.fillRect(cx + u*1.8, y + u*21.5, u*2.2, u*2);
+    ctx.fillStyle = '#F0B840';
+    ctx.beginPath(); ctx.arc(cx, headY - u, u * 7.5, Math.PI * 0.8, Math.PI * 2.2); ctx.fill();
+    circle(ctx, cx - u * 5.5, headY - u * 0.5, u * 3); circle(ctx, cx + u * 5.5, headY - u * 0.5, u * 3);
+    ctx.fillStyle = '#E8A060'; ellipse(ctx, cx, headY, u * 5, u * 5.5);
+    eyes(ctx, cx, headY + u * 0.5, u);
+}
+
+function _horseBody(ctx, x, y, sz, maneColor) {
+    const u = sz / 20;
+    const bx = x + sz / 2 + u;
+    const by = y + u * 11;
+
+    // TAIL
+    ctx.fillStyle = maneColor;
+    ctx.beginPath(); ctx.ellipse(bx + u*8, by - u*1, u*1.8, u*5, 0.35, 0, Math.PI*2); ctx.fill();
+
+    // BODY — barrel
+    ctx.fillStyle = '#8B4513';
+    ctx.beginPath(); ctx.ellipse(bx - u*1, by + u*0.5, u*8, u*4, 0, 0, Math.PI*2); ctx.fill();
+
+    // NECK — wider trapezoid
+    ctx.fillStyle = '#8B4513';
+    ctx.beginPath();
+    ctx.moveTo(bx - u*1.5, by - u*4.5);
+    ctx.lineTo(bx - u*6.5, by - u*5);
+    ctx.lineTo(bx - u*8,   by - u*10);
+    ctx.lineTo(bx - u*6,   by - u*10);
+    ctx.closePath(); ctx.fill();
+
+    // HEAD — tall skull + forward muzzle
+    ctx.fillStyle = '#9B5020';
+    ctx.beginPath();
+    ctx.moveTo(bx - u*6,    by - u*10);
+    ctx.lineTo(bx - u*8.5,  by - u*11.5);
+    ctx.lineTo(bx - u*9.5,  by - u*10);
+    ctx.lineTo(bx - u*10.5, by - u*9);
+    ctx.lineTo(bx - u*11,   by - u*7);
+    ctx.lineTo(bx - u*11,   by - u*5.5);
+    ctx.lineTo(bx - u*9,    by - u*5.5);
+    ctx.lineTo(bx - u*9,    by - u*7);
+    ctx.lineTo(bx - u*6,    by - u*7);
+    ctx.closePath(); ctx.fill();
+
+    // MANE — wide, prominent
+    ctx.fillStyle = maneColor;
+    ctx.beginPath(); ctx.ellipse(bx - u*5.5, by - u*7.5, u*2.8, u*5, -0.2, 0, Math.PI*2); ctx.fill();
+    // Forelock tuft
+    ctx.beginPath(); ctx.arc(bx - u*8.5, by - u*11.5, u*1.8, 0, Math.PI*2); ctx.fill();
+
+    // EYE
+    ctx.fillStyle = '#111111'; circle(ctx, bx - u*8.5, by - u*10.5, u*0.85);
+    // NOSTRIL
+    ctx.fillStyle = '#6B3010'; circle(ctx, bx - u*10.5, by - u*6, u*0.55);
+
+    // LEGS
+    ctx.fillStyle = '#7B4010';
+    const lw = u*2, lh = u*5.5;
+    [bx-u*5.5, bx-u*2, bx+u*2, bx+u*5.5].forEach(lx => ctx.fillRect(lx, by + u*4.5, lw, lh));
+    // HOOVES
+    ctx.fillStyle = '#1a0800';
+    [bx-u*5.5, bx-u*2, bx+u*2, bx+u*5.5].forEach(lx => ctx.fillRect(lx, by + u*9.5, lw, u*0.9));
+}
+
+function drawSprite_horse(ctx, x, y, sz) {
+    _horseBody(ctx, x, y, sz, '#3a2008');
+}
+
+function drawSprite_loyalHorse(ctx, x, y, sz) {
+    const u = sz / 20;
+    const bx = x + sz / 2 + u;
+    const by = y + u * 11;
+    _horseBody(ctx, x, y, sz, '#3a2008'); // identical horse
+    // Tiny yellow bow on mane — incredibly small, normal shade of yellow
+    ctx.fillStyle = '#c8a020';
+    circle(ctx, bx - u*5.5, by - u*9, u*1.1);
+    ctx.fillStyle = '#b89010';
+    circle(ctx, bx - u*7,  by - u*9.2, u*0.7);
+    circle(ctx, bx - u*4,  by - u*9.2, u*0.7);
+}
+
+function drawSprite_enemyHaras(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
+    ctx.fillStyle = '#4a0000';
+    rRect(ctx, cx - u*6, y + u*13, u*12, u*6, u*1.5);
+    head(ctx, cx, headY, u, '#8B5E3C', '#111111');
+    eyes(ctx, cx, headY + u * 0.5, u);
+    legs(ctx, cx, y + u * 17.5, u, '#1a0000');
+}
+
+function drawSprite_guard(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2;
+    ctx.fillStyle = '#445566'; rRect(ctx, cx - u*6, y + u*13, u*12, u*7, u*1.5);
+    ctx.fillStyle = '#cc9900'; circle(ctx, cx, y + u*15.5, u*1.5);
+    ctx.fillStyle = '#667788';
+    circle(ctx, cx, y + u*8, u*5.5);
+    ctx.fillRect(cx - u*5.5, y + u*8, u*11, u*5.5);
+    ctx.beginPath(); ctx.arc(cx, y + u*13.5, u*5.5, 0, Math.PI); ctx.fill();
+    ctx.fillStyle = '#aaccff'; ctx.fillRect(cx - u*3.5, y + u*8.5, u*7, u*2);
+    ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.fillRect(cx - u*3.5, y + u*8.5, u*7, u*0.7);
+    ctx.fillStyle = '#111111';
+    ctx.fillRect(cx - u*5, y + u*18, u*4, u*2.5);
+    ctx.fillRect(cx + u*1, y + u*18, u*4, u*2.5);
+}
+
+function drawSprite_robot(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2;
+    ctx.fillStyle = '#666666'; rRect(ctx, cx - u*5.5, y + u*11.5, u*11, u*8, u);
+    ctx.fillStyle = '#00aaff';
+    ctx.fillRect(cx - u*3.5, y + u*13, u*7, u*1.5);
+    ctx.fillRect(cx - u*3.5, y + u*16, u*7, u*1.5);
+    ctx.fillStyle = '#444444';
+    rRect(ctx, cx - u*9.5, y + u*11.5, u*4, u*6, u*0.8);
+    rRect(ctx, cx + u*5.5,  y + u*11.5, u*4, u*6, u*0.8);
+    ctx.fillStyle = '#888888'; rRect(ctx, cx - u*5, y + u*4, u*10, u*8, u*1.5);
+    ctx.fillStyle = '#aaaaaa'; ctx.fillRect(cx - u*0.6, y, u*1.2, u*5);
+    ctx.fillStyle = '#00aaff'; circle(ctx, cx, y, u*1.3);
+    ctx.fillStyle = '#ff0000';
+    circle(ctx, cx - u*2.5, y + u*7.5, u*1.8); circle(ctx, cx + u*2.5, y + u*7.5, u*1.8);
+    ctx.fillStyle = '#ff8888';
+    circle(ctx, cx - u*2.5, y + u*7.5, u*0.85); circle(ctx, cx + u*2.5, y + u*7.5, u*0.85);
+    ctx.fillStyle = '#555555';
+    ctx.fillRect(cx - u*5, y + u*18.5, u*3.5, u*2.5);
+    ctx.fillRect(cx + u*1.5, y + u*18.5, u*3.5, u*2.5);
+}
+
+function drawSprite_dummy(ctx, x, y, sz) {
+    const u = sz / 20, cx = x + sz / 2;
+    ctx.fillStyle = '#554433';
+    ctx.fillRect(cx - u*1.5, y + u*2, u*3, u*18);
+    ctx.fillRect(cx - u*7, y + u*9, u*14, u*2.5);
+    ctx.fillStyle = '#998877'; ellipse(ctx, cx, y + u*7, u*5, u*5.5);
+    ctx.strokeStyle = '#cc2200'; ctx.lineWidth = Math.max(1.5, u*1.5); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(cx - u*2.5, y + u*4.5); ctx.lineTo(cx + u*2.5, y + u*9.5); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx + u*2.5, y + u*4.5); ctx.lineTo(cx - u*2.5, y + u*9.5); ctx.stroke();
+    ctx.lineWidth = 1; ctx.lineCap = 'butt';
+    ctx.strokeStyle = '#776655'; ctx.lineWidth = Math.max(0.5, u*0.6);
+    ctx.beginPath(); ctx.arc(cx, y + u*7, u*3.5, 0.3, Math.PI - 0.3); ctx.stroke();
+    ctx.lineWidth = 1;
+}
+
+// ---- METADATA ----
+const SPRITES = {
+    haras:              { label: 'Haras',                      team: 'player',  note: 'charcoal hair (bigger oval), brown skin, navy suit',   fn: drawSprite_haras },
+    minion:             { label: 'Minion',                     team: 'player',  note: 'brown hair, yellow jacket',                             fn: drawSprite_minion },
+    civilian:           { label: 'Civilian',                   team: 'enemy',   note: 'grey shirt, dark jeans, medium skin — distinct from minion', fn: drawSprite_civilian },
+    larryDunk:          { label: 'Larry Dunk',                 team: 'player',  note: 'blond poof, orange skin, red tie',                      fn: drawSprite_larryDunk },
+    cainAbel:           { label: 'Cain & Abel',                team: 'player',  note: 'conjoined twins, shared wide body',                     fn: drawSprite_cainAbel },
+    mrRuno:             { label: 'Mr. Runo',                   team: 'enemy',   note: 'HUGE biceps + navy suit, Haras\'s father',               fn: drawSprite_mrRuno },
+    zeusLarry:          { label: 'Zeus Larry Dunk',            team: 'neutral', note: 'toga, no crown, bare arm',                              fn: drawSprite_zeusLarry },
+    britishLarry:       { label: 'British Larry Dunk',         team: 'enemy',   note: 'top hat, monocle, red coat, gold epaulettes',            fn: drawSprite_britishLarry },
+    financierLarry:     { label: 'Financier Larry Dunk',       team: 'enemy',   note: 'cream suit, deep tan, gold sunglasses',                 fn: drawSprite_financierLarry },
+    paraplegicLarry:    { label: 'Paraplegic Superhero Larry', team: 'enemy',   note: 'wheelchair, red cape, blue costume, gold star',          fn: drawSprite_paraplegicLarry },
+    axeLarry:           { label: 'Axe Murderer Larry Dunk',    team: 'enemy',   note: 'blue suit, bloody axe, evil brows, blood spatters',      fn: drawSprite_axeLarry },
+    cerealLarry:        { label: 'Cereal Mascot Larry Dunk',   team: 'enemy',   note: 'white chef hat, orange mascot suit, polka dots',         fn: drawSprite_cerealLarry },
+    investmentLarry:    { label: 'Investment Group Larry',     team: 'enemy',   note: 'charcoal power suit, dark red tie, briefcase',           fn: drawSprite_investmentLarry },
+    femaleLarry:        { label: 'Female Larry Dunk',          team: 'enemy',   note: 'pink blazer, black skirt, long blond hair',              fn: drawSprite_femaleLarry },
+    horse:              { label: 'Horse',                      team: 'enemy',   note: 'profile, dark mane',                                    fn: drawSprite_horse },
+    loyalHorse:         { label: 'Loyal Horse',                team: 'player',  note: 'identical horse + tiny yellow bow',                     fn: drawSprite_loyalHorse },
+    enemyHaras:         { label: 'Rival Haras',                team: 'enemy',   note: 'same face, dark red suit',                              fn: drawSprite_enemyHaras },
+    guard:              { label: 'Guard',                      team: 'enemy',   note: 'full helmet, visor, armored',                           fn: drawSprite_guard },
+    robot:              { label: 'Robot',                      team: 'player',  note: 'rectangular, red sensors, blue panels',                 fn: drawSprite_robot },
+    dummy:              { label: 'Dummy',                      team: 'enemy',   note: 'cloth target, X face',                                  fn: drawSprite_dummy },
+};
+
+const SECTIONS = [
+    { title: 'PLAYER UNITS',                           keys: ['haras', 'minion', 'civilian', 'larryDunk', 'cainAbel', 'robot'] },
+    { title: 'LARRY DUNK VARIANTS (ENEMY → CAPTURE)',  keys: ['mrRuno', 'zeusLarry', 'britishLarry', 'financierLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry'] },
+    { title: 'HORSES',                                 keys: ['horse', 'loyalHorse'] },
+    { title: 'ENEMY UNITS',                            keys: ['enemyHaras', 'guard', 'dummy'] },
+];
+
+// ---- RENDER ----
+function makeCard(key) {
+    const spr = SPRITES[key];
+    const sz = TILE, pad = 12;
+    const card = document.createElement('div');
+    card.className = 'sprite-card';
+    const cvs = document.createElement('canvas');
+    cvs.width = sz + pad * 2;
+    cvs.height = sz + pad * 2;
+    const ctx = cvs.getContext('2d');
+
+    ctx.fillStyle = '#0d0d1e';
+    ctx.fillRect(0, 0, cvs.width, cvs.height);
+
+    const teamBg = { player: 'rgba(50,100,200,0.2)', enemy: 'rgba(200,50,50,0.2)', neutral: 'rgba(200,200,50,0.15)' };
+    ctx.fillStyle = teamBg[spr.team] || 'transparent';
+    ctx.beginPath();
+    ctx.arc(cvs.width / 2, cvs.height / 2, cvs.width / 2 - 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    spr.fn(ctx, pad, pad, sz);
+
+    const label = document.createElement('div');
+    label.className = `label ${spr.team}`;
+    label.textContent = spr.label;
+    card.appendChild(cvs);
+    card.appendChild(label);
+    if (spr.note) {
+        const note = document.createElement('div');
+        note.className = 'note';
+        note.textContent = spr.note;
+        card.appendChild(note);
+    }
+    return card;
+}
+
+const container = document.getElementById('sections');
+for (const sec of SECTIONS) {
+    const div = document.createElement('div');
+    div.className = 'section';
+    const h2 = document.createElement('h2');
+    h2.textContent = sec.title;
+    div.appendChild(h2);
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    for (const key of sec.keys) grid.appendChild(makeCard(key));
+    div.appendChild(grid);
+    container.appendChild(div);
+}
+</script>
+</body>
+</html>

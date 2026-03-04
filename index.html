@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Larry Dunk: The Thousand Horses</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="gameContainer">
+    <canvas id="gameCanvas" width="960" height="640"></canvas>
+
+    <div id="ui">
+        <div id="topBar">
+            <span id="levelName">Tutorial</span>
+            <span id="turnInfo">Player Phase</span>
+            <span id="turnCount">Turn 1</span>
+        </div>
+        <div id="turnBanner"></div>
+        <div id="objectiveBox"></div>
+        <div id="unitInfo">
+            <div class="name" id="uiName"></div>
+            <div class="stat" id="uiHP"></div>
+            <div class="stat" id="uiATK"></div>
+            <div class="stat" id="uiDEF"></div>
+            <div class="stat" id="uiMOV"></div>
+            <div class="stat" id="uiSpecial"></div>
+        </div>
+        <div id="actionPanel">
+            <button id="btnAttack" onclick="doAttack()" style="display:none">Attack</button>
+            <button id="btnWait"   onclick="doWait()"   style="display:none">Wait</button>
+            <button id="btnEndTurn" onclick="endPlayerTurn()">End Turn</button>
+        </div>
+        <div id="dialogueBox" onclick="advanceDialogue()">
+            <div class="speaker" id="dlgSpeaker"></div>
+            <div class="text"    id="dlgText"></div>
+            <div class="continue">Click to continue...</div>
+            <button id="btnBackDialogue" onclick="backDialogue(event)">◀ Back</button>
+            <button id="btnSkipDialogue" onclick="skipAllDialogue(event)">Skip All</button>
+        </div>
+    </div>
+
+    <div id="titleScreen">
+        <h1>LARRY DUNK</h1>
+        <h2>The Thousand Horses</h2>
+        <div class="start">Click to Start</div>
+    </div>
+
+    <div id="levelSelectScreen">
+        <h2>SELECT LEVEL</h2>
+        <div class="subtitle">Pick any level to jump in, or start from the beginning</div>
+        <div id="levelGrid"></div>
+    </div>
+
+    <div id="victoryScreen">
+        <h2>VICTORY!</h2>
+        <p id="victoryText">Level Complete</p>
+        <br><p style="color:#668866; animation: blink 1.5s infinite;">Click to continue...</p>
+    </div>
+
+    <div id="defeatScreen">
+        <h2>DEFEATED</h2>
+        <p>Your forces have fallen...</p>
+        <br><p style="color:#886666; animation: blink 1.5s infinite;">Click to retry...</p>
+    </div>
+
+    <div id="larryDunkSelector">
+        <h2>DEPLOY LARRY DUNKS</h2>
+        <div class="ld-subtitle">Select allies to bring into battle</div>
+        <div class="ld-slots-row">Slots used: <span id="ldSlotsUsed">0</span> / <span id="ldSlotsMax">3</span></div>
+        <div id="ldSelectorGrid"></div>
+        <button id="ldDeployBtn" onclick="confirmLarryDunkDeploy()">DEPLOY ▶</button>
+    </div>
+
+    <div id="adBreakOverlay">
+        <div id="adBadge">Ad</div>
+        <div id="adContent">
+            <div id="adLogo">$</div>
+            <div id="adCompany">LARRY DUNK FINANCIAL SERVICES™</div>
+            <div id="adTagline">"We Own Your Government. Now We Own You."</div>
+            <div id="adBody">
+                <p>Are you tired of having free will?</p>
+                <p>Let our Investment Group handle your democracy.</p>
+                <p id="adDisclaimer">Returns not guaranteed. Side effects include loss of political autonomy, mandatory horse ownership, and occasional brain chip implantation. Larry Dunk Financial Services is not liable for multiverse divergence or rival Haras incidents. Consult a neurosurgeon before investing. This message approved by Larry Dunk Financial Services Ltd., a subsidiary of Larry Dunk Holdings GmbH, a subsidiary of Larry Dunk Capital LP, a subsidiary of the government.</p>
+            </div>
+        </div>
+        <div id="adSkipArea">
+            <div id="adSkipCountdown">Skip ad in 3</div>
+            <button id="adSkipBtn" onclick="skipAdBreak()">Skip Ad ▶</button>
+        </div>
+    </div>
+</div>
+
+<!-- Load order matters: each file depends on those above it -->
+<script src="js/sfx.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/units.js"></script>
+<script src="js/grid.js"></script>
+<script src="js/combat.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/input.js"></script>
+<script src="js/cutscene.js"></script>
+<script src="js/levels.js"></script>
+<script src="js/tetris.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

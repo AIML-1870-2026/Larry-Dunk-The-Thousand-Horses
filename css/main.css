@@ -1,0 +1,453 @@
+/* ============================================================
+   Larry Dunk: The Thousand Horses — Main Stylesheet
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: #0a0a14;
+    font-family: 'Courier New', monospace;
+    color: #e0e0e0;
+    overflow: hidden;
+    margin: 0;
+}
+
+#gameContainer {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+}
+
+/* ---- HUD OVERLAY ---- */
+#ui {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+}
+
+#topBar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    background: rgba(10, 10, 30, 0.85);
+    border-bottom: 2px solid #4a4a8a;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+#turnBanner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 52px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(100, 150, 255, 0.9);
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+    letter-spacing: 4px;
+    white-space: nowrap;
+}
+#turnBanner.banner-animate {
+    animation: bannerPop 0.35s ease-out forwards;
+}
+@keyframes bannerPop {
+    0%   { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
+    40%  { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1);    opacity: 1; }
+}
+
+#objectiveBox {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 10, 30, 0.9);
+    border: 2px solid #886622;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: #ffcc44;
+    display: none;
+    text-align: center;
+}
+
+/* ---- UNIT INFO PANEL ---- */
+#unitInfo {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(10, 10, 30, 0.9);
+    border: 2px solid #4a4a8a;
+    border-radius: 4px;
+    padding: 10px;
+    min-width: 200px;
+    font-size: 14px;
+    display: none;
+}
+#unitInfo .name  { color: #88ccff; font-size: 16px; font-weight: bold; }
+#unitInfo .stat  { margin: 2px 0; }
+
+/* ---- ACTION BUTTONS ---- */
+#actionPanel {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    pointer-events: auto;
+}
+#actionPanel button {
+    background: #2a2a4a;
+    color: #aaccff;
+    border: 2px solid #4a4a8a;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+#actionPanel button:hover    { background: #3a3a6a; border-color: #6a6aaa; }
+#actionPanel button:disabled { opacity: 0.4; cursor: default; }
+
+/* ---- DIALOGUE BOX ---- */
+#dialogueBox {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(10, 10, 40, 0.95);
+    border-top: 3px solid #6a6aaa;
+    padding: 16px 20px 16px 20px;
+    min-height: 120px;
+    display: none;
+    pointer-events: auto;
+    cursor: pointer;
+}
+#dialogueBox .speaker  { color: #ffcc44; font-size: 16px; font-weight: bold; margin-bottom: 6px; }
+#dialogueBox .text     { color: #ddd; font-size: 15px; line-height: 1.5; }
+#dialogueBox .continue { color: #888; font-size: 12px; margin-top: 8px; animation: blink 1s infinite; }
+
+#btnBackDialogue {
+    position: absolute;
+    bottom: 14px; left: 16px;
+    background: transparent;
+    border: 1px solid #666;
+    color: #888;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    padding: 3px 10px;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: color 0.15s, border-color 0.15s;
+}
+#btnBackDialogue:hover { color: #ccc; border-color: #999; }
+
+#btnSkipDialogue {
+    position: absolute;
+    bottom: 14px; right: 16px;
+    background: transparent;
+    border: 1px solid #444;
+    color: #555;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    padding: 3px 10px;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: color 0.15s, border-color 0.15s;
+}
+#btnSkipDialogue:hover { color: #aaa; border-color: #777; }
+
+/* ---- TITLE SCREEN ---- */
+#titleScreen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(180deg, #0a0a1e 0%, #1a1a3e 50%, #2a1a1a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 10;
+}
+#titleScreen h1 {
+    font-size: 42px;
+    color: #ffcc33;
+    text-shadow: 0 0 30px rgba(255, 200, 50, 0.5), 0 4px 8px rgba(0,0,0,0.8);
+    margin-bottom: 8px;
+    text-align: center;
+}
+#titleScreen h2 {
+    font-size: 24px;
+    color: #cc8833;
+    text-shadow: 0 0 15px rgba(200, 130, 50, 0.4);
+    margin-bottom: 40px;
+}
+#titleScreen .start {
+    font-size: 20px;
+    color: #aaa;
+    animation: blink 1.5s infinite;
+}
+
+/* ---- VICTORY / DEFEAT SCREENS ---- */
+#victoryScreen, #defeatScreen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 5;
+}
+#victoryScreen { background: rgba(10, 30, 10, 0.95); }
+#victoryScreen h2 { color: #44ff44; font-size: 36px; margin-bottom: 20px; }
+#victoryScreen p  { color: #aaffaa; font-size: 16px; }
+
+#defeatScreen { background: rgba(40, 10, 10, 0.95); }
+#defeatScreen h2 { color: #ff4444; font-size: 36px; margin-bottom: 20px; }
+#defeatScreen p  { color: #ffaaaa; font-size: 16px; }
+
+/* ---- LARRY DUNK SELECTOR ---- */
+#larryDunkSelector {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(180deg, #0a0a1e 0%, #1a1a2e 60%, #0a1a1a 100%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px;
+    overflow-y: auto;
+    z-index: 15;
+    pointer-events: auto;
+}
+#larryDunkSelector h2 {
+    color: #ffcc33;
+    font-size: 26px;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+}
+.ld-subtitle {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+.ld-slots-row {
+    color: #88ccff;
+    font-size: 15px;
+    margin-bottom: 18px;
+}
+#ldSelectorGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 24px;
+}
+.ld-card {
+    background: #1a1a3a;
+    border: 2px solid #3a3a6a;
+    border-radius: 6px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    pointer-events: auto;
+    user-select: none;
+}
+.ld-card:hover { background: #252550; border-color: #6a6aaa; }
+.ld-card.ld-selected { background: #1a3a2a; border-color: #44ff88; }
+.ld-name { color: #ffcc44; font-size: 14px; font-weight: bold; margin-bottom: 4px; }
+.ld-special { color: #aaffcc; font-size: 12px; margin-bottom: 4px; }
+.ld-stats { color: #6699bb; font-size: 11px; letter-spacing: 1px; margin-bottom: 6px; }
+.ld-desc  { color: #999; font-size: 11px; line-height: 1.4; }
+#ldDeployBtn {
+    background: #1a3a1a;
+    color: #44ff88;
+    border: 2px solid #44aa44;
+    border-radius: 4px;
+    padding: 12px 32px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: all 0.2s;
+    pointer-events: auto;
+}
+#ldDeployBtn:hover { background: #2a5a2a; border-color: #66ff66; }
+
+/* ---- AD BREAK OVERLAY ---- */
+#adBreakOverlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(5, 5, 10, 0.95);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    pointer-events: auto;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#adBadge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: #aa8800;
+    color: #000;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 7px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+}
+
+#adContent {
+    text-align: center;
+    max-width: 580px;
+    padding: 24px;
+}
+
+#adLogo {
+    font-size: 56px;
+    color: #cc9900;
+    text-shadow: 0 0 30px rgba(200, 150, 0, 0.6);
+    margin-bottom: 14px;
+}
+
+#adCompany {
+    font-size: 26px;
+    color: #cc9900;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+#adTagline {
+    font-size: 17px;
+    color: #eee;
+    font-style: italic;
+    margin-bottom: 22px;
+}
+
+#adBody {
+    color: #bbb;
+    font-size: 14px;
+    line-height: 1.7;
+    border-top: 1px solid #333;
+    padding-top: 16px;
+}
+
+#adDisclaimer {
+    margin-top: 10px;
+    font-size: 10px;
+    color: #555;
+    line-height: 1.4;
+}
+
+#adSkipArea {
+    position: absolute;
+    bottom: 20px; right: 20px;
+    text-align: right;
+}
+
+#adSkipCountdown {
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+#adSkipBtn {
+    background: #2a2a2a;
+    color: #ddd;
+    border: 1px solid #555;
+    padding: 7px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    display: none;
+    font-family: Arial, sans-serif;
+    transition: background 0.15s;
+}
+#adSkipBtn:hover { background: #444; }
+
+/* ---- LEVEL SELECT ---- */
+#levelSelectScreen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(180deg, #0a0a1e 0%, #1a1a3e 60%, #2a1a2a 100%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px;
+    overflow-y: auto;
+    z-index: 10;
+    pointer-events: auto;
+}
+#levelSelectScreen h2 {
+    color: #ffcc33;
+    font-size: 28px;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+}
+#levelSelectScreen .subtitle {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+#levelGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+    width: 100%;
+    max-width: 900px;
+}
+.lvl-btn {
+    background: #1a1a3a;
+    color: #aaccff;
+    border: 2px solid #3a3a6a;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.lvl-btn:hover { background: #2a2a5a; border-color: #6a6aaa; color: #fff; }
+.lvl-btn.lvl-start {
+    grid-column: 1 / -1;
+    background: #1a3a1a;
+    border-color: #44aa44;
+    color: #44ff88;
+    font-size: 16px;
+    text-align: center;
+    padding: 14px;
+    margin-bottom: 4px;
+}
+.lvl-btn.lvl-start:hover { background: #2a5a2a; border-color: #66ff66; }
+.lvl-num { color: #555; margin-right: 6px; }
+
+/* ---- ANIMATIONS ---- */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+}
