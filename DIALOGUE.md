@@ -16,9 +16,9 @@ Edit any lines here. When you're done, tell me to "apply dialogue" and I'll upda
 
 NARRATOR: In a world not unlike our own...
 NARRATOR: A great guy named HARAS invented a revolutionary brain chip.
-HARAS: Finally. My Evil Brainchip is complete. Once implanted, I can control anyone.
-NARRATOR: Haras distributed the chips, selling it as the newest piece of technology...but with a self destruction function in case aliens ever enslave all of humanity.
-HARAS: Many people now have my chip in their brain. And soon everyone will. Even me — but mine is just a prototype. Non-destructible.
+HARAS: Finally. My Evil Brainchip is complete. Once implanted, I can control everyone.
+NARRATOR: Haras distributed the chips, selling it as the newest piece of technology...but with a self destruction function in case "aliens ever come and enslave everyone."
+HARAS: Many people now have my chip in their brain. And soon everyone will. Even me — but mine is just a prototype. Non-brain exploding.
 HARAS: ATTENTION, CITIZENS. You will all listen to me now. Disobey, and I will detonate your chip.
 NARRATOR: The world trembled. But Haras's ambitions were far from satisfied...
 HARAS: I need soldiers. Powerful ones. But first — an example must be made.
@@ -29,7 +29,7 @@ HARAS: I need soldiers. Powerful ones. But first — an example must be made.
 
 ### Intro
 
-HARAS: Three citizens dared refuse the brain chip. I will make an example.
+HARAS: Three citizens dared to refuse the brain chip. I will make an example.
 HARAS: Click one of your units to select it. Blue tiles show where it can move.
 HARAS: Walls are impassable. Forest tiles slow movement but grant a defense bonus — use them wisely.
 HARAS: After moving, red tiles mark targets in attack range. Click one to strike.
@@ -42,10 +42,10 @@ HARAS: I'm always in the fight. But if I fall — the mission ends. Keep me aliv
 ### On Victory
 
 HARAS: Good. The message is clear.
-NARRATOR: Haras reviews the neural chip data. One profile catches his eye...
-HARAS: Larry Dunk. Prime Minister. His brain architecture is... anomalous.
-HARAS: Most chips transmit orders. The recipient consciously processes them, then acts.
-HARAS: But Larry Dunk's chip... the order arrives and executes. Simultaneously. No conscious step.
+NARRATOR: Haras reviews the brain chip data. One profile catches his eye...
+HARAS: Larry Dunk. Prime Minister. His brain structure is... strange.
+HARAS: Usually my chips can't control everything the person does.
+HARAS: But Larry Dunk's chip... I can control everything he does.
 NARRATOR: Haras sends an order to Larry Dunk's chip for the first time.
 LARRY DUNK: Wha— what's happening to my brain— it's a tremendous brain, everyone says—
 HARAS: Silence.
@@ -53,8 +53,7 @@ LARRY DUNK: ...
 HARAS: If this Larry Dunk is so useful, I could get more from other universes.
 HARAS: An army of Larry Dunks.
 NARRATOR: And so began the hunt across the multiverse.
-NARRATOR: Not all Larry Dunks will surrender quietly. Some will have to be... caught.
-HARAS: I've prepared for that. Let's see how well they handle pressure.
+
 
 ---
 
@@ -62,7 +61,7 @@ HARAS: I've prepared for that. Let's see how well they handle pressure.
 
 ### Intro
 
-HARAS: The multiverse portal is open. I can sense another Larry Dunk through it. using my powers. from my brainchip. buy my brainchip.
+HARAS: The multiverse portal is open. I can sense more Larry Dunks through it. Using my powers. From my brainchip. (Buy my brainchip.)
 HARAS: Guards are protecting the dimensional rift. Fight through them.
 LARRY DUNK: Order recieved
 
@@ -70,9 +69,7 @@ LARRY DUNK: Order recieved
 
 NARRATOR: Through the portal steps a bizarre sight — a conjoined twin Larry Dunk.
 CAIN & ABEL: We only need one horse.
-HARAS: Ah yes, you're conjoined after all. but you won't need any horses soon, because you'll be a part of my army
-CAIN & ABEL: ...
-HARAS: ...what?
+HARAS: Ah yes, you're conjoined after all, but you won't need any horses soon because you're part of my army now
 HARAS: Another universe. Another collection. Let's go. I'm so great. Which is why you (yes you) should buy my brain chip
 
 ---
@@ -82,48 +79,48 @@ HARAS: Another universe. Another collection. Let's go. I'm so great. Which is wh
 ### Intro
 
 NARRATOR: The British Parliament. A universe of extreme formality.
-BRITISH LARRY DUNK: I say! What is the meaning of this rather distasteful intrusion?!
+BRITISH LARRY DUNK: I say! What is the meaning of this distasteful intrusion?!
 HARAS: Larry Dunk. Come here. You're getting a brain chip
-BRITISH LARRY DUNK: My BRAIN?! How extraordinarily rude. Guards! Deal with this... colonial.
+BRITISH LARRY DUNK: My BRAIN?! How extraordinarily rude. Guards! Deal with this... peasant.
 BRITISH LARRY DUNK: Guards — at once!
 
 ### On Victory
 
 BRITISH LARRY DUNK: ...I am... quite blinded by this spray tan situation. Most undignified.
-HARAS: Chip implanted. Welcome to the collection.
+HARAS: Chip implanted. Welcome to my collection.
 BRITISH LARRY DUNK: This is most irregular.
-HARAS: Noted. Moving on — there's a signal from a remote island. A Larry Dunk variant living off-grid.
+HARAS: Noted. There's a signal from a remote beach. A Larry Dunk variant living off-grid.
 HARAS: Alone. For eleven years. I want to know what he's been eating.
 NARRATOR: Somewhere in the multiverse, a rival Haras is running the same calculation.
 
 ---
 
-## LEVEL 4: Ch.2.5 — The Island
+## LEVEL 4: Ch.2.5 — The Beach
 
 ### Intro
 
-NARRATOR: A remote island. No civilization. No contact. Eleven years of silence.
-HARAS: His neural signature led us here. A Larry Dunk variant living completely off-grid.
-HARAS: Defeat the island's security patrols. And... search the ruins. Something is here.
+NARRATOR: A wide open beach. No civilization. No contact. Eleven years of silence.
+HARAS: His neural signature led us here. A Larry Dunk living completely off-grid.
+HARAS: Defeat the beach's security patrols. And... search the ruins. Something is here.
 NARRATOR: The ancient throne in the interior pulses with a faint signal. Someone rests there.
 
 ### Turn Event (throne tile reached)
 
 NARRATOR: The ancient throne shifts. Something emerges from the jungle.
-FINANCIER LARRY: ...I wasn't expecting visitors.
+SURVIVALIST LARRY: ...I wasn't expecting visitors.
 HARAS: Larry Dunk. Eleven years on this island. Alone.
-FINANCIER LARRY: I was eating extremely well. The local fauna is... quite nutritious.
-HARAS: Your brain chip. Now.
-FINANCIER LARRY: Certainly not. *consumes something* I have resources you cannot imagine.
+SURVIVALIST LARRY: I was eating extremely well. The local fauna is... quite nutritious.
+HARAS: Give me your brain chip. Now.
+SURVIVALIST LARRY: Certainly not. *consumes something* I have resources you cannot imagine.
 CAIN & ABEL: Did he just eat a crab whole? We respect that. One crab is enough.
 
-### On Victory (Financier Larry captured)
+### On Victory (Survivalist Larry captured)
 
-FINANCIER LARRY: ...yes... master... I have... considerable assets to offer.
+SURVIVALIST LARRY: ...yes... master... I have... skills I can offer.
 HARAS: Excellent. His cannibalism ability alone makes him invaluable.
 NARRATOR: In this universe, Dr. Retina fell into a volcano while texting.
 
-### On Victory (Financier Larry NOT captured)
+### On Victory (Survivalist Larry NOT captured)
 
 NARRATOR: The island is secured. The interior was never searched.
 HARAS: A signal, lost. No matter. The next target is more important.
