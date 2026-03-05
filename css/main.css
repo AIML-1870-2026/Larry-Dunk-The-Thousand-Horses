@@ -123,6 +123,25 @@ canvas {
 #actionPanel button:hover    { background: #3a3a6a; border-color: #6a6aaa; }
 #actionPanel button:disabled { opacity: 0.4; cursor: default; }
 
+/* ---- END TURN BUTTON ---- */
+#btnEndTurn {
+    background: #1a3a1a;
+    color: #44ff88;
+    border: 2px solid #44aa44;
+    padding: 10px 22px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+#btnEndTurn:hover:not(:disabled) { background: #2a5a2a; border-color: #66ff66; }
+#btnEndTurn:not(:disabled) { animation: endTurnPulse 1.8s ease-in-out infinite; }
+#btnEndTurn:disabled { background: #181828; color: #444; border-color: #2a2a3a; animation: none; }
+
+@keyframes endTurnPulse {
+    0%, 100% { box-shadow: 0 0 6px rgba(68, 255, 136, 0.3); }
+    50%       { box-shadow: 0 0 20px rgba(68, 255, 136, 0.85), 0 0 40px rgba(68, 255, 136, 0.3); }
+}
+
 /* ---- MOVE CONFIRM PANEL ---- */
 #moveConfirm {
     position: fixed;

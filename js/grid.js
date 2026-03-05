@@ -50,6 +50,14 @@ function getMovementTiles(unit) {
 }
 
 function getAttackTiles(unit, fromX, fromY) {
+    // Paraplegic Larry can't attack if any enemy is adjacent (wheelchair helpless up-close)
+    if (unit.type === 'paraplegicLarry') {
+        const blocked = game.units.find(u =>
+            u.alive && u.team !== unit.team &&
+            getManhattan(fromX, fromY, u.gx, u.gy) <= 1
+        );
+        if (blocked) return [];
+    }
     const tiles = [];
     const range = unit.range || 1;
     for (let dy = -range; dy <= range; dy++) {

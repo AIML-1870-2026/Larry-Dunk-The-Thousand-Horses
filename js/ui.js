@@ -120,6 +120,17 @@ function render() {
                 ctx.fillStyle = `rgba(255, 50, 50, ${0.3 + 0.2 * Math.sin(Date.now() / 400)})`;
                 ctx.fillRect(px + 4, py + 4, TILE_SIZE - 8, TILE_SIZE - 8);
             }
+            if (terrain === Terrain.STAIR) {
+                ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+                ctx.lineWidth = 1;
+                for (let s = 1; s <= 4; s++) {
+                    const sy = py + s * (TILE_SIZE / 5);
+                    ctx.beginPath();
+                    ctx.moveTo(px + 3, sy);
+                    ctx.lineTo(px + TILE_SIZE - 3, sy);
+                    ctx.stroke();
+                }
+            }
         }
     }
 

@@ -57,7 +57,7 @@ function createUnit(type, gx, gy, team) {
         paraplegicLarry: {
             name: 'Paraplegic Superhero Larry', hp: 30, atk: 9, def: 3, mov: 3, range: 3,
             spriteKey: 'paraplegicLarry', special: 'Eye Bullets',
-            desc: 'Fires eye bullets from 3 tiles away.',
+            desc: 'Fires eye bullets from 3 tiles away — but cannot attack if any enemy is adjacent.',
             isLarryDunk: true
         },
         axeLarry: {

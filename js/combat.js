@@ -56,6 +56,7 @@ function _resolveCombat(attacker, defender, isChain) {
         const healed = Math.min(dmg, attacker.maxHp - attacker.hp);
         attacker.hp += healed;
         if (healed > 0) {
+            showBanner('CANNIBALISM!', 1000);
             game.animations.push({
                 type: 'damage',
                 x: attacker.gx * TILE_SIZE + GRID_OFFSET_X + TILE_SIZE / 2,
@@ -93,6 +94,7 @@ function _resolveCombat(attacker, defender, isChain) {
                     getManhattan(attacker.gx, attacker.gy, u.gx, u.gy) <= (attacker.range || 1)
                 );
                 if (chainTarget) {
+                    showBanner('CHAIN KILL!', 1200);
                     setTimeout(() => {
                         if (attacker.alive && chainTarget.alive) doCombat(attacker, chainTarget, true);
                     }, 500);
@@ -109,6 +111,7 @@ function _resolveCombat(attacker, defender, isChain) {
                 u.alive && u.team !== attacker.team &&
                 getManhattan(u.gx, u.gy, defender.gx, defender.gy) <= 1
             );
+            if (blinded.length > 0) showBanner('SPRAY TAN!', 1200);
             blinded.forEach(u => {
                 if (!u.sprayTanned) {
                     u.range = Math.max(1, u.range - 1);
@@ -118,10 +121,12 @@ function _resolveCombat(attacker, defender, isChain) {
         }
 
         // Counterattack (only if defender survives and attacker is in range)
+        // Counterattacks cannot kill — attacker always survives with at least 1 HP
         if (getManhattan(attacker.gx, attacker.gy, defender.gx, defender.gy) <= (defender.range || 1)) {
             const cTerrain = getTerrain(attacker.gx, attacker.gy);
             const cDmg = Math.max(1, defender.atk - attacker.def - cTerrain.defBonus);
-            attacker.hp -= cDmg;
+            const rawHp = attacker.hp - cDmg;
+            attacker.hp = Math.max(1, rawHp);
             game.animations.push({
                 type: 'hitFlash',
                 x: attacker.gx * TILE_SIZE + GRID_OFFSET_X,
@@ -136,23 +141,7 @@ function _resolveCombat(attacker, defender, isChain) {
                 timer: 60,
                 color: '#ffaa44'
             });
-            if (attacker.hp <= 0) {
-                attacker.hp = 0;
-                if (attacker.isLarryDunk && attacker.team === 'enemy') {
-                    // Larry Dunks can't be killed by counterattacks — they cling to 1 HP
-                    // Player must land the killing blow directly to trigger Tetris
-                    attacker.hp = 1;
-                } else {
-                    attacker.alive = false;
-                    playSound('death');
-                    game.animations.push({
-                        type: 'death',
-                        x: attacker.gx * TILE_SIZE + GRID_OFFSET_X,
-                        y: attacker.gy * TILE_SIZE + GRID_OFFSET_Y,
-                        timer: 40
-                    });
-                }
-            }
+            if (rawHp <= 0) showBanner('SURVIVED!', 900);
         }
     }
 }

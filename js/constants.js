@@ -69,5 +69,7 @@ const Terrain = {
     OFFICE_FLOOR: { name: 'Office Floor', color: '#4e5868', moveCost: 1,  defBonus: 0 },
     GYM_FLOOR: { name: 'Gym Floor', color: '#8a7a5a', moveCost: 1,  defBonus: 0 },
     EQUIPMENT: { name: 'Equipment', color: '#5a5a5a', moveCost: 2,  defBonus: 1 },
-    EXIT:      { name: 'Exit',      color: '#aa3333', moveCost: 1,  defBonus: 0 }
+    EXIT:        { name: 'Exit',        color: '#aa3333', moveCost: 1,  defBonus: 0 },
+    STAIR:       { name: 'Stairs',      color: '#7a6555', moveCost: 2,  defBonus: 0 },
+    UPPER_FLOOR: { name: 'Upper Floor', color: '#3a4a5e', moveCost: 1,  defBonus: 1 }
 };
