@@ -37,21 +37,22 @@ HARAS: If you prefer not to attack, press Wait. The turn ends automatically when
 CIVILIAN: We'll die before we comply!
 HARAS: Enemies can counterattack if you're within their range. Hover any unit to inspect its stats: HP, ATK, DEF, MOV, RNG.
 MINION: And you, sir? Are you joining us?
-HARAS: I'm always in the fight. But if I fall — the mission ends. Keep me alive.
+HARAS: I'm always in the fight because I am the ultimate SIGMA MALE. But if I fall — the mission ends. Keep me alive.
 
 ### On Victory
 
 HARAS: Good. The message is clear.
 NARRATOR: Haras reviews the brain chip data. One profile catches his eye...
 HARAS: Larry Dunk. Prime Minister. His brain structure is... strange.
+NARRATOR: Haras sends an order to Larry Dunk's chip for the first time.
 HARAS: Usually my chips can't control everything the person does.
 HARAS: But Larry Dunk's chip... I can control everything he does.
-NARRATOR: Haras sends an order to Larry Dunk's chip for the first time.
 LARRY DUNK: Wha— what's happening to my brain— it's a tremendous brain, everyone says—
 HARAS: Silence.
 LARRY DUNK: ...
-HARAS: If this Larry Dunk is so useful, I could get more from other universes.
-HARAS: An army of Larry Dunks.
+HARAS: He could be..the ultimate middle manager!!
+HARAS: If this Larry Dunk is so useful, I could get more from other universes. Because of the multiverse. 
+HARAS: An army of Larry Dunks. The perfect middle managers, all at my command..
 NARRATOR: And so began the hunt across the multiverse.
 
 
@@ -69,7 +70,7 @@ LARRY DUNK: Order recieved
 
 NARRATOR: Through the portal steps a bizarre sight — a conjoined twin Larry Dunk.
 CAIN & ABEL: We only need one horse.
-HARAS: Ah yes, you're conjoined after all, but you won't need any horses soon because you're part of my army now
+HARAS: Ah yes, you're conjoined after all, but you won't need any horses soon because you're part of my army now. Maybe I should get some horses.
 HARAS: Another universe. Another collection. Let's go. I'm so great. Which is why you (yes you) should buy my brain chip
 
 ---
@@ -81,8 +82,7 @@ HARAS: Another universe. Another collection. Let's go. I'm so great. Which is wh
 NARRATOR: The British Parliament. A universe of extreme formality.
 BRITISH LARRY DUNK: I say! What is the meaning of this distasteful intrusion?!
 HARAS: Larry Dunk. Come here. You're getting a brain chip
-BRITISH LARRY DUNK: My BRAIN?! How extraordinarily rude. Guards! Deal with this... peasant.
-BRITISH LARRY DUNK: Guards — at once!
+BRITISH LARRY DUNK: My BRAIN?! How extraordinarily rude. Guards! Deal with this... p-p-p-PEASANT!
 
 ### On Victory
 
@@ -90,8 +90,9 @@ BRITISH LARRY DUNK: ...I am... quite blinded by this spray tan situation. Most u
 HARAS: Chip implanted. Welcome to my collection.
 BRITISH LARRY DUNK: This is most irregular.
 HARAS: Noted. There's a signal from a remote beach. A Larry Dunk variant living off-grid.
-HARAS: Alone. For eleven years. I want to know what he's been eating.
-NARRATOR: Somewhere in the multiverse, a rival Haras is running the same calculation.
+HARAS: Alone. For eleven years. I want to know what he's been eating. Perhaps a thousand horses. Just like the hit video game, Larry Dunk: The Thousand Horses.
+NARRATOR: Somewhere in the multiverse, another Haras is running the same calculation. 
+HARAS: But worse, because I'm the best one. 
 
 ---
 
@@ -118,7 +119,6 @@ CAIN & ABEL: Did he just eat a crab whole? We respect that. One crab is enough.
 
 SURVIVALIST LARRY: ...yes... master... I have... skills I can offer.
 HARAS: Excellent. His cannibalism ability alone makes him invaluable.
-NARRATOR: In this universe, Dr. Retina fell into a volcano while texting.
 
 ### On Victory (Survivalist Larry NOT captured)
 
@@ -168,7 +168,6 @@ ABEL: One universe was enough.
 
 AXE MURDERER LARRY: ...I was mid-chain. You interrupted my chain.
 HARAS: Your chain kill ability is indeed useful. I'll keep it.
-AXE MURDERER LARRY: ...yes... master... *still holding axe*
 HARAS: Next: a cereal mascot. Reportedly invisible to detection systems.
 
 ---
