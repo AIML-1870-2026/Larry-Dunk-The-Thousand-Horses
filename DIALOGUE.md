@@ -29,13 +29,7 @@ HARAS: I need soldiers. Powerful ones. But first — an example must be made.
 
 ### Intro
 
-HARAS: Three citizens dared to refuse the brain chip. I will make an example.
-HARAS: Click one of your units to select it. Blue tiles show where it can move.
-HARAS: Walls are impassable. Forest tiles slow movement but grant a defense bonus — use them wisely.
-HARAS: After moving, red tiles mark targets in attack range. Click one to strike.
-HARAS: If you prefer not to attack, press Wait. The turn ends automatically when all your units have acted.
-CIVILIAN: We'll die before we comply!
-HARAS: Enemies can counterattack if you're within their range. Hover any unit to inspect its stats: HP, ATK, DEF, MOV, RNG.
+HARAS: Three citizens dared to refuse the brain chip. I will make an example. ATTACK THEM.
 MINION: And you, sir? Are you joining us?
 HARAS: I'm always in the fight because I am the ultimate SIGMA MALE. But if I fall — the mission ends. Keep me alive.
 
@@ -92,7 +86,7 @@ BRITISH LARRY DUNK: This is most irregular.
 HARAS: Noted. There's a signal from a remote beach. A Larry Dunk variant living off-grid.
 HARAS: Alone. For eleven years. I want to know what he's been eating. Perhaps a thousand horses. Just like the hit video game, Larry Dunk: The Thousand Horses.
 NARRATOR: Somewhere in the multiverse, another Haras is running the same calculation. 
-HARAS: But worse, because I'm the best one. 
+HARAS: But he's worse, because I'm the best one. 
 
 ---
 
@@ -102,12 +96,12 @@ HARAS: But worse, because I'm the best one.
 
 NARRATOR: A wide open beach. No civilization. No contact. Eleven years of silence.
 HARAS: His neural signature led us here. A Larry Dunk living completely off-grid.
-HARAS: Defeat the beach's security patrols. And... search the ruins. Something is here.
-NARRATOR: The ancient throne in the interior pulses with a faint signal. Someone rests there.
+HARAS: Defeat the beach's security patrols. And... search the beach house. Something is here.
+NARRATOR: The beach chair in the interior pulses with a faint signal. Someone rests there.
 
 ### Turn Event (throne tile reached)
 
-NARRATOR: The ancient throne shifts. Something emerges from the jungle.
+NARRATOR: The beach chair shifts. Something emerges from the jungle.
 SURVIVALIST LARRY: ...I wasn't expecting visitors.
 HARAS: Larry Dunk. Eleven years on this island. Alone.
 SURVIVALIST LARRY: I was eating extremely well. The local fauna is... quite nutritious.
@@ -122,13 +116,13 @@ HARAS: Excellent. His cannibalism ability alone makes him invaluable.
 
 ### On Victory (Survivalist Larry NOT captured)
 
-NARRATOR: The island is secured. The interior was never searched.
-HARAS: A signal, lost. No matter. The next target is more important.
+NARRATOR: The beach house is secured. The interior was never searched.
+HARAS: A soldier lost. No matter. The next target is more important.
 
 ### Transition (both paths)
 
 HARAS: My sensors are picking up a powerful anomaly. A Larry Dunk called Mr. Runo.
-HARAS: Surely that couldn't be... never mind. He will be captured
+HARAS: Surely that couldn't be... never mind. He will be captured.
 
 ---
 
@@ -145,9 +139,9 @@ HARAS: Rockets and eye bullets. Fantastic. Surround him.
 ### On Victory
 
 PARAPLEGIC LARRY: ...you've... neutralized my rockets. But the chip... it won't...
-HARAS: Your eye bullets are spectacular, by the way. Range 3.
+HARAS: Your eye bullets are spectacular, by the way. A range of 3 units, very impressive.
 HARAS: Moving on. Next signal: an axe murderer.
-NARRATOR: Rival Haras count: 6 active. All behind. None of them understand why.
+NARRATOR: Rival Haras count: 6 active. All behind you. None of them understand why.
 
 ---
 
@@ -161,18 +155,40 @@ HARAS: Put the axe down.
 AXE MURDERER LARRY: No.
 LARRY DUNK: ...he's me. But he's... scarier than me. I don't know how to feel.
 CAIN & ABEL: We have seen many things. This is among them.
-CAIN: Sometimes I wish we hadn't seen this much.
-ABEL: One universe was enough.
+ABEL: I didn't see it.
+CAIN: One universe was enough.
 
 ### On Victory
 
 AXE MURDERER LARRY: ...I was mid-chain. You interrupted my chain.
-HARAS: Your chain kill ability is indeed useful. I'll keep it.
-HARAS: Next: a cereal mascot. Reportedly invisible to detection systems.
+HARAS: Your chain attack ability is indeed useful. I'll keep it.
+HARAS: Next: an investment group. Corporate.
+
+---
+## LEVEL 7: Ch.3.3 — Q4 Acquisition
+
+### Intro
+
+NARRATOR: The boardroom of Larry Dunk Acquisitions LLC. Fifteenth floor.
+INVESTMENT LARRY: I've been expecting a hostile takeover. I did not expect... this.
+HARAS: I want your brain. Literally.
+INVESTMENT LARRY: My legal team will— actually, before we proceed: are you familiar with our Ad Break restructuring package?
+HARAS: I have no interest in your—
+INVESTMENT LARRY: Of course you do. When I attack at full power, I first require everyone present to watch a brief message from our sponsors.
+HARAS: Fight through corporate security. Get me that brain.
+
+### On Victory
+
+INVESTMENT LARRY: ...this acquisition is... pending regulatory approval...
+HARAS: Chip installed. Welcome to the portfolio.
+NARRATOR: His Ad Break ability remains active. The chip did not disable the ad.
+CAIN & ABEL: That advertisement was twenty-two seconds. We counted. We had time.
+HARAS: Next signal: a cereal mascot. Reportedly invisible to detection systems.
+NARRATOR: A rival Haras has intercepted the same signal. But he's not as fast as you so it doesn't matter..
 
 ---
 
-## LEVEL 7: Ch.3.3 — Part of a Complete Breakfast
+## LEVEL 8: Ch.3.4 — Part of a Complete Breakfast
 
 ### Intro
 
@@ -189,30 +205,7 @@ CAIN & ABEL: We also cannot see him. We share the visual processing. This is not
 CEREAL LARRY: Oh! A new friend! Would you like some LARRY DUNK'S CRISPY BITES?
 HARAS: I'm putting a chip in your brain.
 CEREAL LARRY: ...okay! *poses*
-HARAS: His invisibility will be... useful. Next: an investment group. Corporate.
-
----
-
-## LEVEL 8: Ch.3.4 — Q4 Acquisition
-
-### Intro
-
-NARRATOR: The boardroom of Larry Dunk Acquisitions LLC. Fifteenth floor.
-INVESTMENT LARRY: I've been expecting a hostile takeover. I did not expect... this.
-HARAS: I want your brain. Literally.
-INVESTMENT LARRY: My legal team will— actually, before we proceed: are you familiar with our Ad Break restructuring package?
-HARAS: I have no interest in your— what is an Ad Break?
-INVESTMENT LARRY: When I attack at full power, I first require everyone present to watch a brief message from our sponsors.
-HARAS: Fight through corporate security. Get me that brain.
-
-### On Victory
-
-INVESTMENT LARRY: ...this acquisition is... pending regulatory approval...
-HARAS: Chip installed. Welcome to the portfolio.
-NARRATOR: His Ad Break ability remains active. The chip did not disable the ad.
-CAIN & ABEL: That advertisement was twenty-two seconds. We counted. We had time.
-HARAS: Next signal: Female Larry Dunk. Shopping mall. Reports conflict on exact location.
-NARRATOR: A rival Haras has intercepted the same signal. But he's not as fast as you so it doesn't matter..
+HARAS: His invisibility will be... useful. Next: A shopping mall. Reports conflict on exact location.
 
 ---
 
@@ -249,14 +242,14 @@ HARAS: ...
 RIVAL HARAS: I've collected 7 Larry Dunks. Chipped and controlled. How many have you got?
 HARAS: More than you.
 RIVAL HARAS: I've been watching your robot routing. You do something different. Where did you learn that?
-HARAS: A man who died of old age. In this universe.
+HARAS: From a man who died of old age. In this universe at least.
 RIVAL HARAS: You're blocking my path to Runo. I won't let you take him.
 HARAS: You already lost. You just don't know it yet.
 CAIN & ABEL: There are two of him now. This is concerning. We only need one Haras.
 
 ### On Victory
 
-RIVAL HARAS: ...how. I had the same chips. The same plan. The same face.
+RIVAL HARAS: ...how? I had the same chips. The same plan. The same face.
 HARAS: I'm simply better. 
 NARRATOR: The portal opens. Mr. Runo's universe is accessible.
 CAIN & ABEL: He said "same face." That was accurate. We verified.
@@ -329,7 +322,7 @@ HARAS: Yes, one for each member of my army.
 CAIN & ABEL: We only need one horse because we are conjoined.
 ZEUS LARRY DUNK: This reminds me of the Thesis...situation. But I trust that you will be different. The great Zeus can't be fooled twice.
 HARAS: Then we agree. Give me the horses and I will defeat every rival Haras who threatens us both.
-ZEUS LARRY DUNK: ...VERY WELL. *summons 1,000 horses* NOW PROVE YOUR WORTH, MORTAL.
+ZEUS LARRY DUNK: ...very well. *summons 1,000 horses* NOW PROVE YOUR WORTH, MORTAL.
 NARRATOR: Armed with the horse army, Haras faces his multiverse rivals.
 
 ### On Victory
@@ -343,7 +336,7 @@ HARAS: ...ow. A little.
 NARRATOR: The lightning does almost nothing to Haras.
 NARRATOR: But it does something else.
 NARRATOR: The blast broadcasts Haras's exact multiverse coordinates — to every rival Haras still searching for him.
-NARRATOR: His lead — maintained for the entire game — is gone.
+NARRATOR: His lead — maintained this whole time — is gone.
 HARAS: Capture him. NOW. Before they arrive.
 NARRATOR: Haras moves in. The Tetris board appears.
 NARRATOR: Something is wrong with the pieces.
@@ -360,13 +353,13 @@ HARAS: ...
 HARAS: The horses. Use the horses. NOW.
 NARRATOR: Three more rival Harases emerge from separate portals. All guided by the same coordinates. All wanting the same thing.
 RIVAL HARAS: Those horses are MINE. I was here first.
-RIVAL HARAS: Your coordinates came from MY lightning read. Step BACK.
+RIVAL HARAS 2: His coordinates came from MY lightning read. Step BACK.
 NARRATOR: Zeus, passed between rivals like a prize, issues contradictory commands to the horse army.
 ZEUS LARRY DUNK: TRAMPLE HIM — no — THAT ONE — ALL OF THEM — WAIT —
 NARRATOR: The thousand horses receive five different orders in three seconds.
 NARRATOR: The horses begin attacking everyone indiscriminately.
 CAIN & ABEL: The rivals are fighting each other. We have assessed this. This is the window.
-HARAS: Loyal horse. Find me.
+HARAS: Find me a loyal horse.
 
 ---
 
@@ -374,13 +367,12 @@ HARAS: Loyal horse. Find me.
 
 ### Intro
 
-NARRATOR: The portal is thirty meters away. The chaos is everywhere.
+NARRATOR: The portal is thirty meters away. Chaos is everywhere.
 LOYAL HORSE: *appears at Haras's side*
 NARRATOR: The horses — The Thousand Horses — turn.
 ZEUS LARRY DUNK: HORSES. TRAMPLE HIM.
 LOYAL HORSE: *stands firm*
 CAIN & ABEL: Run for the portal!
-MR. RUNO: *looks at the horses* ...not my problem. *runs*
 HARAS: *blacks out*
 
 ### On Victory (Ending)
