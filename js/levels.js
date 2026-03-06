@@ -114,7 +114,7 @@ const LEVELS = [
             ];
 
             const intro = [
-                { speaker: 'HARAS',    text: 'Three citizens dared to refuse the brain chip. I will make an example.', color: '#88f' },
+                { speaker: 'HARAS',    text: 'Three citizens dared to refuse the brain chip. I will make an example. ATTACK THEM.', color: '#88f' },
                 { speaker: 'HARAS',    text: 'Click one of your units to select it. Blue tiles show where it can move.', color: '#88f' },
                 { speaker: 'HARAS',    text: 'Walls are impassable. Forest tiles slow movement but grant a defense bonus — use them wisely.', color: '#88f' },
                 { speaker: 'HARAS',    text: 'After moving, red tiles mark targets in attack range. Click one to strike.', color: '#88f' },
@@ -122,7 +122,7 @@ const LEVELS = [
                 { speaker: 'CIVILIAN', text: 'We\'ll die before we comply!', color: '#ccc' },
                 { speaker: 'HARAS',    text: 'Enemies can counterattack if you\'re within their range. Hover any unit to inspect its stats: HP, ATK, DEF, MOV, RNG.', color: '#88f' },
                 { speaker: 'MINION',   text: 'And you, sir? Are you joining us?', color: '#cc0' },
-                { speaker: 'HARAS',    text: 'I\'m always in the fight. But if I fall — the mission ends. Keep me alive.', color: '#f44' }
+                { speaker: 'HARAS',    text: 'I\'m always in the fight because I am the ultimate SIGMA MALE. But if I fall — the mission ends. Keep me alive.', color: '#f44' }
             ];
             startLevel(intro);
         },
@@ -133,21 +133,18 @@ const LEVELS = [
             const _portal = Cinema.portal();
             const postTutorial = [
                 { speaker: 'HARAS',      text: 'Good. The message is clear.', color: '#88f', drawScene: _dark },
-                { speaker: 'NARRATOR',   text: 'Haras returns to his lab and reviews the brain chip telemetry. Thousands of signals. One stands out.', color: '#aaa', drawScene: _lab },
-                { speaker: 'HARAS',      text: 'Larry Dunk. Prime Minister. His brain structure is... extraordinary.', color: '#88f', drawScene: _lab },
-                { speaker: 'NARRATOR',   text: 'Most chips can nudge behavior — suggestions, impulses, mild compulsions. Haras has never seen full override before.', color: '#aaa', drawScene: _lab },
-                { speaker: 'HARAS',      text: 'With a normal person, the chip and their brain fight each other. But Larry Dunk\'s neural pathways... there\'s no resistance at all.', color: '#88f', drawScene: _lab },
-                { speaker: 'HARAS',      text: 'I can control everything he does. Every thought. Every word. Every action.', color: '#f44', drawScene: _lab },
-                { speaker: 'NARRATOR',   text: 'Haras sends a test command to Larry Dunk\'s chip. Prime Minister, mid-speech at Parliament.', color: '#aaa', drawScene: _lab },
-                { speaker: 'LARRY DUNK', text: 'Wha— what\'s happening to my brain— it\'s a tremendous brain, everyone says— the best brain—', color: '#f80', drawScene: _dark },
+                { speaker: 'NARRATOR',   text: 'Haras reviews the brain chip data. One profile catches his eye...', color: '#aaa', drawScene: _lab },
+                { speaker: 'HARAS',      text: 'Larry Dunk. Prime Minister. His brain structure is... strange.', color: '#88f', drawScene: _lab },
+                { speaker: 'NARRATOR',   text: 'Haras sends an order to Larry Dunk\'s chip for the first time.', color: '#aaa', drawScene: _lab },
+                { speaker: 'HARAS',      text: 'Usually my chips can\'t control everything the person does.', color: '#88f', drawScene: _lab },
+                { speaker: 'HARAS',      text: 'But Larry Dunk\'s chip... I can control everything he does.', color: '#f44', drawScene: _lab },
+                { speaker: 'LARRY DUNK', text: 'Wha— what\'s happening to my brain— it\'s a tremendous brain, everyone says—', color: '#f80', drawScene: _dark },
                 { speaker: 'HARAS',      text: 'Silence.', color: '#f44', drawScene: _dark },
                 { speaker: 'LARRY DUNK', text: '...', color: '#f80', drawScene: _dark },
-                { speaker: 'NARRATOR',   text: 'Complete. Instant. Total control. Like a puppet with no strings showing.', color: '#aaa', drawScene: _dark },
-                { speaker: 'HARAS',      text: 'The multiverse theory. If one Larry Dunk has this brain structure... others might too.', color: '#88f', drawScene: _lab },
-                { speaker: 'HARAS',      text: 'An army of Larry Dunks. Each one a perfect instrument. Each one mine.', color: '#f44', drawScene: _lab },
-                { speaker: 'NARRATOR',   text: 'And so began the hunt across the multiverse.', color: '#aaa', drawScene: _portal },
-                { speaker: 'NARRATOR',   text: 'Not all Larry Dunks will submit. Some will have to be... caught.', color: '#aaa', drawScene: _portal },
-                { speaker: 'HARAS',      text: 'I\'ve prepared for that too.', color: '#88f', drawScene: _portal }
+                { speaker: 'HARAS',      text: 'He could be..the ultimate middle manager!!', color: '#88f', drawScene: _lab },
+                { speaker: 'HARAS',      text: 'If this Larry Dunk is so useful, I could get more from other universes. Because of the multiverse.', color: '#88f', drawScene: _lab },
+                { speaker: 'HARAS',      text: 'An army of Larry Dunks. The perfect middle managers, all at my command..', color: '#f44', drawScene: _lab },
+                { speaker: 'NARRATOR',   text: 'And so began the hunt across the multiverse.', color: '#aaa', drawScene: _portal }
             ];
             startCutscene(postTutorial, () => { loadLevel(2); });
         }
@@ -172,30 +169,26 @@ const LEVELS = [
             game.grid[9][6] = Terrain.WATER;
             game.grid[9][7] = Terrain.WATER;
 
+            const ca = createUnit('cainAbel', 10, 4, 'enemy');
+            ca.hp = 25; ca.maxHp = 25;
             game.units = [
                 createUnit('haras', 0, 4, 'player'),
                 createUnit('larryDunk', 1, 4, 'player'),
                 createUnit('minion', 0, 3, 'player'),
                 createUnit('minion', 0, 5, 'player'),
-                createUnit('guard', 6, 2, 'enemy'),
                 createUnit('guard', 8, 5, 'enemy'),
-                createUnit('cainAbel', 10, 4, 'enemy')
+                ca
             ];
 
-            const _portal = Cinema.portal();
             const intro = [
-                { speaker: 'NARRATOR', text: 'Through the multiverse portal — another universe. Another Larry Dunk.', color: '#aaa', drawScene: _portal },
-                { speaker: 'NARRATOR', text: 'This one is... different.', color: '#aaa', drawScene: _portal },
-                { speaker: 'CAIN', text: 'Abel. Are you ready?', color: '#e90' },
-                { speaker: 'ABEL', text: 'I am always ready. I am attached to you.', color: '#e90' },
-                { speaker: 'CAIN', text: 'Good. The guards are in position. When the enemy comes through, we hold the rift.', color: '#e90' },
                 { speaker: 'GUARD', text: 'Sir — both of you, sir — what do we do with the horses after?', color: '#bbb' },
                 { speaker: 'ABEL', text: 'We only need one horse.', color: '#e90' },
+                { speaker: 'HARAS', text: 'Ah yes, you\'re conjoined after all, but you won\'t need any horses soon because you\'re part of my army now. Maybe I should get some horses.', color: '#88f' },
                 { speaker: 'CAIN', text: 'Exactly one.', color: '#e90' },
                 { speaker: 'GUARD', text: '...which one?', color: '#bbb' },
                 { speaker: 'CAIN & ABEL', text: 'We haven\'t decided yet. Prepare yourselves.', color: '#e90' },
-                { speaker: 'HARAS', text: 'The multiverse portal is open. Guards are protecting the dimensional rift. Fight through them.', color: '#88f' },
-                { speaker: 'LARRY DUNK', text: 'Order received.', color: '#f80' }
+                { speaker: 'HARAS', text: 'The multiverse portal is open. I can sense more Larry Dunks through it. Using my powers. From my brainchip. (Buy my brainchip.)', color: '#88f' },
+                { speaker: 'HARAS', text: 'Guards are protecting the dimensional rift. Fight through them.', color: '#88f' }
             ];
 
             startLevel(intro);
@@ -204,13 +197,7 @@ const LEVELS = [
         victoryText: 'Portal Secured!',
         onVictory: function() {
             const meetCainAbel = [
-                { speaker: 'CAIN', text: 'Our guards are... gone.', color: '#e90' },
-                { speaker: 'ABEL', text: 'We are outnumbered. We have lost.', color: '#e90' },
-                { speaker: 'CAIN & ABEL', text: 'We still only need one horse.', color: '#e90' },
-                { speaker: 'HARAS', text: 'You\'re conjoined. You won\'t need any horses. You\'re part of my army now.', color: '#88f' },
-                { speaker: 'ABEL', text: '...yes... master...', color: '#e90' },
-                { speaker: 'CAIN', text: '...yes... also master...', color: '#e90' },
-                { speaker: 'HARAS', text: 'Another universe. Another collection. Let\'s go.', color: '#88f' }
+                { speaker: 'HARAS', text: 'Another universe. Another collection. Let\'s go. I\'m so great. Which is why you (yes you) should buy my brain chip', color: '#88f' }
             ];
             startCutscene(meetCainAbel, () => { loadLevel(3); });
         }
@@ -256,11 +243,8 @@ const LEVELS = [
             spawnSelectedLarryDunks();
 
             const intro = [
-                { speaker: 'NARRATOR', text: 'The British Parliament. A universe of extreme formality.', color: '#aaa' },
-                { speaker: 'BRITISH LARRY DUNK', text: 'I say! What is the meaning of this distasteful intrusion?!', color: '#f80' },
                 { speaker: 'HARAS', text: 'Larry Dunk. Come here. You\'re getting a brain chip', color: '#88f' },
-                { speaker: 'BRITISH LARRY DUNK', text: 'My BRAIN?! How extraordinarily rude. Guards! Deal with this... peasant.', color: '#f80' },
-                { speaker: 'BRITISH LARRY DUNK', text: 'Guards — at once!', color: '#f80' }
+                { speaker: 'BRITISH LARRY DUNK', text: 'My BRAIN?! How extraordinarily rude. Guards! Deal with this... p-p-p-PEASANT!', color: '#f80' }
             ];
 
             startLevel(intro);
@@ -269,12 +253,10 @@ const LEVELS = [
         victoryText: 'Parliament Falls!',
         onVictory: function() {
             const postBritish = [
-                { speaker: 'BRITISH LARRY DUNK', text: '...I am... quite blinded by this spray tan situation. Most undignified.', color: '#f80' },
-                { speaker: 'HARAS', text: 'Chip implanted. Welcome to my collection.', color: '#88f' },
-                { speaker: 'BRITISH LARRY DUNK', text: 'This is most irregular.', color: '#f80' },
                 { speaker: 'HARAS', text: 'Noted. There\'s a signal from a remote beach. A Larry Dunk variant living off-grid.', color: '#88f' },
-                { speaker: 'HARAS', text: 'Alone. For eleven years. I want to know what he\'s been eating.', color: '#88f' },
-                { speaker: 'NARRATOR', text: 'Somewhere in the multiverse, a rival Haras is running the same calculation.', color: '#555' }
+                { speaker: 'HARAS', text: 'Alone. For eleven years. I want to know what he\'s been eating. Perhaps a thousand horses. Just like the hit video game, Larry Dunk: The Thousand Horses.', color: '#88f' },
+                { speaker: 'NARRATOR', text: 'Somewhere in the multiverse, another Haras is running the same calculation.', color: '#555' },
+                { speaker: 'HARAS', text: 'But he\'s worse, because I\'m the best one.', color: '#88f' }
             ];
             startCutscene(postBritish, () => { loadLevel(4); });
         }
@@ -282,9 +264,9 @@ const LEVELS = [
 
     // 4: Ch.2.5 — Financier Larry Dunk (Secret Island)
     {
-        name: 'Ch.2.5: The Island',
+        name: 'Ch.2.5: The Beach',
         gridW: 12, gridH: 9,
-        objective: 'Secure the island. Search the ruins — something is hidden here.',
+        objective: 'Secure the beach. Search the beach house — something is hidden here.',
         ldSlots: [[1,5],[2,3],[2,6]],
         setup: function() {
             game.gridW = 12; game.gridH = 9;
@@ -327,8 +309,8 @@ const LEVELS = [
             const intro = [
                 { speaker: 'NARRATOR', text: 'A wide open beach. No civilization. No contact. Eleven years of silence.', color: '#aaa' },
                 { speaker: 'HARAS', text: 'His neural signature led us here. A Larry Dunk living completely off-grid.', color: '#88f' },
-                { speaker: 'HARAS', text: 'Defeat the beach\'s security patrols. And... search the ruins. Something is here.', color: '#88f' },
-                { speaker: 'NARRATOR', text: 'The ancient throne in the interior pulses with a faint signal. Someone rests there.', color: '#555' }
+                { speaker: 'HARAS', text: 'Defeat the beach\'s security patrols. And... search the beach house. Something is here.', color: '#88f' },
+                { speaker: 'NARRATOR', text: 'The beach chair in the interior pulses with a faint signal. Someone rests there.', color: '#555' }
             ];
 
             startLevel(intro);
@@ -342,9 +324,9 @@ const LEVELS = [
                 if (onThrone) {
                     game.financierRevealed = true;
                     startCutscene([
-                        { speaker: 'NARRATOR', text: 'The ancient throne shifts. Something emerges from the jungle.', color: '#aaa' },
+                        { speaker: 'NARRATOR', text: 'The beach chair shifts. Something emerges from the jungle.', color: '#aaa' },
                         { speaker: 'SURVIVALIST LARRY', text: '...I wasn\'t expecting visitors.', color: '#f80' },
-                        { speaker: 'HARAS', text: 'Larry Dunk. Eleven years on this island. Alone.', color: '#88f' },
+                        { speaker: 'HARAS', text: 'Larry Dunk. Eleven years on this beach. Alone.', color: '#88f' },
                         { speaker: 'SURVIVALIST LARRY', text: 'I was eating extremely well. The local fauna is... quite nutritious.', color: '#f80' },
                         { speaker: 'HARAS', text: 'Give me your brain chip. Now.', color: '#f44' },
                         { speaker: 'SURVIVALIST LARRY', text: 'Certainly not. *consumes something* I have resources you cannot imagine.', color: '#f80' },
@@ -364,16 +346,15 @@ const LEVELS = [
 
             const dialogue = captured ? [
                 { speaker: 'SURVIVALIST LARRY', text: '...yes... master... I have... skills I can offer.', color: '#f80' },
-                { speaker: 'HARAS', text: 'Excellent. His cannibalism ability alone makes him invaluable.', color: '#88f' },
-                { speaker: 'NARRATOR', text: 'In this universe, Dr. Retina fell into a volcano while texting.', color: '#555' }
+                { speaker: 'HARAS', text: 'Excellent. His cannibalism ability alone makes him invaluable.', color: '#88f' }
             ] : [
-                { speaker: 'NARRATOR', text: 'The island is secured. The interior was never searched.', color: '#aaa' },
-                { speaker: 'HARAS', text: 'A signal, lost. No matter. The next target is more important.', color: '#88f' }
+                { speaker: 'NARRATOR', text: 'The beach house is secured. The interior was never searched.', color: '#aaa' },
+                { speaker: 'HARAS', text: 'A soldier lost. No matter. The next target is more important.', color: '#88f' }
             ];
 
             dialogue.push(
                 { speaker: 'HARAS', text: 'My sensors are picking up a powerful anomaly. A Larry Dunk called Mr. Runo.', color: '#88f' },
-                { speaker: 'HARAS', text: 'Surely that couldn\'t be... never mind. He will be captured', color: '#88f' }
+                { speaker: 'HARAS', text: 'Surely that couldn\'t be... never mind. He will be captured.', color: '#88f' }
             );
 
             startCutscene(dialogue, () => { loadLevel(5); });
@@ -429,7 +410,8 @@ const LEVELS = [
             startCutscene([
                 { speaker: 'PARAPLEGIC LARRY', text: '...you\'ve... neutralized my rockets. But the chip... it won\'t...', color: '#f80' },
                 { speaker: 'HARAS', text: 'Your eye bullets are spectacular, by the way. Range 3.', color: '#88f' },
-                { speaker: 'HARAS', text: 'Moving on. Next signal: an axe murderer.', color: '#88f' }
+                { speaker: 'HARAS', text: 'Moving on. Next signal: an axe murderer.', color: '#88f' },
+                { speaker: 'NARRATOR', text: 'Rival Haras count: 6 active. All behind you. None of them understand why.', color: '#aaa' }
             ], () => { loadLevel(6); });
         }
     },
@@ -471,8 +453,8 @@ const LEVELS = [
                 { speaker: 'AXE MURDERER LARRY', text: 'No.', color: '#f80' },
                 { speaker: 'LARRY DUNK', text: '...he\'s me. But he\'s... scarier than me. I don\'t know how to feel.', color: '#f80' },
                 { speaker: 'CAIN & ABEL', text: 'We have seen many things. This is among them.', color: '#e90' },
-                { speaker: 'CAIN', text: 'Sometimes I wish we hadn\'t seen this much.', color: '#e90' },
-                { speaker: 'ABEL', text: 'One universe was enough.', color: '#e90' }
+                { speaker: 'ABEL', text: 'I didn\'t see it.', color: '#e90' },
+                { speaker: 'CAIN', text: 'One universe was enough.', color: '#e90' }
             ], () => {
                 game.phase = GamePhase.PLAYER_TURN;
                 showBanner('Player Phase', 1200);
@@ -483,9 +465,8 @@ const LEVELS = [
         onVictory: function() {
             startCutscene([
                 { speaker: 'AXE MURDERER LARRY', text: '...I was mid-chain. You interrupted my chain.', color: '#f80' },
-                { speaker: 'HARAS', text: 'Your chain kill ability is indeed useful. I\'ll keep it.', color: '#88f' },
-                { speaker: 'AXE MURDERER LARRY', text: '...yes... master... *still holding axe*', color: '#f80' },
-                { speaker: 'HARAS', text: 'Next: a cereal mascot. Reportedly invisible to detection systems.', color: '#88f' }
+                { speaker: 'HARAS', text: 'Your chain attack ability is indeed useful. I\'ll keep it.', color: '#88f' },
+                { speaker: 'HARAS', text: 'Next: an investment group. Corporate.', color: '#88f' }
             ], () => { loadLevel(7); });
         }
     },
@@ -588,7 +569,7 @@ const LEVELS = [
                 { speaker: 'RIVAL HARAS', text: 'I\'ve collected 7 Larry Dunks. Chipped and controlled. How many have you got?', color: '#a88' },
                 { speaker: 'HARAS', text: 'More than you.', color: '#88f' },
                 { speaker: 'RIVAL HARAS', text: 'I\'ve been watching your robot routing. You do something different. Where did you learn that?', color: '#a88' },
-                { speaker: 'HARAS', text: 'A man who died of old age. In this universe.', color: '#88f' },
+                { speaker: 'HARAS', text: 'From a man who died of old age. In this universe at least.', color: '#88f' },
                 { speaker: 'RIVAL HARAS', text: 'You\'re blocking my path to Runo. I won\'t let you take him.', color: '#a88' },
                 { speaker: 'HARAS', text: 'You already lost. You just don\'t know it yet.', color: '#f44' },
                 { speaker: 'CAIN & ABEL', text: 'There are two of him now. This is concerning. We only need one Haras.', color: '#e90' }
@@ -601,7 +582,7 @@ const LEVELS = [
         victoryText: 'Rival Defeated!',
         onVictory: function() {
             startCutscene([
-                { speaker: 'RIVAL HARAS', text: '...how. I had the same chips. The same plan. The same face.', color: '#a88' },
+                { speaker: 'RIVAL HARAS', text: '...how? I had the same chips. The same plan. The same face.', color: '#a88' },
                 { speaker: 'HARAS', text: 'I\'m simply better.', color: '#88f' },
                 { speaker: 'NARRATOR', text: 'The portal opens. Mr. Runo\'s universe is accessible.', color: '#aaa' },
                 { speaker: 'CAIN & ABEL', text: 'He said "same face." That was accurate. We verified.', color: '#e90' },
@@ -790,8 +771,8 @@ const LEVELS = [
                 { speaker: 'INVESTMENT LARRY', text: 'I\'ve been expecting a hostile takeover. I did not expect... this.', color: '#f80' },
                 { speaker: 'HARAS', text: 'I want your brain. Literally.', color: '#88f' },
                 { speaker: 'INVESTMENT LARRY', text: 'My legal team will— actually, before we proceed: are you familiar with our Ad Break restructuring package?', color: '#f80' },
-                { speaker: 'HARAS', text: 'I have no interest in your— what is an Ad Break?', color: '#88f' },
-                { speaker: 'INVESTMENT LARRY', text: 'When I attack at full power, I first require everyone present to watch a brief message from our sponsors.', color: '#f80' },
+                { speaker: 'HARAS', text: 'I have no interest in your—', color: '#88f' },
+                { speaker: 'INVESTMENT LARRY', text: 'Of course you do. When I attack at full power, I first require everyone present to watch a brief message from our sponsors.', color: '#f80' },
                 { speaker: 'HARAS', text: 'Fight through corporate security. Get me that brain.', color: '#88f' }
             ], () => {
                 game.phase = GamePhase.PLAYER_TURN;
@@ -912,7 +893,7 @@ const LEVELS = [
                 { speaker: 'CAIN & ABEL', text: 'We only need one horse because we are conjoined.', color: '#e90' },
                 { speaker: 'ZEUS LARRY DUNK', text: 'This reminds me of the Thesis...situation. But I trust that you will be different. The great Zeus can\'t be fooled twice.', color: '#ff0' },
                 { speaker: 'HARAS', text: 'Then we agree. Give me the horses and I will defeat every rival Haras who threatens us both.', color: '#88f' },
-                { speaker: 'ZEUS LARRY DUNK', text: '...VERY WELL. *summons 1,000 horses* NOW PROVE YOUR WORTH, MORTAL.', color: '#ff0' },
+                { speaker: 'ZEUS LARRY DUNK', text: '...very well. *summons 1,000 horses* NOW PROVE YOUR WORTH, MORTAL.', color: '#ff0' },
                 { speaker: 'NARRATOR', text: 'Armed with the horse army, Haras faces his multiverse rivals.', color: '#aaa' }
             ];
 
@@ -963,7 +944,7 @@ const LEVELS = [
                 { speaker: 'NARRATOR', text: 'The lightning does almost nothing to Haras.', color: '#aaa' },
                 { speaker: 'NARRATOR', text: 'But it does something else.', color: '#aaa' },
                 { speaker: 'NARRATOR', text: 'The blast broadcasts Haras\'s exact multiverse coordinates — to every rival Haras still searching for him.', color: '#f44' },
-                { speaker: 'NARRATOR', text: 'His lead — maintained for the entire game — is gone.', color: '#f44' },
+                { speaker: 'NARRATOR', text: 'His lead — maintained this whole time — is gone.', color: '#f44' },
                 { speaker: 'HARAS', text: 'Capture him. NOW. Before they arrive.', color: '#f44' },
                 { speaker: 'NARRATOR', text: 'Haras moves in. The Tetris board appears.', color: '#aaa' },
                 { speaker: 'NARRATOR', text: 'Something is wrong with the pieces.', color: '#aaa' }
@@ -1018,13 +999,12 @@ const LEVELS = [
             ];
 
             const intro = [
-                { speaker: 'NARRATOR', text: 'The portal is thirty meters away. The chaos is everywhere.', color: '#aaa' },
+                { speaker: 'NARRATOR', text: 'The portal is thirty meters away. Chaos is everywhere.', color: '#aaa' },
                 { speaker: 'LOYAL HORSE', text: '*appears at Haras\'s side*', color: '#fc0' },
                 { speaker: 'NARRATOR', text: 'The horses — The Thousand Horses — turn.', color: '#f44' },
                 { speaker: 'ZEUS LARRY DUNK', text: 'HORSES. TRAMPLE HIM.', color: '#ff0' },
                 { speaker: 'LOYAL HORSE', text: '*stands firm*', color: '#fc0' },
                 { speaker: 'CAIN & ABEL', text: 'Run for the portal!', color: '#e90' },
-                { speaker: 'MR. RUNO', text: '*looks at the horses* ...not my problem. *runs*', color: '#2a2' },
                 { speaker: 'HARAS', text: '*blacks out*', color: '#88f' }
             ];
 
@@ -1053,6 +1033,7 @@ const LEVELS = [
             }
         },
         onVictory: function() {
+            const _cred = Cinema.credits();
             const ending = [
                 { speaker: 'NARRATOR', text: 'The horse carrying Haras leaps through the portal.', color: '#aaa' },
                 { speaker: 'NARRATOR', text: 'Behind them — 999 horses. Zeus Larry Dunk. The rivals. Even his own father.', color: '#aaa' },
@@ -1062,24 +1043,14 @@ const LEVELS = [
                 { speaker: 'HARAS', text: 'But you stayed.', color: '#88f' },
                 { speaker: 'NARRATOR', text: 'The horse carries Haras off into the sunset...', color: '#fc0' },
                 { speaker: 'NARRATOR', text: 'Past the conquered Larry Dunks.', color: '#fc0' },
-                { speaker: '', text: '                  "You only need 1 horse."', color: '#fc0' },
-                { speaker: '', text: '          LARRY DUNK: THE THOUSAND HORSES', color: '#ffcc33' },
-                { speaker: '', text: '                     ~ FIN ~', color: '#888' }
+                { speaker: '', text: '"You only need 1 horse."', color: '#fc0', drawScene: _cred },
+                { speaker: '', text: 'Thank you for playing.', color: '#888', drawScene: _cred }
             ];
 
             document.getElementById('victoryScreen').style.display = 'none';
             startCutscene(ending, () => {
                 game.phase = GamePhase.ENDING;
-                ctx.fillStyle = '#000';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#fc0';
-                ctx.font = 'bold 28px Courier New';
-                ctx.textAlign = 'center';
-                ctx.fillText('"You only need 1 horse."', canvas.width / 2, canvas.height / 2 - 20);
-                ctx.fillStyle = '#666';
-                ctx.font = '16px Courier New';
-                ctx.fillText('Thank you for playing!', canvas.width / 2, canvas.height / 2 + 30);
-                ctx.fillText('LARRY DUNK: THE THOUSAND HORSES', canvas.width / 2, canvas.height / 2 + 60);
+                game.cinemaDrawScene = _cred; // hold credits on screen after cutscene ends
             });
         }
     }

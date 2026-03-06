@@ -52,11 +52,17 @@ function handleGridClick(gx, gy) {
 
     } else if (game.phase === GamePhase.UNIT_SELECTED) {
         const clickedMove = game.moveTiles.find(t => t.x === gx && t.y === gy);
+        const clickedAtk = game.attackTiles.find(t => t.x === gx && t.y === gy);
         if (clickedMove) {
             // Show confirmation panel instead of moving immediately
             game.pendingMoveTile = { tx: gx, ty: gy };
             positionMoveConfirm(gx, gy);
             document.getElementById('moveConfirm').style.display = 'flex';
+        } else if (clickedAtk) {
+            // Attack from current position without moving
+            game.selectedUnit.attacksLeft = game.selectedUnit.type === 'cainAbel' ? 2 : 1;
+            game.moveTiles = [];
+            executeAttack(gx, gy);
         } else {
             // Clicked outside movement range — cancel pending and deselect
             game.pendingMoveTile = null;
@@ -69,37 +75,7 @@ function handleGridClick(gx, gy) {
     } else if (game.phase === GamePhase.ATTACK_SELECT) {
         const clickedAtk = game.attackTiles.find(t => t.x === gx && t.y === gy);
         if (clickedAtk) {
-            const target = getUnitAt(gx, gy);
-            if (target) {
-                doCombat(game.selectedUnit, target);
-                // Tetris takes over — clean up selection and stop normal flow
-                if (game.phase === GamePhase.TETRIS) {
-                    game.selectedUnit = null;
-                    game.moveTiles = [];
-                    game.attackTiles = [];
-                    document.getElementById('btnAttack').style.display = 'none';
-                    document.getElementById('btnWait').style.display = 'none';
-                    return;
-                }
-                // Ad Break takes over — overlay handles combat + finishUnitAction on skip
-                // selectedUnit intentionally NOT cleared so finishUnitAction can mark it acted
-                if (game.phase === GamePhase.AD_BREAK) {
-                    game.moveTiles = [];
-                    game.attackTiles = [];
-                    document.getElementById('btnAttack').style.display = 'none';
-                    document.getElementById('btnWait').style.display = 'none';
-                    return;
-                }
-                game.selectedUnit.attacksLeft--;
-                if (game.selectedUnit.attacksLeft <= 0) {
-                    finishUnitAction();
-                } else {
-                    // Cain & Abel gets another attack
-                    game.attackTiles = getAttackTiles(game.selectedUnit, game.selectedUnit.gx, game.selectedUnit.gy);
-                    if (game.attackTiles.length === 0) finishUnitAction();
-                }
-                checkVictoryDefeat();
-            }
+            executeAttack(gx, gy);
         } else {
             // Clicking a friendly unit tile shouldn't cancel the attack — ignore it
             const clickedUnit = getUnitAt(gx, gy);
@@ -109,13 +85,47 @@ function handleGridClick(gx, gy) {
     }
 }
 
+function executeAttack(gx, gy) {
+    const target = getUnitAt(gx, gy);
+    if (!target) return;
+    doCombat(game.selectedUnit, target);
+    // Tetris takes over — clean up selection and stop normal flow
+    if (game.phase === GamePhase.TETRIS) {
+        game.selectedUnit = null;
+        game.moveTiles = [];
+        game.attackTiles = [];
+        document.getElementById('btnAttack').style.display = 'none';
+        document.getElementById('btnWait').style.display = 'none';
+        return;
+    }
+    // Ad Break takes over — overlay handles combat + finishUnitAction on skip
+    // selectedUnit intentionally NOT cleared so finishUnitAction can mark it acted
+    if (game.phase === GamePhase.AD_BREAK) {
+        game.moveTiles = [];
+        game.attackTiles = [];
+        document.getElementById('btnAttack').style.display = 'none';
+        document.getElementById('btnWait').style.display = 'none';
+        return;
+    }
+    game.selectedUnit.attacksLeft--;
+    if (game.selectedUnit.attacksLeft <= 0) {
+        finishUnitAction();
+    } else {
+        // Cain & Abel gets another attack
+        game.attackTiles = getAttackTiles(game.selectedUnit, game.selectedUnit.gx, game.selectedUnit.gy);
+        if (game.attackTiles.length === 0) finishUnitAction();
+    }
+    checkVictoryDefeat();
+}
+
 function selectUnit(unit) {
     playSound('select');
     game.selectedUnit = unit;
     game.moveTiles = getMovementTiles(unit);
+    game.attackTiles = getAttackTiles(unit, unit.gx, unit.gy);
     game.phase = GamePhase.UNIT_SELECTED;
     document.getElementById('btnAttack').style.display = 'none';
-    document.getElementById('btnWait').style.display = 'none';
+    document.getElementById('btnWait').style.display = game.attackTiles.length > 0 ? 'inline-block' : 'none';
 }
 
 function moveUnit(unit, gx, gy) {

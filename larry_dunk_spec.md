@@ -125,6 +125,16 @@
 - [x] DIALOGUE.md fully synced to levels.js — verified line-by-line across all 14 levels + Between 12-13 chaos section
 - [x] Level 4 character renamed "Survivalist Larry" in dialogue (type stays financierLarry in code)
 
+#### Cinematic System
+- [x] `Cinema` object in cutscene.js: scene functions return `drawScene(ctx, canvas)` closures attached to individual dialogue lines
+- [x] Cinema scenes: `lab` (tech lab, circuit grid, brain chip), `portal` (multiverse rift), `flashback` (sepia-toned, film grain), `broadcast` (TV static + announcement), `chipInsert` (post-tutorial chip implant sequence), `credits` (gold title + credits text on black)
+- [x] Prologue (level 0): full cinematic with lab + broadcast scenes
+- [x] Post-tutorial brain chip scene: chip insert + Larry reaction + "An army of Larry Dunks"
+- [x] Cain & Abel pre-battle: intro dialogue shows C&A briefing guards before fight, "We only need one horse." in strategic context
+- [x] Mr. Runo rework: `victoryCheck: () => false`; Runo scripted to reach EXIT → `onRunoEscape` fires; robots intercept cutscene → victory. No hard turn-limit defeat.
+- [x] Credits scene: `Cinema.credits()` rendered in final level ending cutscene — "LARRY DUNK / THE THOUSAND HORSES / Made with Claude / Special thanks to Victor Winter"
+- [x] Tetris Early Win: `clearLines()` checks `score >= threshold` immediately on line clear → triggers `gameOver = true`, `winFlashTimer`, `onSuccess()` after 800ms
+
 #### Balance
 - [x] Level 2: 5 guards → 3 guards; C&A is boss
 - [x] Level 3: removed 1 robot (now 2 guards + boss)
@@ -138,32 +148,6 @@
 ---
 
 ## PENDING IMPLEMENTATION
-
-### Cinematic Cutscenes (cutscene.js + ui.js + levels.js)
-- [ ] Add `startCinema(scenes, callback)` system: each scene has a full-screen canvas backdrop (dark gradient, color tint, pixel art characters) instead of showing the game grid. For flashbacks, prologues, and context-heavy moments.
-- [ ] Prologue (level 0) becomes a full cinematic: lab scene with Haras + brain chip diagram, broadcast announcement, etc.
-- [ ] Post-tutorial brain chip scene: visual sequence of chip being inserted into Larry Dunk, Larry's reaction panel, "An army of Larry Dunks" reveal — more explained, more dramatic.
-
-### Cain & Abel Pre-Battle Scene (levels.js level 2)
-- [ ] Before the fight, show C&A talking to their guards *preparing for battle*. "We only need one horse." comes from a strategic pre-fight conversation, not post-capture.
-
-### Mr. Runo Rework (levels.js level 9 in new order)
-- [ ] Runo successfully escapes through the EXIT (player cannot catch him directly). Victory condition: defeat all guards/robots.
-- [ ] On player victory, Runo reaches exit → cutscene: "He escaped!" → Haras deploys robots → robots intercept Runo → Runo is captured by robots.
-- [ ] Removes 10-turn hard defeat if Runo escapes; instead it's the scripted narrative outcome.
-
-### Level Reorder (levels.js + main.js LD_POOL_AT_LEVEL)
-- [x] Move Investment Larry (formerly level 8) and Female Larry (formerly level 9) to AFTER Mr. Runo, before Zeus.
-- [x] New order: 0 Prologue → 1 Tutorial → 2 Cain&Abel → 3 British → 4 Survivalist → 5 Paraplegic → 6 Axe → 7 Cereal → 8 Rival Haras → 9 Runo → 10 Investment → 11 Female → 12 Zeus → 13 Final
-- [x] Update all `loadLevel()` calls, `LD_POOL_AT_LEVEL`, and `checkTurnEvents` level index references.
-- [x] Consequences of Runo capture "felt a little" in levels 10–11 (Investment intro: "Haras has been quieter since the Runo situation").
-
-### Credits Scene (levels.js level 13 + main.js)
-- [ ] After ending cutscene in final level, render a credits screen on canvas:
-  - "LARRY DUNK: THE THOUSAND HORSES"
-  - "Made by Claude"
-  - "Special thank you to Victor Winter"
-  - Scrolling or animated text, dark background with gold palette
 
 ### Music System (music.js — new file)
 - [ ] Create `music.js` with Web Audio API synthesized tracks:
@@ -179,10 +163,6 @@
 - [ ] Level 12 (The Thousand Horses battle): play `music/Song For Wemmbu PLAYFUL MASSACRE (2v1000 ver.).mp3` — NOT synthesized
 - [ ] `playMusic(trackName)` and `stopMusic()` in music.js; called from levels.js and phase transitions
 - [ ] Load order: add music.js before main.js in index.html
-
-### Tetris Early Win (tetris.js)
-- [ ] When score reaches threshold, immediately trigger success — don't wait for board to fill
-- [ ] Show win banner/animation, then call `tetris.onSuccess()` after brief delay
 
 ---
 

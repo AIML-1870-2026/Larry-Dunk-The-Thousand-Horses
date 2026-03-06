@@ -56,15 +56,17 @@ NARRATOR: And so began the hunt across the multiverse.
 
 ### Intro
 
+GUARD: Sir — both of you, sir — what do we do with the horses after?
+ABEL: We only need one horse.
+HARAS: Ah yes, you're conjoined after all, but you won't need any horses soon because you're part of my army now. Maybe I should get some horses.
+CAIN: Exactly one.
+GUARD: ...which one?
+CAIN & ABEL: We haven't decided yet. Prepare yourselves.
 HARAS: The multiverse portal is open. I can sense more Larry Dunks through it. Using my powers. From my brainchip. (Buy my brainchip.)
 HARAS: Guards are protecting the dimensional rift. Fight through them.
-LARRY DUNK: Order recieved
 
 ### On Victory
 
-NARRATOR: Through the portal steps a bizarre sight — a conjoined twin Larry Dunk.
-CAIN & ABEL: We only need one horse.
-HARAS: Ah yes, you're conjoined after all, but you won't need any horses soon because you're part of my army now. Maybe I should get some horses.
 HARAS: Another universe. Another collection. Let's go. I'm so great. Which is why you (yes you) should buy my brain chip
 
 ---
@@ -73,16 +75,11 @@ HARAS: Another universe. Another collection. Let's go. I'm so great. Which is wh
 
 ### Intro
 
-NARRATOR: The British Parliament. A universe of extreme formality.
-BRITISH LARRY DUNK: I say! What is the meaning of this distasteful intrusion?!
 HARAS: Larry Dunk. Come here. You're getting a brain chip
 BRITISH LARRY DUNK: My BRAIN?! How extraordinarily rude. Guards! Deal with this... p-p-p-PEASANT!
 
 ### On Victory
 
-BRITISH LARRY DUNK: ...I am... quite blinded by this spray tan situation. Most undignified.
-HARAS: Chip implanted. Welcome to my collection.
-BRITISH LARRY DUNK: This is most irregular.
 HARAS: Noted. There's a signal from a remote beach. A Larry Dunk variant living off-grid.
 HARAS: Alone. For eleven years. I want to know what he's been eating. Perhaps a thousand horses. Just like the hit video game, Larry Dunk: The Thousand Horses.
 NARRATOR: Somewhere in the multiverse, another Haras is running the same calculation. 
@@ -103,7 +100,7 @@ NARRATOR: The beach chair in the interior pulses with a faint signal. Someone re
 
 NARRATOR: The beach chair shifts. Something emerges from the jungle.
 SURVIVALIST LARRY: ...I wasn't expecting visitors.
-HARAS: Larry Dunk. Eleven years on this island. Alone.
+HARAS: Larry Dunk. Eleven years on this beach. Alone.
 SURVIVALIST LARRY: I was eating extremely well. The local fauna is... quite nutritious.
 HARAS: Give me your brain chip. Now.
 SURVIVALIST LARRY: Certainly not. *consumes something* I have resources you cannot imagine.
@@ -139,7 +136,7 @@ HARAS: Rockets and eye bullets. Fantastic. Surround him.
 ### On Victory
 
 PARAPLEGIC LARRY: ...you've... neutralized my rockets. But the chip... it won't...
-HARAS: Your eye bullets are spectacular, by the way. A range of 3 units, very impressive.
+HARAS: Your eye bullets are spectacular, by the way. Range 3.
 HARAS: Moving on. Next signal: an axe murderer.
 NARRATOR: Rival Haras count: 6 active. All behind you. None of them understand why.
 
@@ -165,30 +162,8 @@ HARAS: Your chain attack ability is indeed useful. I'll keep it.
 HARAS: Next: an investment group. Corporate.
 
 ---
-## LEVEL 7: Ch.3.3 — Q4 Acquisition
 
-### Intro
-
-NARRATOR: The boardroom of Larry Dunk Acquisitions LLC. Fifteenth floor.
-INVESTMENT LARRY: I've been expecting a hostile takeover. I did not expect... this.
-HARAS: I want your brain. Literally.
-INVESTMENT LARRY: My legal team will— actually, before we proceed: are you familiar with our Ad Break restructuring package?
-HARAS: I have no interest in your—
-INVESTMENT LARRY: Of course you do. When I attack at full power, I first require everyone present to watch a brief message from our sponsors.
-HARAS: Fight through corporate security. Get me that brain.
-
-### On Victory
-
-INVESTMENT LARRY: ...this acquisition is... pending regulatory approval...
-HARAS: Chip installed. Welcome to the portfolio.
-NARRATOR: His Ad Break ability remains active. The chip did not disable the ad.
-CAIN & ABEL: That advertisement was twenty-two seconds. We counted. We had time.
-HARAS: Next signal: a cereal mascot. Reportedly invisible to detection systems.
-NARRATOR: A rival Haras has intercepted the same signal. But he's not as fast as you so it doesn't matter..
-
----
-
-## LEVEL 8: Ch.3.4 — Part of a Complete Breakfast
+## LEVEL 7: Ch.3.3 — Part of a Complete Breakfast
 
 ### Intro
 
@@ -205,34 +180,11 @@ CAIN & ABEL: We also cannot see him. We share the visual processing. This is not
 CEREAL LARRY: Oh! A new friend! Would you like some LARRY DUNK'S CRISPY BITES?
 HARAS: I'm putting a chip in your brain.
 CEREAL LARRY: ...okay! *poses*
-HARAS: His invisibility will be... useful. Next: A shopping mall. Reports conflict on exact location.
+HARAS: His invisibility will be... useful. Next: someone's blocking the portal. Another Haras.
 
 ---
 
-## LEVEL 9: Ch.3.6 — Wrong Turn
-
-### Intro
-
-NARRATOR: A shopping mall. Female Larry Dunk is in the parking structure. Or possibly the food court. Reports conflict.
-FEMALE LARRY: I know EXACTLY where I'm going. This is NOT a wrong turn.
-HARAS: She's about to drive into the fountain.
-FEMALE LARRY: That is a DELIBERATE SHORTCUT. Absolutely intentional. Haras, I presume? I've heard about you.
-HARAS: Chip. Brain. Now.
-FEMALE LARRY: I am going to DRIVE AWAY from this situation. *swerves unpredictably*
-
-### On Victory
-
-FEMALE LARRY: ...that was... a calculated maneuver. I meant to be here.
-HARAS: Chip installed. Your bad driving is now my bad driving.
-FEMALE LARRY: ...yes... master... *parks slightly crooked*
-NARRATOR: The collection is nearly complete. One target remains before the Runo situation.
-HARAS: Mr. Runo. The last one. And the hardest.
-NARRATOR: Haras opens the portal to Runo's universe. Something blocks it.
-HARAS: ...Someone's already here.
-
----
-
-## LEVEL 10: Ch.3.7 — The Other Me
+## LEVEL 8: Ch.3.7 — The Other Me
 
 ### Intro
 
@@ -250,14 +202,14 @@ CAIN & ABEL: There are two of him now. This is concerning. We only need one Hara
 ### On Victory
 
 RIVAL HARAS: ...how? I had the same chips. The same plan. The same face.
-HARAS: I'm simply better. 
+HARAS: I'm simply better.
 NARRATOR: The portal opens. Mr. Runo's universe is accessible.
 CAIN & ABEL: He said "same face." That was accurate. We verified.
 HARAS: Move out.
 
 ---
 
-## LEVEL 11: Ch.4 — Catch Mr. Runo!
+## LEVEL 9: Ch.4 — Catch Mr. Runo!
 
 ### Intro
 
@@ -285,7 +237,8 @@ NARRATOR: Dr. Retina died shortly after. Old age. Peacefully.
 NARRATOR: In this universe, at least.
 NARRATOR: ~~ END FLASHBACK ~~
 CAIN & ABEL: We met Dr. Retina once. He could not decide which of us to address. Neither could we.
-HARAS: He taught me everything. but my father just... left. Deploy the robots.
+HARAS: He taught me everything. My father just... left. But I learned to plan ahead.
+HARAS: Deploy the robots. Send them through the service entrance.
 
 ### Turn Event (if Mr. Runo escapes)
 
@@ -306,7 +259,53 @@ HARAS: I could go back. Stop him from leaving.
 HARAS: ...I'm doing it. With my time machine.
 NARRATOR: The timeline shifts. Mr. Runo never left. Haras was never alone.
 NARRATOR: But something is different now.
-HARAS: It doesn't matter. I'll find Zeus Larry Dunk. He's the next one. But the rival Harases are closing in. I won't lose my edge now.
+HARAS: It doesn't matter. I still have targets. And then — Zeus.
+
+---
+
+## LEVEL 10: Ch.3.4 — Q4 Acquisition
+
+### Intro
+
+NARRATOR: The boardroom of Larry Dunk Acquisitions LLC. Fifteenth floor.
+NARRATOR: Haras has been quieter since the Runo situation. The team does not ask.
+INVESTMENT LARRY: I've been expecting a hostile takeover. I did not expect... this.
+HARAS: I want your brain. Literally.
+INVESTMENT LARRY: My legal team will— actually, before we proceed: are you familiar with our Ad Break restructuring package?
+HARAS: I have no interest in your—
+INVESTMENT LARRY: Of course you do. When I attack at full power, I first require everyone present to watch a brief message from our sponsors.
+HARAS: Fight through corporate security. Get me that brain.
+
+### On Victory
+
+INVESTMENT LARRY: ...this acquisition is... pending regulatory approval...
+HARAS: Chip installed. Welcome to the portfolio.
+NARRATOR: His Ad Break ability remains active. The chip did not disable the ad.
+CAIN & ABEL: That advertisement was twenty-two seconds. We counted. We had time.
+HARAS: Next signal: Female Larry Dunk. Shopping mall. Reports conflict on exact location.
+
+---
+
+## LEVEL 11: Ch.3.6 — Wrong Turn
+
+### Intro
+
+NARRATOR: A shopping mall. Female Larry Dunk is in the parking structure. Or possibly the food court. Reports conflict.
+FEMALE LARRY: I know EXACTLY where I'm going. This is NOT a wrong turn.
+HARAS: She's about to drive into the fountain.
+FEMALE LARRY: That is a DELIBERATE SHORTCUT. Absolutely intentional. Haras, I presume? I've heard about you.
+HARAS: Chip. Brain. Now.
+FEMALE LARRY: I am going to DRIVE AWAY from this situation. *swerves unpredictably*
+
+### On Victory
+
+FEMALE LARRY: ...that was... a calculated maneuver. I meant to be here.
+HARAS: Chip installed. Your bad driving is now my bad driving.
+FEMALE LARRY: ...yes... master... *parks slightly crooked*
+NARRATOR: The collection is complete. Only Zeus remains.
+HARAS: Zeus Larry Dunk. The last one. And the most dangerous.
+NARRATOR: Haras opens the portal to Mount Olympus.
+HARAS: I have a plan.
 
 ---
 

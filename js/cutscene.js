@@ -237,6 +237,52 @@ const Cinema = {
         };
     },
 
+    // End credits screen
+    credits: function() {
+        return function(ctx, canvas) {
+            const W = canvas.width, H = canvas.height;
+            const t = Date.now();
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, W, H);
+
+            const pulse = 0.75 + 0.25 * Math.sin(t / 900);
+
+            // Gold horizontal rules
+            ctx.strokeStyle = `rgba(200,160,30,${0.4 * pulse})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(W*0.15, H*0.28); ctx.lineTo(W*0.85, H*0.28); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(W*0.15, H*0.72); ctx.lineTo(W*0.85, H*0.72); ctx.stroke();
+
+            // Main title
+            ctx.textAlign = 'center';
+            ctx.shadowColor = 'rgba(255,204,51,0.5)';
+            ctx.shadowBlur = 24 * pulse;
+            ctx.fillStyle = `rgba(255,204,51,${pulse})`;
+            ctx.font = 'bold 40px Courier New';
+            ctx.fillText('LARRY DUNK', W / 2, H * 0.42);
+
+            ctx.shadowBlur = 12;
+            ctx.fillStyle = `rgba(210,170,60,${pulse * 0.85})`;
+            ctx.font = '20px Courier New';
+            ctx.fillText('THE THOUSAND HORSES', W / 2, H * 0.52);
+
+            ctx.shadowBlur = 0;
+
+            // Credits
+            ctx.font = '13px Courier New';
+            ctx.fillStyle = `rgba(150,130,70,${0.65 * pulse})`;
+            ctx.fillText('Made with Claude', W / 2, H * 0.62);
+            ctx.fillText('Special thanks to Victor Winter', W / 2, H * 0.69);
+
+            // Vignette
+            const vig = ctx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.72);
+            vig.addColorStop(0, 'rgba(0,0,0,0)');
+            vig.addColorStop(1, 'rgba(0,0,0,0.75)');
+            ctx.fillStyle = vig;
+            ctx.fillRect(0, 0, W, H);
+        };
+    },
+
     // Chapter title card
     chapter: function(title, sub) {
         return function(ctx, canvas) {

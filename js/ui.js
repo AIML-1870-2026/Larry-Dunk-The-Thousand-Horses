@@ -85,7 +85,11 @@ function render() {
     ctx.fillStyle = '#1a1a2e';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    if (game.phase === GamePhase.TITLE || game.phase === GamePhase.ENDING) return;
+    if (game.phase === GamePhase.TITLE) return;
+    if (game.phase === GamePhase.ENDING) {
+        if (game.cinemaDrawScene) game.cinemaDrawScene(ctx, canvas);
+        return;
+    }
 
     // Cinema cutscene: draw scene background instead of game grid
     if (game.phase === GamePhase.CUTSCENE && game.cinemaDrawScene) {
