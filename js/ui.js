@@ -325,6 +325,28 @@ function render() {
     if (game.phase === GamePhase.CUTSCENE) {
         ctx.fillStyle = 'rgba(0,0,0,0.6)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Tutorial highlights — drawn after dim so they pop on the dark canvas
+        if (game.tutorialHighlight) {
+            const h = game.tutorialHighlight;
+            const pulse = 0.5 + 0.5 * Math.sin(Date.now() / 300);
+            ctx.strokeStyle = `rgba(255,255,80,${0.7 + 0.3 * pulse})`;
+            ctx.lineWidth = 3;
+            const drawHighlightTile = (px, py) => {
+                ctx.fillStyle = `rgba(255,255,80,${0.15 + 0.1 * pulse})`;
+                ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+                ctx.strokeRect(px + 1.5, py + 1.5, TILE_SIZE - 3, TILE_SIZE - 3);
+            };
+            if (h.type === 'units') {
+                game.units.filter(u => u.alive &&
+                    (h.team ? u.team === h.team : true) &&
+                    (h.unitType ? u.type === h.unitType : true)
+                ).forEach(u => drawHighlightTile(u.gx * TILE_SIZE + GRID_OFFSET_X, u.gy * TILE_SIZE + GRID_OFFSET_Y));
+            } else if (h.type === 'tiles') {
+                h.tiles.forEach(({gx, gy}) => drawHighlightTile(gx * TILE_SIZE + GRID_OFFSET_X, gy * TILE_SIZE + GRID_OFFSET_Y));
+            }
+            ctx.lineWidth = 1;
+        }
     }
 
     // Tetris overlay (delegated to tetris.js)

@@ -12,6 +12,7 @@ function checkVictoryDefeat() {
     if (haras && !haras.alive) {
         game.phase = GamePhase.DEFEAT;
         playSound('defeat');
+        playMusic('defeat');
         setTimeout(() => { document.getElementById('defeatScreen').style.display = 'flex'; }, 1000);
         return;
     }
@@ -20,6 +21,7 @@ function checkVictoryDefeat() {
     if (playerAlive.length === 0) {
         game.phase = GamePhase.DEFEAT;
         playSound('defeat');
+        playMusic('defeat');
         setTimeout(() => { document.getElementById('defeatScreen').style.display = 'flex'; }, 1000);
         return;
     }
@@ -29,6 +31,7 @@ function checkVictoryDefeat() {
         if (level.victoryCheck()) {
             game.phase = GamePhase.VICTORY;
             playSound('victory');
+            playMusic('victory');
             document.getElementById('victoryText').textContent = level.victoryText || 'Level Complete!';
             setTimeout(() => {
                 document.getElementById('victoryScreen').style.display = 'flex';
@@ -39,6 +42,7 @@ function checkVictoryDefeat() {
         if (enemyAlive.length === 0) {
             game.phase = GamePhase.VICTORY;
             playSound('victory');
+            playMusic('victory');
             setTimeout(() => { document.getElementById('victoryScreen').style.display = 'flex'; }, 1000);
         }
     }
@@ -61,6 +65,7 @@ function fillGrid(w, h, terrain) {
 
 function startLevel(intro) {
     startCutscene(intro, () => {
+        if (game.currentLevel !== 12) playMusic('playerPhase');
         game.phase = GamePhase.PLAYER_TURN;
         showBanner('Player Phase', 1200);
     });
@@ -114,15 +119,23 @@ const LEVELS = [
             ];
 
             const intro = [
-                { speaker: 'HARAS',    text: 'Three citizens dared to refuse the brain chip. I will make an example. ATTACK THEM.', color: '#88f' },
-                { speaker: 'HARAS',    text: 'Click one of your units to select it. Blue tiles show where it can move.', color: '#88f' },
-                { speaker: 'HARAS',    text: 'Walls are impassable. Forest tiles slow movement but grant a defense bonus — use them wisely.', color: '#88f' },
-                { speaker: 'HARAS',    text: 'After moving, red tiles mark targets in attack range. Click one to strike.', color: '#88f' },
+                { speaker: 'HARAS',    text: 'Three citizens dared to refuse the brain chip. I will make an example. ATTACK THEM.', color: '#88f',
+                  highlight: { type: 'units', team: 'enemy' } },
+                { speaker: 'HARAS',    text: 'Click one of your units to select it. Blue tiles show where it can move.', color: '#88f',
+                  highlight: { type: 'units', team: 'player' } },
+                { speaker: 'HARAS',    text: 'Walls are impassable. Forest tiles slow movement but grant a defense bonus — use them wisely.', color: '#88f',
+                  highlight: { type: 'tiles', tiles: [{gx:3,gy:1},{gx:3,gy:5},{gx:4,gy:3}] } },
+                { speaker: 'HARAS',    text: 'After moving, red tiles mark targets in attack range. Click one to strike.', color: '#88f',
+                  highlight: { type: 'units', team: 'enemy' } },
                 { speaker: 'HARAS',    text: 'If you prefer not to attack, press Wait. The turn ends automatically when all your units have acted.', color: '#88f' },
-                { speaker: 'CIVILIAN', text: 'We\'ll die before we comply!', color: '#ccc' },
-                { speaker: 'HARAS',    text: 'Enemies can counterattack if you\'re within their range. Hover any unit to inspect its stats: HP, ATK, DEF, MOV, RNG.', color: '#88f' },
-                { speaker: 'MINION',   text: 'And you, sir? Are you joining us?', color: '#cc0' },
-                { speaker: 'HARAS',    text: 'I\'m always in the fight because I am the ultimate SIGMA MALE. But if I fall — the mission ends. Keep me alive.', color: '#f44' }
+                { speaker: 'CIVILIAN', text: 'We\'ll die before we comply!', color: '#ccc',
+                  highlight: { type: 'units', team: 'enemy' } },
+                { speaker: 'HARAS',    text: 'Enemies can counterattack if you\'re within their range. Hover any unit to inspect its stats: HP, ATK, DEF, MOV, RNG.', color: '#88f',
+                  highlight: { type: 'units', team: 'enemy' } },
+                { speaker: 'MINION',   text: 'And you, sir? Are you joining us?', color: '#cc0',
+                  highlight: { type: 'units', unitType: 'minion' } },
+                { speaker: 'HARAS',    text: 'I\'m always in the fight because I am the ultimate SIGMA MALE. But if I fall — the mission ends. Keep me alive.', color: '#f44',
+                  highlight: { type: 'units', unitType: 'haras' } }
             ];
             startLevel(intro);
         },
@@ -1139,6 +1152,8 @@ function loadLevel(index) {
     document.getElementById('larryDunkSelector').style.display = 'none';
     if (game._adCountdownTimer) { clearInterval(game._adCountdownTimer); game._adCountdownTimer = null; }
     game.pendingAdBreak = null;
+
+    playMusic(index === 12 ? 'level12' : 'cutscene');
 
     const level = LEVELS[index];
     document.getElementById('levelName').textContent = level.name;

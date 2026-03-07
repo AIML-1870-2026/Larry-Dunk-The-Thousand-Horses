@@ -46,11 +46,15 @@ canvas.addEventListener('mousemove', (e) => {
 });
 
 function handleGridClick(gx, gy) {
-    if (game.phase === GamePhase.PLAYER_TURN) {
+    // During tutorial dialogue, allow player interaction on the grid
+    const phase = (game.phase === GamePhase.CUTSCENE && game.tutorialHighlight)
+        ? GamePhase.PLAYER_TURN : game.phase;
+
+    if (phase === GamePhase.PLAYER_TURN) {
         const unit = getUnitAt(gx, gy);
         if (unit && unit.team === 'player' && !unit.acted) selectUnit(unit);
 
-    } else if (game.phase === GamePhase.UNIT_SELECTED) {
+    } else if (phase === GamePhase.UNIT_SELECTED) {
         const clickedMove = game.moveTiles.find(t => t.x === gx && t.y === gy);
         const clickedAtk = game.attackTiles.find(t => t.x === gx && t.y === gy);
         if (clickedMove) {
@@ -71,7 +75,7 @@ function handleGridClick(gx, gy) {
             if (unit && unit.team === 'player' && !unit.acted) selectUnit(unit);
         }
 
-    } else if (game.phase === GamePhase.ATTACK_SELECT) {
+    } else if (phase === GamePhase.ATTACK_SELECT) {
         const clickedAtk = game.attackTiles.find(t => t.x === gx && t.y === gy);
         if (clickedAtk) {
             executeAttack(gx, gy);
@@ -227,6 +231,7 @@ function endPlayerTurn() {
     if (game.phase === GamePhase.TETRIS) return;
     deselectUnit();
     game.phase = GamePhase.ENEMY_TURN;
+    if (game.currentLevel !== 12) playMusic('enemyPhase');
     playSound('enemy_phase');
     showBanner('Enemy Phase', 1200);
     updateTopBar();

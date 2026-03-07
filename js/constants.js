@@ -52,7 +52,8 @@ let game = {
     selectedLarryDunks: [],   // per-battle: types chosen in pre-level selector
     _ldSelectorCallback: null,
     _ldSelectorMaxSlots: 0,
-    pendingMoveTile: null     // tile clicked but not yet confirmed {tx, ty}
+    pendingMoveTile: null,    // tile clicked but not yet confirmed {tx, ty}
+    tutorialHighlight: null   // { type:'units', team, unitType } or { type:'tiles', tiles:[{gx,gy}] }
 };
 
 const Terrain = {

@@ -59,6 +59,7 @@ function getTetrisThreshold(unit) {
 
 // ---- ENTRY POINT ----
 function startTetrisCapture(unit, options = {}) {
+    if (game.currentLevel !== 12) playMusic('tetris');
     tetris.active = true;
     tetris.unit = unit;
     tetris.rigged = options.rigged || false;
@@ -311,6 +312,7 @@ function stopTetrisDrop() {
 function endTetris() {
     tetris.active = false;
     stopTetrisDrop();
+    if (game.currentLevel !== 12) playMusic('playerPhase');
     document.getElementById('btnEndTurn').style.display = 'inline-block';
 }
 

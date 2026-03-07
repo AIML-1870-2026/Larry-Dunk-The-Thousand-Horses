@@ -151,25 +151,27 @@
 
 ### Bug Fixes & Improvements (priority order)
 - [x] Map does not load when progressing from level to level on GitHub Pages — root cause: `loadLevel` reset `game.grid=[]` but not `game.gridW/gridH`; render loop crashed during LD selector gap. Fix: also reset `game.gridW=0; game.gridH=0` in `loadLevel`. First fails at island (L4) and L5 because those are the first levels with ldSlots encountered in normal play.
-- [ ] Cain & Abel can attack more than twice (infinite) and at range greater than 1 — bug in attacksLeft reset/decrement logic or range handling
-- [ ] British Larry Dunk should NOT have Spray Tan ability — remove it; give him a different or no special
-- [ ] Survivalist Larry shown as "Financier Larry" in LD selector screen — fix display name in showLarryDunkSelector
-- [ ] Better tutorial: highlight the relevant unit/tile on canvas while each tutorial dialogue line plays, rather than dialogue-only instruction
+- [x] Cain & Abel can attack more than twice (infinite) and at range greater than 1 — fixed: removed attacksLeft reset in UNIT_SELECTED clickedAtk branch; added phase=ATTACK_SELECT after first attack; reset attacksLeft in endEnemyTurn; spray tan now only applies if range>1 so range can't be incorrectly incremented on reset
+- [x] British Larry Dunk should NOT have Spray Tan ability — removed from combat.js trigger and units.js; replaced with passive "Parliamentary Order" flavor special
+- [x] Survivalist Larry shown as "Financier Larry" in LD selector screen — changed unit name to 'Survivalist Larry Dunk' in units.js
+- [x] Better tutorial: each dialogue line now carries a `highlight` property; render() draws a pulsing yellow box after the cutscene dim over matching units/tiles; cutscene.js reads it in showDialogueLine and clears on endCutscene; game.tutorialHighlight added to constants.js
+- [x] Tutorial: allow player to move units while tutorial dialogue is open — `handleGridClick` computes `effectivePhase`: if `CUTSCENE && tutorialHighlight`, treats clicks as `PLAYER_TURN`
+- [x] backDialogue (Back button) does not update game.tutorialHighlight — added `game.tutorialHighlight = line.highlight || null` in `backDialogue` alongside cinemaDrawScene update
 
 ### Music System (music.js — new file)
-- [ ] Create `music.js` with Web Audio API synthesized tracks:
-  - `title`: ambient, eerie, slow arpeggios
-  - `playerPhase`: tactical, medium energy
-  - `enemyPhase`: tense, minor key
-  - `cutscene`: cinematic, dramatic
-  - `tetris`: frantic, upbeat
-  - `victory`: triumphant fanfare
-  - `defeat`: somber
-  - `ending`: bittersweet, slow
-  - `credits`: gentle, reflective
-- [ ] Level 12 (The Thousand Horses battle): play `music/Song For Wemmbu PLAYFUL MASSACRE (2v1000 ver.).mp3` — NOT synthesized
-- [ ] `playMusic(trackName)` and `stopMusic()` in music.js; called from levels.js and phase transitions
-- [ ] Load order: add music.js before main.js in index.html
+- [x] `music.js` created — pure mp3-backed system, no synthesis. `playMusic(trackName)` / `stopMusic()`. MUSIC_FILES map routes all tracks to provided mp3s.
+- [x] Track assignments:
+  - `title`, `cutscene`, `victory` → `HoliznaCC0 - Deus Ex Machina.mp3`
+  - `playerPhase`, `tetris` → `Koi-discovery - Plasma-corrélation.mp3`
+  - `enemyPhase`, `defeat` → `Koi-discovery - Rouge-haine-les-9-âmes.mp3`
+  - `ending`, `credits` → `oji - idée. (en mi bémol majeur).mp3`
+  - `level12` → `Song For Wemmbu PLAYFUL MASSACRE (2v1000 ver.).mp3` (exclusive to level 12)
+- [x] Level 12 mp3 plays through entire battle (cutscene, player turns, enemy turns, Tetris) — all phase-transition music calls guarded with `game.currentLevel !== 12`
+- [x] `playMusic`/`stopMusic` wired in: main.js (title click), levels.js (loadLevel, startLevel callback, checkVictoryDefeat), input.js (endPlayerTurn), ai.js (endEnemyTurn), tetris.js (startTetrisCapture, endTetris)
+- [x] music.js added before main.js in index.html load order
+
+### Balance
+- [x] Horse buff: horse HP 20→30, ATK 6→12, DEF 3→5, MOV 6→7; loyalHorse HP 25→38, ATK 8→15, DEF 5→7, MOV 7→8
 
 ---
 

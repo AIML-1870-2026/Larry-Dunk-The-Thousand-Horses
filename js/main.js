@@ -25,6 +25,7 @@ const LD_POOL_AT_LEVEL = [
 
 // ---- TITLE SCREEN ----
 document.getElementById('titleScreen').addEventListener('click', () => {
+    playMusic('title');
     document.getElementById('titleScreen').style.display = 'none';
     showLevelSelect();
 });
@@ -93,6 +94,10 @@ document.addEventListener('keydown', (e) => {
     }
     if (e.key === ' ' || e.key === 'Enter') {
         if (game.phase === GamePhase.CUTSCENE) advanceDialogue();
+    }
+    if (e.key === 'v' || e.key === 'V') {
+        const on = toggleVoice();
+        showBanner(on ? 'Voice Acting: ON' : 'Voice Acting: OFF', 1200);
     }
 });
 

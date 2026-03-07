@@ -21,8 +21,10 @@ js/
   cutscene.js       — startCutscene(), advanceDialogue(), endCutscene()
   levels.js         — LEVELS array, loadLevel(), checkVictoryDefeat(), checkTurnEvents()
   tetris.js         — Tetris capture minigame overlay
+  music.js          — playMusic(trackName), stopMusic(); mp3-backed track map
   main.js           — gameLoop(), title/victory/defeat handlers, keyboard shortcuts
 sfx/                — sound files (Web Audio API synthesis)
+music/              — background mp3 files
 DIALOGUE.md         — all dialogue text (authoritative source — sync to levels.js on request)
 ```
 
@@ -123,8 +125,8 @@ Terrain HP effects per turn (applied in `endEnemyTurn`): LAVA −2, FOREST +1, T
 | guard | Guard | 18 | 6 | 4 | 3 | 1 |
 | robot | Robot | 22 | 7 | 6 | 3 | 1 |
 | enemyHaras | Rival Haras | 28 | 9 | 5 | 4 | 2 |
-| horse | Horse | 20 | 6 | 3 | 6 | 1 |
-| loyalHorse | Loyal Horse | 25 | 8 | 5 | 7 | 1 |
+| horse | Horse | 30 | 12 | 5 | 7 | 1 |
+| loyalHorse | Loyal Horse | 38 | 15 | 7 | 8 | 1 |
 | dummy | Dummy | 10 | 2 | 1 | 0 | 1 |
 
 ### Larry Dunk Variants (`isLarryDunk: true` on all)
@@ -298,6 +300,22 @@ Key visual identifiers:
 
 `playSound(name)` — 13 synthesized sounds via Web Audio API, no external files:
 `select`, `move`, `hit`, `death`, `tetris_place`, `tetris_clear`, `tetris_success`, `tetris_fail`, `player_phase`, `enemy_phase`, `ad_jingle`, `victory`, `defeat`
+
+---
+
+## Music System
+
+`playMusic(trackName)` / `stopMusic()` in `music.js`. All tracks backed by mp3 files in `music/`. No Web Audio synthesis — pure `new Audio(file)` with `loop = true`.
+
+| Track | File |
+|-------|------|
+| `title`, `cutscene`, `victory` | `HoliznaCC0 - Deus Ex Machina.mp3` |
+| `playerPhase`, `tetris` | `Koi-discovery - Plasma-corrélation.mp3` |
+| `enemyPhase`, `defeat` | `Koi-discovery - Rouge-haine-les-9-âmes.mp3` |
+| `ending`, `credits` | `oji - idée. (en mi bémol majeur).mp3` |
+| `level12` | `Song For Wemmbu PLAYFUL MASSACRE (2v1000 ver.).mp3` |
+
+Level 12 music plays uninterrupted throughout the entire level (cutscene, player/enemy turns, Zeus Tetris). All phase-transition `playMusic` calls are guarded with `game.currentLevel !== 12`.
 
 ---
 

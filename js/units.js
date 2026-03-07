@@ -88,11 +88,11 @@ function createUnit(type, gx, gy, team) {
         },
         // ---- Other units ----
         horse: {
-            name: 'Horse', hp: 20, atk: 6, def: 3, mov: 6, range: 1,
+            name: 'Horse', hp: 30, atk: 12, def: 5, mov: 7, range: 1,
             spriteKey: 'horse', special: 'Cavalry'
         },
         loyalHorse: {
-            name: 'Loyal Horse', hp: 25, atk: 8, def: 5, mov: 7, range: 1,
+            name: 'Loyal Horse', hp: 38, atk: 15, def: 7, mov: 8, range: 1,
             spriteKey: 'loyalHorse', special: 'The One Horse'
         },
         guard: {

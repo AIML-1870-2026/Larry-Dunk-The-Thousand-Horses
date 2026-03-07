@@ -149,6 +149,7 @@ function endEnemyTurn() {
         }
     });
     game.phase = GamePhase.PLAYER_TURN;
+    if (game.currentLevel !== 12) playMusic('playerPhase');
     playSound('player_phase');
     showBanner('Player Phase', 1200);
     updateTopBar();

@@ -317,6 +317,7 @@ function showDialogueLine() {
     const line = game.cutsceneQueue[game.cutsceneIndex];
     // Cinema: update the background draw function for this line (null = show game grid)
     game.cinemaDrawScene = line.drawScene || null;
+    game.tutorialHighlight = line.highlight || null;
     document.getElementById('dlgSpeaker').textContent = line.speaker || '';
     document.getElementById('dlgSpeaker').style.color = line.color || '#ffcc44';
 
@@ -328,6 +329,8 @@ function showDialogueLine() {
     if (game._typewriterInterval) clearInterval(game._typewriterInterval);
     game._typewriterDone = false;
     game._typewriterFull = fullText;
+
+    speakLine(line.speaker, fullText);
 
     game._typewriterInterval = setInterval(() => {
         charIdx++;
@@ -343,6 +346,7 @@ function advanceDialogue() {
     if (!game._typewriterDone) {
         // Skip to end of current line
         clearInterval(game._typewriterInterval);
+        stopVoice();
         document.getElementById('dlgText').textContent = game._typewriterFull;
         game._typewriterDone = true;
         return;
@@ -359,10 +363,12 @@ function backDialogue(e) {
     if (e) e.stopPropagation();
     if (game.cutsceneIndex <= 0) return;
     if (game._typewriterInterval) clearInterval(game._typewriterInterval);
+    stopVoice();
     game.cutsceneIndex--;
     // Show previous line immediately — no typewriter re-run on back
     const line = game.cutsceneQueue[game.cutsceneIndex];
     game.cinemaDrawScene = line.drawScene || null;
+    game.tutorialHighlight = line.highlight || null;
     document.getElementById('dlgSpeaker').textContent = line.speaker || '';
     document.getElementById('dlgSpeaker').style.color = line.color || '#ffcc44';
     document.getElementById('dlgText').textContent = line.text;
@@ -373,11 +379,13 @@ function backDialogue(e) {
 function skipAllDialogue(e) {
     if (e) e.stopPropagation();
     if (game._typewriterInterval) clearInterval(game._typewriterInterval);
+    stopVoice();
     endCutscene();
 }
 
 function endCutscene() {
     game.cinemaDrawScene = null;
+    game.tutorialHighlight = null;
     document.getElementById('dialogueBox').style.display = 'none';
     document.getElementById('actionPanel').style.display = 'flex';
     if (game.cutsceneCallback) game.cutsceneCallback();
