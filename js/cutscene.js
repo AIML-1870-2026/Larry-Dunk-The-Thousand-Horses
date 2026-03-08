@@ -225,7 +225,6 @@ const Cinema = {
     dark: function(tint) {
         return function(ctx, canvas) {
             const W = canvas.width, H = canvas.height;
-            const t = Date.now();
             const r = tint ? tint[0] : 10, g = tint ? tint[1] : 8, b = tint ? tint[2] : 18;
             ctx.fillStyle = `rgb(${r},${g},${b})`;
             ctx.fillRect(0, 0, W, H);
@@ -272,7 +271,16 @@ const Cinema = {
             ctx.font = '13px Courier New';
             ctx.fillStyle = `rgba(150,130,70,${0.65 * pulse})`;
             ctx.fillText('Made with Claude', W / 2, H * 0.62);
-            ctx.fillText('Special thanks to Victor Winter', W / 2, H * 0.69);
+            ctx.fillText('Special thanks to Victor Winter', W / 2, H * 0.685);
+
+            // Music credits
+            ctx.font = '10px Courier New';
+            ctx.fillStyle = `rgba(110,95,55,${0.5 * pulse})`;
+            ctx.fillText('Music:', W / 2, H * 0.755);
+            ctx.fillText('HoliznaCC0 — Deus Ex Machina (CC0)', W / 2, H * 0.79);
+            ctx.fillText('Koi-discovery — Plasma-corrélation / Rouge-haine-les-9-âmes (CC BY)', W / 2, H * 0.82);
+            ctx.fillText('oji — idée. (en mi bémol majeur) (CC BY)', W / 2, H * 0.85);
+            ctx.fillText('Song For Wemmbu — PLAYFUL MASSACRE (2v1000 ver.)', W / 2, H * 0.88);
 
             // Vignette
             const vig = ctx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.72);

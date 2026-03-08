@@ -37,8 +37,8 @@ function showTerrainInfo(terrain) {
     document.getElementById('uiMOV').textContent = '';
     const specialEl = document.getElementById('uiSpecial');
     specialEl.style.color = '#aaa';
-    if (terrain === Terrain.THRONE)       specialEl.textContent = '★ Heals 5 HP/turn';
-    else if (terrain === Terrain.LAVA)    specialEl.textContent = '★ -1 HP/turn';
+    if (terrain === Terrain.THRONE)       specialEl.textContent = '★ Heals 2 HP/turn';
+    else if (terrain === Terrain.LAVA)    specialEl.textContent = '★ -2 HP/turn';
     else if (terrain === Terrain.PORTAL)  specialEl.textContent = '★ Dimensional rift';
     else if (terrain === Terrain.EXIT)    specialEl.textContent = '★ Escape point';
     else specialEl.textContent = '';

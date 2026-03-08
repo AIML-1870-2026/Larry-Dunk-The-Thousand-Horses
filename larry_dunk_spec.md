@@ -7,7 +7,7 @@
 
 **Level sequence:** 0 Prologue → 1 Tutorial → 2 Cain&Abel → 3 British Larry → 4 Survivalist Larry → 5 Paraplegic Larry → 6 Axe Murderer → 7 Cereal Mascot → 8 Investment Group → 9 Female Larry → 10 Rival Haras → 11 Mr. Runo → 12 Zeus → 13 Final
 
-**File load order:** constants → sprites → units → grid → combat → ai → ui → input → cutscene → levels → tetris → main
+**File load order:** constants → sprites → units → grid → combat → ai → ui → input → cutscene → levels → tetris → music → voice → main
 
 **Canvas:** 960×640, TILE_SIZE=48, GRID_OFFSET_X=16, GRID_OFFSET_Y=40
 
@@ -101,16 +101,24 @@
 - [x] Ability banners: SPRAY TAN!, CANNIBALISM!, CHAIN KILL!, TOO CLOSE! (paraplegic blocked), SURVIVED! (counterattack clamped)
 - [x] Counterattacks cannot kill the attacker — floor at 1 HP; SURVIVED! banner fires if clamp triggers
 - [x] Attack-select bug fixed: clicking a friendly unit tile in ATTACK_SELECT no longer cancels the attack
+- [x] Attack-from-position: in UNIT_SELECTED state, clicking an attack tile (without first clicking a move tile) now directly calls `executeAttack` — unit attacks from current position
+- [x] ENDING phase now renders `game.cinemaDrawScene` if set (allows credits Cinema to persist after endCutscene)
+- [x] Terrain UI: THRONE shows "★ Heals 2 HP/turn" (was 5); LAVA shows "★ -2 HP/turn" (was -1)
 
 #### SFX
 - [x] 13 synthesized sounds via Web Audio API (sfx.js): select, move, hit, death, tetris_place, tetris_clear, tetris_success, tetris_fail, player_phase, enemy_phase, ad_jingle, victory, defeat
+
+#### Voice Acting (voice.js)
+- [x] `voice.js` — Web Speech API TTS. `speakLine(speaker, text)`, `stopVoice()`, `toggleVoice()`.
+- [x] Character voice profiles: Haras (pitch 0.55, rate 0.78 — dramatic baritone), Narrator (1.0/0.82), Larry Dunk (1.3/1.08 — pompous), Mr. Runo (0.7/0.88), Dr. Retina (1.15/1.3), Cain & Abel (1.35/1.12), Zeus (0.85/0.68), Loyal Horse (0.45/0.55). Any unknown Larry variant falls back to Larry Dunk profile.
+- [x] Integrated into cutscene.js: `speakLine` fires on `showDialogueLine`; `stopVoice` fires on advance, back, skip, end.
 
 #### Levels
 - [x] 0 Prologue: villain monologue, brain chip reveal
 - [x] 1 Tutorial: 9×7 map, Haras + minion vs 3 civilians; 9-line tutorial dialogue covering all mechanics
 - [x] 2 Cain & Abel: multiverse portal, C&A as Tetris boss
 - [x] 3 British Larry: parliament chamber 14×10, guards + robot, Spray Tan boss
-- [x] 4 Survivalist Larry (unit: financierLarry): island 12×9, WATER border, THRONE secret at (7,4), spawns on Wait trigger
+- [x] 4 Survivalist Larry (unit: financierLarry): beach 12×9, name "Ch.2.5: The Beach", objective references beach house; WATER border, THRONE (beach chair) secret at (7,4), spawns on Wait trigger
 - [x] 5 Paraplegic Larry: rooftop 12×8, CLOUD corners, WALL border; eye bullets boss (range 3, can't attack when adjacent enemy)
 - [x] 6 Axe Murderer: slaughterhouse 12×8, FOREST crates, Chain Kill boss
 - [x] 7 Cereal Mascot: TV studio 12×9, TEMPLE floor, Invisible boss
@@ -122,8 +130,8 @@
 - [x] 13 Final: chaos, horses betray, loyal horse escape ending
 
 #### Dialogue
-- [x] DIALOGUE.md fully synced to levels.js — verified line-by-line across all 14 levels + Between 12-13 chaos section
-- [x] Level 4 character renamed "Survivalist Larry" in dialogue (type stays financierLarry in code)
+- [x] DIALOGUE.md fully synced to levels.js — verified line-by-line across all 14 levels + Between 12-13 chaos section. Dialogue trimmed and revised for comedic tone (middle manager framing, beach rename throughout L4, various line cuts across L2/L3/L5/L6/L10/L13).
+- [x] Level 4 character named "Survivalist Larry" in dialogue (type stays financierLarry in code)
 
 #### Cinematic System
 - [x] `Cinema` object in cutscene.js: scene functions return `drawScene(ctx, canvas)` closures attached to individual dialogue lines
@@ -132,11 +140,11 @@
 - [x] Post-tutorial brain chip scene: chip insert + Larry reaction + "An army of Larry Dunks"
 - [x] Cain & Abel pre-battle: intro dialogue shows C&A briefing guards before fight, "We only need one horse." in strategic context
 - [x] Mr. Runo rework: `victoryCheck: () => false`; Runo scripted to reach EXIT → `onRunoEscape` fires; robots intercept cutscene → victory. No hard turn-limit defeat.
-- [x] Credits scene: `Cinema.credits()` rendered in final level ending cutscene — "LARRY DUNK / THE THOUSAND HORSES / Made with Claude / Special thanks to Victor Winter"
+- [x] Credits scene: `Cinema.credits()` — animated black screen with pulsing gold title "LARRY DUNK / THE THOUSAND HORSES", credits text ("Made with Claude / Special thanks to Victor Winter"), gold rule lines, vignette. Rendered in final level ending cutscene AND held on screen after cutscene ends via `game.cinemaDrawScene = _cred`.
 - [x] Tetris Early Win: `clearLines()` checks `score >= threshold` immediately on line clear → triggers `gameOver = true`, `winFlashTimer`, `onSuccess()` after 800ms
 
 #### Balance
-- [x] Level 2: 5 guards → 3 guards; C&A is boss
+- [x] Level 2: 1 guard total; C&A boss with HP/maxHp explicitly set to 25
 - [x] Level 3: removed 1 robot (now 2 guards + boss)
 - [x] Level 7: 4 guards → 3 guards
 - [x] Level 8: 3 guards + 2 robots → 2 guards + 1 robot (pre two-floor redesign); now redesigned with 1 lower guard + 2 upper enemies
@@ -150,9 +158,9 @@
 ## PENDING IMPLEMENTATION
 
 ### Bug Fixes & Improvements (priority order)
-- [x] Map does not load when progressing from level to level on GitHub Pages — root cause: `loadLevel` reset `game.grid=[]` but not `game.gridW/gridH`; render loop crashed during LD selector gap. Fix: also reset `game.gridW=0; game.gridH=0` in `loadLevel`. First fails at island (L4) and L5 because those are the first levels with ldSlots encountered in normal play.
-- [x] Cain & Abel can attack more than twice (infinite) and at range greater than 1 — fixed: removed attacksLeft reset in UNIT_SELECTED clickedAtk branch; added phase=ATTACK_SELECT after first attack; reset attacksLeft in endEnemyTurn; spray tan now only applies if range>1 so range can't be incorrectly incremented on reset
-- [x] British Larry Dunk should NOT have Spray Tan ability — removed from combat.js trigger and units.js; replaced with passive "Parliamentary Order" flavor special
+- [x] `loadLevel` resets: `game.grid=[]`, `game.gridW=0`, `game.gridH=0`, `game.hoveredUnit=null`, `game.pendingMoveTile=null`, hides `#moveConfirm`. Prevents render crash during LD selector gap.
+- [x] Cain & Abel attack limit: `attacksLeft` resets to 2 in `endEnemyTurn` for cainAbel; all others reset to 1. Spray Tan only fires if target range > 1.
+- [x] British Larry Dunk has no Spray Tan — only `larryDunk` type triggers it in combat.js. britishLarry has passive "Parliamentary Order" flavor only.
 - [x] Survivalist Larry shown as "Financier Larry" in LD selector screen — changed unit name to 'Survivalist Larry Dunk' in units.js
 - [x] Better tutorial: each dialogue line now carries a `highlight` property; render() draws a pulsing yellow box after the cutscene dim over matching units/tiles; cutscene.js reads it in showDialogueLine and clears on endCutscene; game.tutorialHighlight added to constants.js
 - [x] Tutorial: allow player to move units while tutorial dialogue is open — `handleGridClick` computes `effectivePhase`: if `CUTSCENE && tutorialHighlight`, treats clicks as `PLAYER_TURN`
@@ -271,10 +279,24 @@ Speed: 800ms drop interval → 150ms min, -50ms per 50 pts scored.
 
 ## Technical Architecture
 
-- Multi-file JS (no modules). Load order: constants → sprites → units → grid → combat → ai → ui → input → cutscene → levels → tetris → main
+- Multi-file JS (no modules). Load order: constants → sprites → units → grid → combat → ai → ui → input → cutscene → levels → tetris → music → voice → main
 - Canvas rendering at 960×640 internal resolution, scaled to full browser window
 - Sprite keys: `haras`, `minion`, `civilian`, `larryDunk`, `cainAbel`, `mrRuno`, `zeusLarry`, `britishLarry`, `financierLarry`, `paraplegicLarry`, `axeLarry`, `cerealLarry`, `investmentLarry`, `femaleLarry`, `horse`, `loyalHorse`, `enemyHaras`, `guard`, `robot`, `dummy`
 - `createUnit(type, gx, gy, team)` — all templates in units.js with `isLarryDunk: true` on LD variants
 - Tetris triggered synchronously in `_resolveCombat()` when LD hits 0 HP (no setTimeout — avoids render race condition)
 - Zeus uses `team: 'neutral'`; `getAttackTiles()` excludes neutral team
 - DIALOGUE.md is authoritative for all dialogue text. Sync to levels.js by running "apply dialogue".
+
+---
+
+## Music Credits
+
+All tracks used under Creative Commons licenses.
+
+| File | Artist | Track | License | Used For |
+|------|--------|-------|---------|----------|
+| `HoliznaCC0 - Deus Ex Machina.mp3` | HoliznaCC0 | Deus Ex Machina | CC0 | Title, cutscenes, victory |
+| `Koi-discovery - Plasma-corrélation.mp3` | Koi-discovery | Plasma-corrélation | CC BY | Player phase, Tetris |
+| `Koi-discovery - Rouge-haine-les-9-âmes.mp3` | Koi-discovery | Rouge-haine-les-9-âmes | CC BY | Enemy phase, defeat |
+| `oji - idée. (en mi bémol majeur).mp3` | oji | idée. (en mi bémol majeur) | CC BY | Ending, credits |
+| `Song For Wemmbu PLAYFUL MASSACRE (2v1000 ver.).mp3` | (unknown) | Song For Wemmbu — PLAYFUL MASSACRE (2v1000 ver.) | — | Level 12 exclusive (entire battle) |

@@ -118,13 +118,13 @@ function startTetrisCapture(unit, options = {}) {
                 { speaker: 'HARAS', text: 'The horses. Use the horses. NOW.', color: '#f44' },
                 { speaker: 'NARRATOR', text: 'Three more rival Harases emerge from separate portals. All guided by the same coordinates. All wanting the same thing.', color: '#f44' },
                 { speaker: 'RIVAL HARAS', text: 'Those horses are MINE. I was here first.', color: '#f44' },
-                { speaker: 'RIVAL HARAS', text: 'Your coordinates came from MY lightning read. Step BACK.', color: '#f44' },
+                { speaker: 'RIVAL HARAS', text: 'His coordinates came from MY lightning read. Step BACK.', color: '#f44' },
                 { speaker: 'NARRATOR', text: 'Zeus, passed between rivals like a prize, issues contradictory commands to the horse army.', color: '#aaa' },
                 { speaker: 'ZEUS LARRY DUNK', text: 'TRAMPLE HIM — no — THAT ONE — ALL OF THEM — WAIT —', color: '#ff0' },
                 { speaker: 'NARRATOR', text: 'The thousand horses receive five different orders in three seconds.', color: '#aaa' },
                 { speaker: 'NARRATOR', text: 'The horses begin attacking everyone indiscriminately.', color: '#f44' },
                 { speaker: 'CAIN & ABEL', text: 'The rivals are fighting each other. We have assessed this. This is the window.', color: '#e90' },
-                { speaker: 'HARAS', text: 'Loyal horse. Find me.', color: '#88f' }
+                { speaker: 'HARAS', text: 'Find me a loyal horse.', color: '#88f' }
             ], () => {
                 const zeus = game.units.find(u => u.type === 'zeusLarry');
                 if (zeus) zeus.alive = false;

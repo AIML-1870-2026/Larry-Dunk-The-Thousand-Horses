@@ -406,16 +406,13 @@ const LEVELS = [
             ];
             spawnSelectedLarryDunks();
 
-            startCutscene([
+            startLevel([
                 { speaker: 'NARRATOR', text: 'Universe 5. A rooftop. A Larry Dunk who became a superhero after losing the use of his legs.', color: '#aaa' },
                 { speaker: 'PARAPLEGIC LARRY', text: 'HALT! I am SUPER LARRY DUNK, defender of justice and democracy!', color: '#f80' },
                 { speaker: 'HARAS', text: 'Your wheelchair has rockets on it.', color: '#88f' },
                 { speaker: 'PARAPLEGIC LARRY', text: 'Yes. And EYE BULLETS. Don\'t come any closer.', color: '#f80' },
                 { speaker: 'HARAS', text: 'Rockets and eye bullets. Fantastic. Surround him.', color: '#88f' }
-            ], () => {
-                game.phase = GamePhase.PLAYER_TURN;
-                showBanner('Player Phase', 1200);
-            });
+            ]);
         },
         victoryCheck: allEnemiesDefeated,
         victoryText: 'Super Larry Captured!',
@@ -459,7 +456,7 @@ const LEVELS = [
             ];
             spawnSelectedLarryDunks();
 
-            startCutscene([
+            startLevel([
                 { speaker: 'NARRATOR', text: 'An abandoned slaughterhouse. Three guards — visibly unhappy about their assignment.', color: '#aaa' },
                 { speaker: 'AXE MURDERER LARRY', text: 'Welcome. I\'ve been expecting someone. *wipes axe*', color: '#f80' },
                 { speaker: 'HARAS', text: 'Put the axe down.', color: '#88f' },
@@ -468,10 +465,7 @@ const LEVELS = [
                 { speaker: 'CAIN & ABEL', text: 'We have seen many things. This is among them.', color: '#e90' },
                 { speaker: 'ABEL', text: 'I didn\'t see it.', color: '#e90' },
                 { speaker: 'CAIN', text: 'One universe was enough.', color: '#e90' }
-            ], () => {
-                game.phase = GamePhase.PLAYER_TURN;
-                showBanner('Player Phase', 1200);
-            });
+            ]);
         },
         victoryCheck: allEnemiesDefeated,
         victoryText: 'Axe Murderer Chipped!',
@@ -512,7 +506,7 @@ const LEVELS = [
             ];
             spawnSelectedLarryDunks();
 
-            startCutscene([
+            startLevel([
                 { speaker: 'NARRATOR', text: 'A TV studio. The cereal mascot Larry Dunk has been filming commercials for eleven years.', color: '#aaa' },
                 { speaker: 'CEREAL LARRY', text: 'Hey kids! Are you HUNGRY? Because LARRY DUNK\'S CRISPY BITES are—', color: '#f80' },
                 { speaker: 'HARAS', text: 'Why aren\'t the guards doing anything? He\'s right there.', color: '#88f' },
@@ -520,10 +514,7 @@ const LEVELS = [
                 { speaker: 'CEREAL LARRY', text: '— part of a complete BREAKFAST! Heh heh! *poses with cereal box*', color: '#f80' },
                 { speaker: 'HARAS', text: 'Remarkable. His invisibility ability is real. Take down the guards first.', color: '#88f' },
                 { speaker: 'CAIN & ABEL', text: 'We also cannot see him. We share the visual processing. This is not helping.', color: '#e90' }
-            ], () => {
-                game.phase = GamePhase.PLAYER_TURN;
-                showBanner('Player Phase', 1200);
-            });
+            ]);
         },
         victoryCheck: allEnemiesDefeated,
         victoryText: 'Mascot Acquired!',
@@ -575,7 +566,7 @@ const LEVELS = [
             ];
             spawnSelectedLarryDunks();
 
-            startCutscene([
+            startLevel([
                 { speaker: 'NARRATOR', text: 'An interdimensional crossroads. The portal to Mr. Runo\'s universe is blocked.', color: '#aaa' },
                 { speaker: 'RIVAL HARAS', text: 'So. The one they\'re all talking about.', color: '#a88' },
                 { speaker: 'HARAS', text: '...', color: '#88f' },
@@ -586,10 +577,7 @@ const LEVELS = [
                 { speaker: 'RIVAL HARAS', text: 'You\'re blocking my path to Runo. I won\'t let you take him.', color: '#a88' },
                 { speaker: 'HARAS', text: 'You already lost. You just don\'t know it yet.', color: '#f44' },
                 { speaker: 'CAIN & ABEL', text: 'There are two of him now. This is concerning. We only need one Haras.', color: '#e90' }
-            ], () => {
-                game.phase = GamePhase.PLAYER_TURN;
-                showBanner('Player Phase', 1200);
-            });
+            ]);
         },
         victoryCheck: allEnemiesDefeated,
         victoryText: 'Rival Defeated!',
@@ -778,7 +766,7 @@ const LEVELS = [
             ];
             spawnSelectedLarryDunks();
 
-            startCutscene([
+            startLevel([
                 { speaker: 'NARRATOR', text: 'The boardroom of Larry Dunk Acquisitions LLC. Fifteenth floor.', color: '#aaa' },
                 { speaker: 'NARRATOR', text: 'Haras has been quieter since the Runo situation. The team does not ask.', color: '#555' },
                 { speaker: 'INVESTMENT LARRY', text: 'I\'ve been expecting a hostile takeover. I did not expect... this.', color: '#f80' },
@@ -787,10 +775,7 @@ const LEVELS = [
                 { speaker: 'HARAS', text: 'I have no interest in your—', color: '#88f' },
                 { speaker: 'INVESTMENT LARRY', text: 'Of course you do. When I attack at full power, I first require everyone present to watch a brief message from our sponsors.', color: '#f80' },
                 { speaker: 'HARAS', text: 'Fight through corporate security. Get me that brain.', color: '#88f' }
-            ], () => {
-                game.phase = GamePhase.PLAYER_TURN;
-                showBanner('Player Phase', 1200);
-            });
+            ]);
         },
         victoryCheck: allEnemiesDefeated,
         victoryText: 'Hostile Takeover Complete!',
@@ -844,17 +829,14 @@ const LEVELS = [
             ];
             spawnSelectedLarryDunks();
 
-            startCutscene([
+            startLevel([
                 { speaker: 'NARRATOR', text: 'A shopping mall. Female Larry Dunk is in the parking structure. Or possibly the food court. Reports conflict.', color: '#aaa' },
                 { speaker: 'FEMALE LARRY', text: 'I know EXACTLY where I\'m going. This is NOT a wrong turn.', color: '#f80' },
                 { speaker: 'HARAS', text: 'She\'s about to drive into the fountain.', color: '#88f' },
                 { speaker: 'FEMALE LARRY', text: 'That is a DELIBERATE SHORTCUT. Absolutely intentional. Haras, I presume? I\'ve heard about you.', color: '#f80' },
                 { speaker: 'HARAS', text: 'Chip. Brain. Now.', color: '#88f' },
                 { speaker: 'FEMALE LARRY', text: 'I am going to DRIVE AWAY from this situation. *swerves unpredictably*', color: '#f80' }
-            ], () => {
-                game.phase = GamePhase.PLAYER_TURN;
-                showBanner('Player Phase', 1200);
-            });
+            ]);
         },
         victoryCheck: allEnemiesDefeated,
         victoryText: 'Parking Validated!',
@@ -1140,9 +1122,12 @@ function loadLevel(index) {
     game.gridW = 0;
     game.gridH = 0;
     game.selectedUnit = null;
+    game.hoveredUnit = null;
+    game.pendingMoveTile = null;
     game.moveTiles = [];
     game.attackTiles = [];
     game.animations = [];
+    document.getElementById('moveConfirm').style.display = 'none';
     game.betrayalTriggered = false;
     game.financierRevealed = false;
 

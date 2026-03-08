@@ -386,4 +386,4 @@ NARRATOR: The horse carries Haras off into the sunset...
 NARRATOR: Past the conquered Larry Dunks.
 TITLE CARD: "You only need 1 horse."
 TITLE CARD: LARRY DUNK: THE THOUSAND HORSES
-TITLE CARD: ~ FIN ~
+TITLE CARD: ~ FIN ~               
