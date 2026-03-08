@@ -2,7 +2,7 @@
 
 Browser-based Fire Emblem-style tactical RPG with a Tetris capture minigame. Vanilla JS + Canvas, no dependencies.
 
-**Story:** Haras is a tech villain who invented a brain chip that can remotely control people. He discovers that Larry Dunk — the Prime Minister — has a uniquely chip-receptive brain, making him the perfect puppet. Haras begins harvesting Larry Dunks from across the multiverse, each one a different variant with different abilities. Rival Harases from other universes are doing the same thing. The endgame involves Zeus Larry Dunk and his thousand horses, which betray everyone. Haras escapes on the one loyal horse.
+**Story:** Haras is a tech villain who invented a brain chip that can remotely control people. He discovers that Larry Dunk — the Prime Minister — has a uniquely chip-receptive brain, making him the perfect puppet. Haras begins collecting Larry Dunks from across the multiverse, each one a different variant with different abilities. Rival Harases from other universes are doing the same thing. The endgame involves Zeus Larry Dunk and his thousand horses, which betray everyone. Haras escapes on the one loyal horse.
 
 ---
 
@@ -67,7 +67,7 @@ No modules — everything is global. Canvas: **960×640**, scaled to full window
 | larryDunk | 35 | 7 | 7 | 3 | 1 | Spray Tan |
 | cainAbel | 40 | 9 | 6 | 3 | 1 | 2 Attacks/Turn |
 | britishLarry | 32 | 8 | 6 | 3 | 1 | Parliamentary Order (flavor) |
-| financierLarry | 28 | 10 | 4 | 4 | 1 | Cannibalism |
+| survivalistLarry | 28 | 10 | 4 | 4 | 1 | Cannibalism |
 | paraplegicLarry | 30 | 9 | 3 | 3 | 3 | Eye Bullets |
 | axeLarry | 36 | 13 | 3 | 3 | 1 | Chain Kill |
 | cerealLarry | 25 | 6 | 4 | 4 | 1 | Invisible |
@@ -93,7 +93,7 @@ Larry Dunk hits 0 HP → Tetris capture (synchronous). Defeat: Haras dies or all
 ## Special Abilities
 
 - **Spray Tan** (`larryDunk`): defender + adjacent enemies lose 1 range if range > 1. Resets end of turn.
-- **Cannibalism** (`financierLarry`): heals HP equal to damage dealt.
+- **Cannibalism** (`survivalistLarry`): heals HP equal to damage dealt.
 - **2 Attacks/Turn** (`cainAbel`): `attacksLeft: 2`, resets each turn.
 - **Chain Kill** (`axeLarry`): free attack on nearest adjacent enemy after non-Larry kill.
 - **Invisible** (`cerealLarry`): enemy AI ignores this unit entirely.

@@ -281,9 +281,9 @@ function drawSprite_britishLarry(x, y, sz) {
     _legs(cx, y + u * 19.5, u, '#0a0a20');
 }
 
-function drawSprite_financierLarry(x, y, sz) {
+function drawSprite_survivalistLarry(x, y, sz) {
     const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
-    // White/cream linen suit (island wealth)
+    // White/cream linen suit (beach wealth)
     ctx.fillStyle = '#f0ead8';
     _roundRect(cx - u * 6.5, y + u * 13, u * 13, u * 7, u * 1.5);
     // Tan polo shirt collar underneath
@@ -313,7 +313,7 @@ function drawSprite_financierLarry(x, y, sz) {
     ctx.lineWidth = 1;
     _brow(cx, headY - u * 0.8, u, 'raised'); // still has the big brows
     _nose(cx, headY + u * 1.6, u);
-    _mouth(cx, headY + u * 2.9, u, 'smirk'); // smug island billionaire
+    _mouth(cx, headY + u * 2.9, u, 'smirk'); // smug beach billionaire
     _legs(cx, y + u * 18.5, u, '#e0d4b0'); // cream trousers
 }
 
@@ -742,7 +742,7 @@ const SPRITES = {
     mrRuno:             drawSprite_mrRuno,
     zeusLarry:          drawSprite_zeusLarry,
     britishLarry:       drawSprite_britishLarry,
-    financierLarry:     drawSprite_financierLarry,
+    survivalistLarry:   drawSprite_survivalistLarry,
     paraplegicLarry:    drawSprite_paraplegicLarry,
     axeLarry:           drawSprite_axeLarry,
     cerealLarry:        drawSprite_cerealLarry,

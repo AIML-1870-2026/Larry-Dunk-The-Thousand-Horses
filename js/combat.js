@@ -5,7 +5,7 @@
 // Variant abilities implemented here:
 //   Spray Tan (larryDunk, britishLarry): surviving defender + adjacent enemies
 //     lose 1 range for 1 turn (sprayTanned flag; reset in endEnemyTurn)
-//   Cannibalism (financierLarry): heals attacker by damage dealt
+//   Cannibalism (survivalistLarry): heals attacker by damage dealt
 //   Chain Kill (axeLarry): killing a non-Larry unit gives 1 free attack on
 //     the nearest adjacent enemy (isChain flag prevents infinite recursion)
 //   Ad Break (investmentLarry, player only): triggers ad overlay before damage;
@@ -51,8 +51,8 @@ function _resolveCombat(attacker, defender, isChain) {
         color: dmgColor
     });
 
-    // Financier Larry — cannibalism: heals HP equal to damage dealt
-    if (attacker.type === 'financierLarry') {
+    // Survivalist Larry — cannibalism: heals HP equal to damage dealt
+    if (attacker.type === 'survivalistLarry') {
         const healed = Math.min(dmg, attacker.maxHp - attacker.hp);
         attacker.hp += healed;
         if (healed > 0) {

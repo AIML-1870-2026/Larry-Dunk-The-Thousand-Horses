@@ -287,7 +287,7 @@ function drawSprite_britishLarry(ctx, x, y, sz) {
     legs(ctx, cx, y + u*19.5, u, '#0a0a20');
 }
 
-function drawSprite_financierLarry(ctx, x, y, sz) {
+function drawSprite_survivalistLarry(ctx, x, y, sz) {
     const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
     // Cream linen suit
     ctx.fillStyle = '#f0ead8';
@@ -560,7 +560,7 @@ const SPRITES = {
     mrRuno:             { label: 'Mr. Runo',                   team: 'enemy',   note: 'HUGE biceps + navy suit, Haras\'s father',               fn: drawSprite_mrRuno },
     zeusLarry:          { label: 'Zeus Larry Dunk',            team: 'neutral', note: 'toga, no crown, bare arm',                              fn: drawSprite_zeusLarry },
     britishLarry:       { label: 'British Larry Dunk',         team: 'enemy',   note: 'top hat, monocle, red coat, gold epaulettes',            fn: drawSprite_britishLarry },
-    financierLarry:     { label: 'Financier Larry Dunk',       team: 'enemy',   note: 'cream suit, deep tan, gold sunglasses',                 fn: drawSprite_financierLarry },
+    survivalistLarry:   { label: 'Survivalist Larry Dunk',     team: 'enemy',   note: 'cream suit, deep tan, gold sunglasses',                 fn: drawSprite_survivalistLarry },
     paraplegicLarry:    { label: 'Paraplegic Superhero Larry', team: 'enemy',   note: 'wheelchair, red cape, blue costume, gold star',          fn: drawSprite_paraplegicLarry },
     axeLarry:           { label: 'Axe Murderer Larry Dunk',    team: 'enemy',   note: 'blue suit, bloody axe, evil brows, blood spatters',      fn: drawSprite_axeLarry },
     cerealLarry:        { label: 'Cereal Mascot Larry Dunk',   team: 'enemy',   note: 'white chef hat, orange mascot suit, polka dots',         fn: drawSprite_cerealLarry },
@@ -576,7 +576,7 @@ const SPRITES = {
 
 const SECTIONS = [
     { title: 'PLAYER UNITS',                           keys: ['haras', 'minion', 'civilian', 'larryDunk', 'cainAbel', 'robot'] },
-    { title: 'LARRY DUNK VARIANTS (ENEMY → CAPTURE)',  keys: ['mrRuno', 'zeusLarry', 'britishLarry', 'financierLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry'] },
+    { title: 'LARRY DUNK VARIANTS (ENEMY → CAPTURE)',  keys: ['mrRuno', 'zeusLarry', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry'] },
     { title: 'HORSES',                                 keys: ['horse', 'loyalHorse'] },
     { title: 'ENEMY UNITS',                            keys: ['enemyHaras', 'guard', 'dummy'] },
 ];

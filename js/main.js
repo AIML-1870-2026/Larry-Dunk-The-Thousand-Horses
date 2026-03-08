@@ -4,23 +4,23 @@
 
 // LDs available at the START of each level in normal play order.
 // Indexed by level number; mrRuno and zeusLarry are never capturable.
-// New order: 0 Prologue 1 Tutorial 2 C&A 3 British 4 Financier 5 Paraplegic
+// New order: 0 Prologue 1 Tutorial 2 C&A 3 British 4 Survivalist 5 Paraplegic
 //            6 Axe 7 Cereal 8 RivalHaras 9 Runo 10 Investment 11 Female 12 Zeus 13 Final
 const LD_POOL_AT_LEVEL = [
     [],                                                                                                    // 0 Prologue
     [],                                                                                                    // 1 Tutorial
     [],                                                                                                    // 2 Cain & Abel (haven't captured yet)
     ['cainAbel'],                                                                                          // 3 British Larry
-    ['cainAbel', 'britishLarry'],                                                                          // 4 Financier
-    ['cainAbel', 'britishLarry', 'financierLarry'],                                                        // 5 Paraplegic
-    ['cainAbel', 'britishLarry', 'financierLarry', 'paraplegicLarry'],                                    // 6 Axe
-    ['cainAbel', 'britishLarry', 'financierLarry', 'paraplegicLarry', 'axeLarry'],                        // 7 Cereal
-    ['cainAbel', 'britishLarry', 'financierLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry'],         // 8 Rival Haras (rival not capturable)
-    ['cainAbel', 'britishLarry', 'financierLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry'],         // 9 Mr. Runo (Runo not capturable as LD)
-    ['cainAbel', 'britishLarry', 'financierLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'larryDunk'],  // 10 Investment
-    ['cainAbel', 'britishLarry', 'financierLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'larryDunk'],  // 11 Female
-    ['cainAbel', 'britishLarry', 'financierLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry', 'larryDunk'],  // 12 Zeus (mrRuno not capturable)
-    ['cainAbel', 'britishLarry', 'financierLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry', 'larryDunk'],  // 13 Final (zeusLarry not capturable)
+    ['cainAbel', 'britishLarry'],                                                                          // 4 Survivalist
+    ['cainAbel', 'britishLarry', 'survivalistLarry'],                                                      // 5 Paraplegic
+    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry'],                                  // 6 Axe
+    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry'],                      // 7 Cereal
+    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry'],       // 8 Rival Haras (rival not capturable)
+    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry'],       // 9 Mr. Runo (Runo not capturable as LD)
+    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'larryDunk'],  // 10 Investment
+    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'larryDunk'],  // 11 Female
+    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry', 'larryDunk'],  // 12 Zeus (mrRuno not capturable)
+    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry', 'larryDunk'],  // 13 Final (zeusLarry not capturable)
 ];
 
 // ---- TITLE SCREEN ----

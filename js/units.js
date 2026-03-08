@@ -47,9 +47,9 @@ function createUnit(type, gx, gy, team) {
             desc: 'High DEF — reflects years of surviving political debate.',
             isLarryDunk: true
         },
-        financierLarry: {
+        survivalistLarry: {
             name: 'Survivalist Larry Dunk', hp: 28, atk: 10, def: 4, mov: 4, range: 1,
-            spriteKey: 'financierLarry', special: 'Cannibalism',
+            spriteKey: 'survivalistLarry', special: 'Cannibalism',
             desc: 'Heals HP equal to damage dealt on every attack.',
             isLarryDunk: true
         },

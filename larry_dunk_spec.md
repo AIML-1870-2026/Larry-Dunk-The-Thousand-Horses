@@ -28,7 +28,7 @@
 - [x] haras, minion, civilian, guard, robot, dummy, horse, loyalHorse, enemyHaras — all complete
 - [x] larryDunk, cainAbel, mrRuno, zeusLarry — complete
 - [x] britishLarry: red military coat, gold epaulettes, top hat, monocle + chain
-- [x] financierLarry (Survivalist Larry in dialogue): cream linen suit, deep tan, gold sunglasses
+- [x] survivalistLarry (Survivalist Larry in dialogue): cream linen suit, deep tan, gold sunglasses
 - [x] paraplegicLarry: wheelchair (wheels/spokes/armrests), red cape, blue superhero costume, gold star
 - [x] axeLarry: blue suit, bloody axe polygon, blood spatters, evil brows
 - [x] cerealLarry: golden cream (#fff0b0) chef hat + outline, orange mascot suit, yellow polka dots
@@ -48,7 +48,7 @@
 
 #### Variant Abilities (all implemented in combat.js / input.js)
 - [x] Spray Tan (larryDunk, britishLarry): surviving defender + adjacent enemies lose 1 range for 1 turn (sprayTanned flag; resets in endEnemyTurn)
-- [x] Cannibalism (financierLarry / Survivalist Larry): heals HP = damage dealt, shows green +N animation
+- [x] Cannibalism (survivalistLarry / Survivalist Larry): heals HP = damage dealt, shows green +N animation
 - [x] 2 Attacks/Turn (cainAbel): attacksLeft: 2 in template
 - [x] Chain Kill (axeLarry): on non-Larry kill, one free attack on nearest adjacent enemy (isChain flag prevents recursion)
 - [x] Invisible (cerealLarry): invisible: true; enemy AI skips unit as target in both pre-move and post-move loops
@@ -118,7 +118,7 @@
 - [x] 1 Tutorial: 9×7 map, Haras + minion vs 3 civilians; 9-line tutorial dialogue covering all mechanics
 - [x] 2 Cain & Abel: multiverse portal, C&A as Tetris boss
 - [x] 3 British Larry: parliament chamber 14×10, guards + robot, Spray Tan boss
-- [x] 4 Survivalist Larry (unit: financierLarry): beach 12×9, name "Ch.2.5: The Beach", objective references beach house; WATER border, THRONE (beach chair) secret at (7,4), spawns on Wait trigger
+- [x] 4 Survivalist Larry (unit: survivalistLarry): beach 12×9, name "Ch.2.5: The Beach", objective references beach house; WATER border, THRONE (beach chair) secret at (7,4), spawns on Wait trigger
 - [x] 5 Paraplegic Larry: rooftop 12×8, CLOUD corners, WALL border; eye bullets boss (range 3, can't attack when adjacent enemy)
 - [x] 6 Axe Murderer: slaughterhouse 12×8, FOREST crates, Chain Kill boss
 - [x] 7 Cereal Mascot: TV studio 12×9, TEMPLE floor, Invisible boss
@@ -131,7 +131,7 @@
 
 #### Dialogue
 - [x] DIALOGUE.md fully synced to levels.js — verified line-by-line across all 14 levels + Between 12-13 chaos section. Dialogue trimmed and revised for comedic tone (middle manager framing, beach rename throughout L4, various line cuts across L2/L3/L5/L6/L10/L13).
-- [x] Level 4 character named "Survivalist Larry" in dialogue (type stays financierLarry in code)
+- [x] Level 4 character named "Survivalist Larry" in dialogue (type stays survivalistLarry in code)
 
 #### Cinematic System
 - [x] `Cinema` object in cutscene.js: scene functions return `drawScene(ctx, canvas)` closures attached to individual dialogue lines
@@ -161,7 +161,7 @@
 - [x] `loadLevel` resets: `game.grid=[]`, `game.gridW=0`, `game.gridH=0`, `game.hoveredUnit=null`, `game.pendingMoveTile=null`, hides `#moveConfirm`. Prevents render crash during LD selector gap.
 - [x] Cain & Abel attack limit: `attacksLeft` resets to 2 in `endEnemyTurn` for cainAbel; all others reset to 1. Spray Tan only fires if target range > 1.
 - [x] British Larry Dunk has no Spray Tan — only `larryDunk` type triggers it in combat.js. britishLarry has passive "Parliamentary Order" flavor only.
-- [x] Survivalist Larry shown as "Financier Larry" in LD selector screen — changed unit name to 'Survivalist Larry Dunk' in units.js
+- [x] Survivalist Larry unit name set to 'Survivalist Larry Dunk' in units.js
 - [x] Better tutorial: each dialogue line now carries a `highlight` property; render() draws a pulsing yellow box after the cutscene dim over matching units/tiles; cutscene.js reads it in showDialogueLine and clears on endCutscene; game.tutorialHighlight added to constants.js
 - [x] Tutorial: allow player to move units while tutorial dialogue is open — `handleGridClick` computes `effectivePhase`: if `CUTSCENE && tutorialHighlight`, treats clicks as `PLAYER_TURN`
 - [x] backDialogue (Back button) does not update game.tutorialHighlight — added `game.tutorialHighlight = line.highlight || null` in `backDialogue` alongside cinemaDrawScene update
@@ -241,7 +241,7 @@ You play as **Haras**, a megalomaniacal tech villain who invented a brain chip c
 | Prime Minister Larry Dunk | larryDunk | Spray Tan: surviving defender + adjacent enemies lose 1 range for 1 turn | Common |
 | Cain & Abel Larry Dunk | cainAbel | 2 Attacks/Turn | Conjoined twins. "We only need one horse." Story-guaranteed. |
 | British Larry Dunk | britishLarry | Spray Tan (British): same effect, British flavor | Uncommon |
-| Survivalist Larry Dunk | financierLarry | Cannibalism: heals HP = damage dealt | Secret — hidden on island, spawns via Wait on THRONE |
+| Survivalist Larry Dunk | survivalistLarry | Cannibalism: heals HP = damage dealt | Secret — hidden on beach, spawns via Wait on THRONE |
 | Paraplegic Superhero Larry | paraplegicLarry | Eye Bullets: range 3 — **but can't attack if any enemy is adjacent** | Uncommon |
 | Axe Murderer Larry Dunk | axeLarry | Chain Kill: killing a non-Larry triggers one free attack on nearest adjacent enemy | Uncommon |
 | Cereal Mascot Larry Dunk | cerealLarry | Invisible: enemy AI cannot target or move toward this unit | Uncommon |
@@ -281,7 +281,7 @@ Speed: 800ms drop interval → 150ms min, -50ms per 50 pts scored.
 
 - Multi-file JS (no modules). Load order: constants → sprites → units → grid → combat → ai → ui → input → cutscene → levels → tetris → music → voice → main
 - Canvas rendering at 960×640 internal resolution, scaled to full browser window
-- Sprite keys: `haras`, `minion`, `civilian`, `larryDunk`, `cainAbel`, `mrRuno`, `zeusLarry`, `britishLarry`, `financierLarry`, `paraplegicLarry`, `axeLarry`, `cerealLarry`, `investmentLarry`, `femaleLarry`, `horse`, `loyalHorse`, `enemyHaras`, `guard`, `robot`, `dummy`
+- Sprite keys: `haras`, `minion`, `civilian`, `larryDunk`, `cainAbel`, `mrRuno`, `zeusLarry`, `britishLarry`, `survivalistLarry`, `paraplegicLarry`, `axeLarry`, `cerealLarry`, `investmentLarry`, `femaleLarry`, `horse`, `loyalHorse`, `enemyHaras`, `guard`, `robot`, `dummy`
 - `createUnit(type, gx, gy, team)` — all templates in units.js with `isLarryDunk: true` on LD variants
 - Tetris triggered synchronously in `_resolveCombat()` when LD hits 0 HP (no setTimeout — avoids render race condition)
 - Zeus uses `team: 'neutral'`; `getAttackTiles()` excludes neutral team

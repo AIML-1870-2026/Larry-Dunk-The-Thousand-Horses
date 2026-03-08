@@ -55,7 +55,7 @@ larry_dunk_spec.md  ← full game spec, todo list, all design decisions (single 
 - JS load order matters (no modules). Scripts loaded in order in index.html.
 - `isLarryDunk: true && team === 'enemy'` triggers Tetris on death (combat.js). Player-team Larry units die normally.
 - Tetris overlay renders on top of the game canvas as a modal layer.
-- All Larry Dunk sprite keys: `larryDunk`, `cainAbel`, `mrRuno`, `zeusLarry`, `britishLarry`, `financierLarry`, `paraplegicLarry`, `axeLarry`, `cerealLarry`, `investmentLarry`, `femaleLarry`.
+- All Larry Dunk sprite keys: `larryDunk`, `cainAbel`, `mrRuno`, `zeusLarry`, `britishLarry`, `survivalistLarry`, `paraplegicLarry`, `axeLarry`, `cerealLarry`, `investmentLarry`, `femaleLarry`.
 - Game fills full browser window (100vw × 100vh). Canvas internal resolution stays 960×640; input.js scales clicks.
 - Level selector: main.js `showLevelSelect()` — shown on title click, lets player jump to any level.
 - test.html: standalone test suite (loads all JS, runs automated checks). Not part of the game.

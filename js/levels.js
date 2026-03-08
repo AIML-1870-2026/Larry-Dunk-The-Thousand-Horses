@@ -1,7 +1,7 @@
 // ============================================================
 // LEVELS, VICTORY/DEFEAT, TURN EVENTS
 // Level index:
-//   0 Prologue  1 Tutorial  2 Cain&Abel    3 BritishLarry   4 FinancierLarry
+//   0 Prologue  1 Tutorial  2 Cain&Abel    3 BritishLarry   4 SurvivalistLarry
 //   5 Paraplegic  6 Axe  7 Cereal  8 RivalHaras  9 MrRuno
 //   10 Investment  11 FemaleLarry  12 Zeus  13 Final
 // ============================================================
@@ -275,7 +275,7 @@ const LEVELS = [
         }
     },
 
-    // 4: Ch.2.5 — Financier Larry Dunk (Secret Island)
+    // 4: Ch.2.5 — Survivalist Larry Dunk (Secret Beach)
     {
         name: 'Ch.2.5: The Beach',
         gridW: 12, gridH: 9,
@@ -283,7 +283,7 @@ const LEVELS = [
         ldSlots: [[1,5],[2,3],[2,6]],
         setup: function() {
             game.gridW = 12; game.gridH = 9;
-            game.financierRevealed = false;
+            game.survivalistRevealed = false;
             game.grid = [];
             for (let y = 0; y < 9; y++) {
                 game.grid[y] = [];
@@ -301,7 +301,7 @@ const LEVELS = [
             game.grid[6][7] = Terrain.FOREST; game.grid[6][8] = Terrain.FOREST;
             game.grid[4][9] = Terrain.FOREST;
             game.grid[3][6] = Terrain.FOREST;
-            // THRONE — the secret Wait tile (old island ruins)
+            // THRONE — the secret Wait tile (old beach ruins)
             game.grid[4][7] = Terrain.THRONE;
             // Wall (rocky outcroppings)
             game.grid[2][9] = Terrain.MOUNTAIN;
@@ -311,7 +311,7 @@ const LEVELS = [
                 createUnit('haras', 1, 4, 'player'),
                 createUnit('larryDunk', 2, 4, 'player'),
                 createUnit('minion', 1, 3, 'player'),
-                // Island security — small patrol
+                // Beach security — small patrol
                 createUnit('guard', 5, 2, 'enemy'),
                 createUnit('guard', 8, 5, 'enemy'),
                 createUnit('guard', 5, 6, 'enemy'),
@@ -329,13 +329,13 @@ const LEVELS = [
             startLevel(intro);
         },
         victoryCheck: allEnemiesDefeated,
-        victoryText: 'Island Secured!',
+        victoryText: 'Beach Secured!',
         turnEvent: function(_turn) {
-            if (!game.financierRevealed) {
+            if (!game.survivalistRevealed) {
                 // Check if any player unit is sitting on the throne tile (4,7)
                 const onThrone = game.units.find(u => u.alive && u.team === 'player' && u.gx === 7 && u.gy === 4);
                 if (onThrone) {
-                    game.financierRevealed = true;
+                    game.survivalistRevealed = true;
                     startCutscene([
                         { speaker: 'NARRATOR', text: 'The beach chair shifts. Something emerges from the jungle.', color: '#aaa' },
                         { speaker: 'SURVIVALIST LARRY', text: '...I wasn\'t expecting visitors.', color: '#f80' },
@@ -345,8 +345,8 @@ const LEVELS = [
                         { speaker: 'SURVIVALIST LARRY', text: 'Certainly not. *consumes something* I have resources you cannot imagine.', color: '#f80' },
                         { speaker: 'CAIN & ABEL', text: 'Did he just eat a crab whole? We respect that. One crab is enough.', color: '#e90' }
                     ], () => {
-                        // Spawn Financier Larry as enemy near the throne
-                        game.units.push(createUnit('financierLarry', 7, 5, 'enemy'));
+                        // Spawn Survivalist Larry as enemy near the throne
+                        game.units.push(createUnit('survivalistLarry', 7, 5, 'enemy'));
                         game.phase = GamePhase.PLAYER_TURN;
                         showBanner('SURVIVALIST LARRY FOUND!', 2000);
                     });
@@ -354,7 +354,7 @@ const LEVELS = [
             }
         },
         onVictory: function() {
-            const fin = game.units.find(u => u.type === 'financierLarry');
+            const fin = game.units.find(u => u.type === 'survivalistLarry');
             const captured = fin && fin.team === 'player';
 
             const dialogue = captured ? [
@@ -1129,7 +1129,7 @@ function loadLevel(index) {
     game.animations = [];
     document.getElementById('moveConfirm').style.display = 'none';
     game.betrayalTriggered = false;
-    game.financierRevealed = false;
+    game.survivalistRevealed = false;
 
     document.getElementById('victoryScreen').style.display = 'none';
     document.getElementById('defeatScreen').style.display = 'none';
