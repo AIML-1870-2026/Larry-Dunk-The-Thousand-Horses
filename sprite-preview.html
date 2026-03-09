@@ -399,24 +399,6 @@ function drawSprite_investmentLarry(ctx, x, y, sz) {
     legs(ctx, cx, y + u * 17.5, u, '#111118');
 }
 
-function drawSprite_femaleLarry(ctx, x, y, sz) {
-    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
-    ctx.fillStyle = '#F0B840'; ellipse(ctx, cx - u*7, headY + u*3, u*2.5, u*5.5); ellipse(ctx, cx + u*7, headY + u*3, u*2.5, u*5.5);
-    ctx.fillStyle = '#cc4488'; rRect(ctx, cx - u*6, y + u*13, u*12, u*6, u*1.5);
-    ctx.fillStyle = '#ffffff';
-    ctx.beginPath(); ctx.moveTo(cx - u*2, y + u*13); ctx.lineTo(cx, y + u*16.5); ctx.lineTo(cx + u*2, y + u*13); ctx.fill();
-    ctx.fillStyle = '#cc4488';
-    ctx.beginPath(); ctx.moveTo(cx - u*0.8, y + u*13); ctx.lineTo(cx, y + u*15.5); ctx.lineTo(cx + u*0.8, y + u*13); ctx.fill();
-    ctx.fillStyle = '#1a1a1a';
-    ctx.beginPath(); ctx.moveTo(cx - u*5.5, y + u*18); ctx.lineTo(cx - u*7, y + u*22); ctx.lineTo(cx + u*7, y + u*22); ctx.lineTo(cx + u*5.5, y + u*18); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = '#E8A060'; ctx.fillRect(cx - u*4, y + u*21.5, u*2.2, u*2); ctx.fillRect(cx + u*1.8, y + u*21.5, u*2.2, u*2);
-    ctx.fillStyle = '#F0B840';
-    ctx.beginPath(); ctx.arc(cx, headY - u, u * 7.5, Math.PI * 0.8, Math.PI * 2.2); ctx.fill();
-    circle(ctx, cx - u * 5.5, headY - u * 0.5, u * 3); circle(ctx, cx + u * 5.5, headY - u * 0.5, u * 3);
-    ctx.fillStyle = '#E8A060'; ellipse(ctx, cx, headY, u * 5, u * 5.5);
-    eyes(ctx, cx, headY + u * 0.5, u);
-}
-
 function _horseBody(ctx, x, y, sz, maneColor) {
     const u = sz / 20;
     const bx = x + sz / 2 + u;
@@ -565,7 +547,6 @@ const SPRITES = {
     axeLarry:           { label: 'Axe Murderer Larry Dunk',    team: 'enemy',   note: 'blue suit, bloody axe, evil brows, blood spatters',      fn: drawSprite_axeLarry },
     cerealLarry:        { label: 'Cereal Mascot Larry Dunk',   team: 'enemy',   note: 'white chef hat, orange mascot suit, polka dots',         fn: drawSprite_cerealLarry },
     investmentLarry:    { label: 'Investment Group Larry',     team: 'enemy',   note: 'charcoal power suit, dark red tie, briefcase',           fn: drawSprite_investmentLarry },
-    femaleLarry:        { label: 'Female Larry Dunk',          team: 'enemy',   note: 'pink blazer, black skirt, long blond hair',              fn: drawSprite_femaleLarry },
     horse:              { label: 'Horse',                      team: 'enemy',   note: 'profile, dark mane',                                    fn: drawSprite_horse },
     loyalHorse:         { label: 'Loyal Horse',                team: 'player',  note: 'identical horse + tiny yellow bow',                     fn: drawSprite_loyalHorse },
     enemyHaras:         { label: 'Rival Haras',                team: 'enemy',   note: 'same face, dark red suit',                              fn: drawSprite_enemyHaras },
@@ -576,7 +557,7 @@ const SPRITES = {
 
 const SECTIONS = [
     { title: 'PLAYER UNITS',                           keys: ['haras', 'minion', 'civilian', 'larryDunk', 'cainAbel', 'robot'] },
-    { title: 'LARRY DUNK VARIANTS (ENEMY → CAPTURE)',  keys: ['mrRuno', 'zeusLarry', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry'] },
+    { title: 'LARRY DUNK VARIANTS (ENEMY → CAPTURE)',  keys: ['mrRuno', 'zeusLarry', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry'] },
     { title: 'HORSES',                                 keys: ['horse', 'loyalHorse'] },
     { title: 'ENEMY UNITS',                            keys: ['enemyHaras', 'guard', 'dummy'] },
 ];

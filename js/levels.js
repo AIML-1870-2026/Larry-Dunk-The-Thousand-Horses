@@ -3,7 +3,7 @@
 // Level index:
 //   0 Prologue  1 Tutorial  2 Cain&Abel    3 BritishLarry   4 SurvivalistLarry
 //   5 Paraplegic  6 Axe  7 Cereal  8 RivalHaras  9 MrRuno
-//   10 Investment  11 FemaleLarry  12 Zeus  13 Final
+//   10 Investment  11 Zeus  12 Final
 // ============================================================
 
 function checkVictoryDefeat() {
@@ -13,7 +13,7 @@ function checkVictoryDefeat() {
         game.phase = GamePhase.DEFEAT;
         playSound('defeat');
         playMusic('defeat');
-        setTimeout(() => { document.getElementById('defeatScreen').style.display = 'flex'; }, 1000);
+        setTimeout(() => { if (game.phase === GamePhase.DEFEAT) document.getElementById('defeatScreen').style.display = 'flex'; }, 1000);
         return;
     }
 
@@ -22,7 +22,7 @@ function checkVictoryDefeat() {
         game.phase = GamePhase.DEFEAT;
         playSound('defeat');
         playMusic('defeat');
-        setTimeout(() => { document.getElementById('defeatScreen').style.display = 'flex'; }, 1000);
+        setTimeout(() => { if (game.phase === GamePhase.DEFEAT) document.getElementById('defeatScreen').style.display = 'flex'; }, 1000);
         return;
     }
 
@@ -34,7 +34,7 @@ function checkVictoryDefeat() {
             playMusic('victory');
             document.getElementById('victoryText').textContent = level.victoryText || 'Level Complete!';
             setTimeout(() => {
-                document.getElementById('victoryScreen').style.display = 'flex';
+                if (game.phase === GamePhase.VICTORY) document.getElementById('victoryScreen').style.display = 'flex';
             }, 1000);
         }
     } else {
@@ -43,7 +43,7 @@ function checkVictoryDefeat() {
             game.phase = GamePhase.VICTORY;
             playSound('victory');
             playMusic('victory');
-            setTimeout(() => { document.getElementById('victoryScreen').style.display = 'flex'; }, 1000);
+            setTimeout(() => { if (game.phase === GamePhase.VICTORY) document.getElementById('victoryScreen').style.display = 'flex'; }, 1000);
         }
     }
 }
@@ -65,7 +65,7 @@ function fillGrid(w, h, terrain) {
 
 function startLevel(intro) {
     startCutscene(intro, () => {
-        if (game.currentLevel !== 12) playMusic('playerPhase');
+        if (game.currentLevel !== 11) playMusic('playerPhase');
         game.phase = GamePhase.PLAYER_TURN;
         showBanner('Player Phase', 1200);
     });
@@ -123,8 +123,10 @@ const LEVELS = [
                   highlight: { type: 'units', team: 'enemy' } },
                 { speaker: 'HARAS',    text: 'Click one of your units to select it. Blue tiles show where it can move.', color: '#88f',
                   highlight: { type: 'units', team: 'player' } },
-                { speaker: 'HARAS',    text: 'Walls are impassable. Forest tiles slow movement but grant a defense bonus — use them wisely.', color: '#88f',
-                  highlight: { type: 'tiles', tiles: [{gx:3,gy:1},{gx:3,gy:5},{gx:4,gy:3}] } },
+                { speaker: 'HARAS',    text: 'Walls are impassable.', color: '#88f',
+                  highlight: { type: 'tiles', tiles: [{gx:3,gy:1},{gx:3,gy:5}] } },
+                { speaker: 'HARAS',    text: 'Forest tiles (the darker green square) cost extra movement to enter but give a defense bonus — stand in one to reduce incoming damage.', color: '#88f',
+                  highlight: { type: 'tiles', tiles: [{gx:4,gy:3}] } },
                 { speaker: 'HARAS',    text: 'After moving, red tiles mark targets in attack range. Click one to strike.', color: '#88f',
                   highlight: { type: 'units', team: 'enemy' } },
                 { speaker: 'HARAS',    text: 'If you prefer not to attack, press Wait. The turn ends automatically when all your units have acted.', color: '#88f' },
@@ -785,75 +787,12 @@ const LEVELS = [
                 { speaker: 'HARAS', text: 'Chip installed. Welcome to the portfolio.', color: '#88f' },
                 { speaker: 'NARRATOR', text: 'His Ad Break ability remains active. The chip did not disable the ad.', color: '#aaa' },
                 { speaker: 'CAIN & ABEL', text: 'That advertisement was twenty-two seconds. We counted. We had time.', color: '#e90' },
-                { speaker: 'HARAS', text: 'Next signal: Female Larry Dunk. Shopping mall. Reports conflict on exact location.', color: '#88f' }
+                { speaker: 'HARAS', text: 'Next signal: Zeus Larry Dunk. Mount Olympus.', color: '#88f' }
             ], () => { loadLevel(11); });
         }
     },
 
-    // 11: Ch.3.6 — Female Larry Dunk
-    {
-        name: 'Ch.3.6: Wrong Turn',
-        gridW: 12, gridH: 8,
-        objective: 'Corner Female Larry Dunk — her movement is unpredictable. Watch out.',
-        ldSlots: [[0,4],[2,3],[0,6],[2,5]],
-        setup: function() {
-            fillGrid(12, 8, Terrain.TEMPLE);
-            // Mall layout — fountain (WATER centerpiece), shops (GYM_FLOOR), planters (FOREST), storefronts (WALL)
-            game.grid[3][5] = Terrain.WATER; game.grid[4][5] = Terrain.WATER;
-            game.grid[3][6] = Terrain.WATER; game.grid[4][6] = Terrain.WATER;
-            // GYM_FLOOR shop interiors along the sides
-            game.grid[1][1] = Terrain.GYM_FLOOR; game.grid[2][1] = Terrain.GYM_FLOOR;
-            game.grid[5][2] = Terrain.GYM_FLOOR; game.grid[6][2] = Terrain.GYM_FLOOR;
-            game.grid[1][10] = Terrain.GYM_FLOOR; game.grid[2][10] = Terrain.GYM_FLOOR;
-            game.grid[5][10] = Terrain.GYM_FLOOR; game.grid[6][10] = Terrain.GYM_FLOOR;
-            // FOREST planters / kiosks lining the main walkway
-            game.grid[1][3] = Terrain.FOREST; game.grid[6][3] = Terrain.FOREST;
-            game.grid[1][8] = Terrain.FOREST; game.grid[6][8] = Terrain.FOREST;
-            game.grid[2][5] = Terrain.FOREST; game.grid[5][5] = Terrain.FOREST;
-            // WALL storefronts / entrance pillars
-            game.grid[0][1] = Terrain.WALL; game.grid[7][1] = Terrain.WALL;
-            game.grid[0][6] = Terrain.WALL; game.grid[7][6] = Terrain.WALL;
-            game.grid[0][11] = Terrain.WALL; game.grid[7][11] = Terrain.WALL;
-
-            game.units = [
-                createUnit('haras', 1, 3, 'player'),
-                createUnit('larryDunk', 1, 4, 'player'),
-                createUnit('minion', 0, 3, 'player'),
-                createUnit('guard', 4, 2, 'enemy'),
-                createUnit('guard', 4, 5, 'enemy'),
-                createUnit('robot', 7, 3, 'enemy'),
-                createUnit('robot', 9, 5, 'enemy'),
-                createUnit('guard', 3, 5, 'enemy'),
-                createUnit('robot', 8, 2, 'enemy'),
-                createUnit('femaleLarry', 9, 3, 'enemy')
-            ];
-            spawnSelectedLarryDunks();
-
-            startLevel([
-                { speaker: 'NARRATOR', text: 'A shopping mall. Female Larry Dunk is in the parking structure. Or possibly the food court. Reports conflict.', color: '#aaa' },
-                { speaker: 'FEMALE LARRY', text: 'I know EXACTLY where I\'m going. This is NOT a wrong turn.', color: '#f80' },
-                { speaker: 'HARAS', text: 'She\'s about to drive into the fountain.', color: '#88f' },
-                { speaker: 'FEMALE LARRY', text: 'That is a DELIBERATE SHORTCUT. Absolutely intentional. Haras, I presume? I\'ve heard about you.', color: '#f80' },
-                { speaker: 'HARAS', text: 'Chip. Brain. Now.', color: '#88f' },
-                { speaker: 'FEMALE LARRY', text: 'I am going to DRIVE AWAY from this situation. *swerves unpredictably*', color: '#f80' }
-            ]);
-        },
-        victoryCheck: allEnemiesDefeated,
-        victoryText: 'Parking Validated!',
-        onVictory: function() {
-            startCutscene([
-                { speaker: 'FEMALE LARRY', text: '...that was... a calculated maneuver. I meant to be here.', color: '#f80' },
-                { speaker: 'HARAS', text: 'Chip installed. Your bad driving is now my bad driving.', color: '#88f' },
-                { speaker: 'FEMALE LARRY', text: '...yes... master... *parks slightly crooked*', color: '#f80' },
-                { speaker: 'NARRATOR', text: 'The collection is complete. Only Zeus remains.', color: '#aaa' },
-                { speaker: 'HARAS', text: 'Zeus Larry Dunk. The last one. And the most dangerous.', color: '#88f' },
-                { speaker: 'NARRATOR', text: 'Haras opens the portal to Mount Olympus.', color: '#555' },
-                { speaker: 'HARAS', text: 'I have a plan.', color: '#88f' }
-            ], () => { loadLevel(12); });
-        }
-    },
-
-    // 12: Ch.5 — The Thousand Horses (Zeus)
+    // 11: Ch.5 — The Thousand Horses (Zeus)
     {
         name: 'Ch.4: The Thousand Horses',
         gridW: 16, gridH: 12,
@@ -952,7 +891,7 @@ const LEVELS = [
         }
     },
 
-    // 13: FINAL — The One Horse
+    // 12: FINAL — The One Horse
     {
         name: 'FINAL: The One Horse',
         gridW: 16, gridH: 12,
@@ -1116,6 +1055,7 @@ function loadLevel(index) {
     });
 
     game.currentLevel = index;
+    game.phase = GamePhase.CUTSCENE; // immediately clear any defeat/victory state
     game.turn = 1;
     game.units = [];
     game.grid = [];
@@ -1138,7 +1078,8 @@ function loadLevel(index) {
     if (game._adCountdownTimer) { clearInterval(game._adCountdownTimer); game._adCountdownTimer = null; }
     game.pendingAdBreak = null;
 
-    playMusic(index === 12 ? 'level12' : 'cutscene');
+    resetMusicPositions();
+    playMusic(index === 11 ? 'level12' : 'cutscene');
 
     const level = LEVELS[index];
     document.getElementById('levelName').textContent = level.name;

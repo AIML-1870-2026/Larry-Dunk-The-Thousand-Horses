@@ -79,13 +79,6 @@ function createUnit(type, gx, gy, team) {
             desc: 'Attacking triggers an unskippable ad. Highest ATK in the roster, lowest MOV.',
             isLarryDunk: true
         },
-        femaleLarry: {
-            name: 'Female Larry Dunk', hp: 16, atk: 4, def: 2, mov: 4, range: 1,
-            spriteKey: 'femaleLarry', special: 'Bad Driving',
-            desc: '20% chance to land 1 tile off-target when moving.',
-            isLarryDunk: true,
-            badDriving: true  // 20% chance to land 1 tile off on move
-        },
         // ---- Other units ----
         horse: {
             name: 'Horse', hp: 30, atk: 12, def: 5, mov: 7, range: 1,
@@ -125,7 +118,6 @@ function createUnit(type, gx, gy, team) {
         alive: true,
         isLarryDunk: t.isLarryDunk || false,
         invisible: t.invisible || false,
-        badDriving: t.badDriving || false,
         attacksLeft: type === 'cainAbel' ? 2 : 1
     };
 }

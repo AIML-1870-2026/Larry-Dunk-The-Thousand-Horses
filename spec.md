@@ -72,7 +72,6 @@ No modules — everything is global. Canvas: **960×640**, scaled to full window
 | axeLarry | 36 | 13 | 3 | 3 | 1 | Chain Kill |
 | cerealLarry | 25 | 6 | 4 | 4 | 1 | Invisible |
 | investmentLarry | 30 | 15 | 5 | 2 | 1 | Ad Break |
-| femaleLarry | 16 | 4 | 2 | 4 | 1 | Bad Driving |
 | mrRuno | 35 | 12 | 4 | 3 | 1 | Non-capturable |
 | zeusLarry | 50 | 11 | 5 | 3 | 3 | Lightning |
 
@@ -98,7 +97,6 @@ Larry Dunk hits 0 HP → Tetris capture (synchronous). Defeat: Haras dies or all
 - **Chain Kill** (`axeLarry`): free attack on nearest adjacent enemy after non-Larry kill.
 - **Invisible** (`cerealLarry`): enemy AI ignores this unit entirely.
 - **Ad Break** (`investmentLarry`): full-screen fake 3s YouTube ad before attack resolves.
-- **Bad Driving** (`femaleLarry`): 20% chance to land 1 tile off target on move.
 - **Eye Bullets** (`paraplegicLarry`): range 3, but can't attack if any enemy is adjacent.
 
 ---
@@ -136,7 +134,7 @@ Score per target: `(maxHp - hp) + (haras ? 20 : 0) - distance * 2`. Attacks best
 | ending, credits | oji - idée. (en mi bémol majeur) |
 | level12 (exclusive) | Song For Wemmbu — PLAYFUL MASSACRE (2v1000 ver.) |
 
-Level 12 music plays uninterrupted — all phase-transition calls guarded with `currentLevel !== 12`.
+Level 11 (Zeus) music plays uninterrupted — all phase-transition calls guarded with `currentLevel !== 11`.
 
 **Voice** (`voice.js`): Web Speech API TTS. `speakLine(speaker, text)` on each dialogue line, `stopVoice()` on advance/back/skip/end. Profiles: Haras 0.55/0.78, Narrator 1.0/0.82, Larry Dunk 1.3/1.08, Mr. Runo 0.7/0.88, Dr. Retina 1.15/1.3, Zeus 0.85/0.68, Loyal Horse 0.45/0.55. Unknown Larry variants fall back to Larry Dunk.
 
@@ -170,11 +168,10 @@ Level 12 music plays uninterrupted — all phase-transition calls guarded with `
 | 6 | The Slaughterhouse | 12×8 | Axe Murderer Larry | 3 guards |
 | 7 | Part of a Complete Breakfast | 12×9 | Cereal Larry | Invisible boss |
 | 8 | Q4 Acquisition | 14×9 | Investment Larry | Two-floor, STAIR at (4,4)+(9,4) |
-| 9 | Wrong Turn | 12×8 | Female Larry | Mall, WATER fountain |
-| 10 | The Other Me | 12×8 | Rival Haras | PORTAL flanks |
-| 11 | Catch Mr. Runo! | 14×10 | Mr. Runo | Runs for EXIT, don't let him escape |
-| 12 | The Thousand Horses | 16×12 | Zeus (neutral) | Rigged Tetris → Level 13 |
-| 13 | The One Horse | 16×12 | — | Escape via PORTAL; loyal horse only ally |
+| 9 | The Other Me | 12×8 | Rival Haras | PORTAL flanks |
+| 10 | Catch Mr. Runo! | 14×10 | Mr. Runo | Runs for EXIT, don't let him escape |
+| 11 | The Thousand Horses | 16×12 | Zeus (neutral) | Rigged Tetris → Level 12 |
+| 12 | The One Horse | 16×12 | — | Escape via PORTAL; loyal horse only ally |
 
 ---
 

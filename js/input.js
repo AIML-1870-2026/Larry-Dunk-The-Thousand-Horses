@@ -134,17 +134,6 @@ function selectUnit(unit) {
 }
 
 function moveUnit(unit, gx, gy) {
-    // Female Larry bad driving: 20% chance to land 1 tile off in a random direction
-    if (unit.badDriving && Math.random() < 0.2) {
-        const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
-        const [dx, dy] = dirs[Math.floor(Math.random() * dirs.length)];
-        const nx = gx + dx, ny = gy + dy;
-        if (nx >= 0 && nx < game.gridW && ny >= 0 && ny < game.gridH &&
-            getTerrain(nx, ny).moveCost < 99 && !getUnitAt(nx, ny)) {
-            gx = nx; gy = ny;
-            showBanner('Bad Driving!', 900);
-        }
-    }
     playSound('move');
     unit.gx = gx;
     unit.gy = gy;
@@ -231,7 +220,7 @@ function endPlayerTurn() {
     if (game.phase === GamePhase.TETRIS) return;
     deselectUnit();
     game.phase = GamePhase.ENEMY_TURN;
-    if (game.currentLevel !== 12) playMusic('enemyPhase');
+    if (game.currentLevel !== 11) playMusic('enemyPhase');
     playSound('enemy_phase');
     showBanner('Enemy Phase', 1200);
     updateTopBar();

@@ -540,54 +540,6 @@ function drawSprite_investmentLarry(x, y, sz) {
     _legs(cx, y + u * 17.5, u, '#111118');
 }
 
-// ---- Female Larry Dunk ----
-// Pink blazer + flowing long blond hair (same blond, different style) + black skirt + LD face
-function drawSprite_femaleLarry(x, y, sz) {
-    const u = sz / 20, cx = x + sz / 2, headY = y + u * 9;
-
-    // Long flowing blond hair sides (drawn behind body)
-    ctx.fillStyle = '#F0B840';
-    _ellipse(cx - u*7, headY + u*3, u*2.5, u*5.5);
-    _ellipse(cx + u*7, headY + u*3, u*2.5, u*5.5);
-
-    // Pink blazer
-    ctx.fillStyle = '#cc4488';
-    _roundRect(cx - u*6, y + u*13, u*12, u*6, u*1.5);
-    // White blouse collar (V-neck)
-    ctx.fillStyle = '#ffffff';
-    ctx.beginPath(); ctx.moveTo(cx - u*2, y + u*13); ctx.lineTo(cx, y + u*16.5); ctx.lineTo(cx + u*2, y + u*13); ctx.fill();
-    ctx.fillStyle = '#cc4488';
-    ctx.beginPath(); ctx.moveTo(cx - u*0.8, y + u*13); ctx.lineTo(cx, y + u*15.5); ctx.lineTo(cx + u*0.8, y + u*13); ctx.fill();
-
-    // Black skirt (flares slightly)
-    ctx.fillStyle = '#1a1a1a';
-    ctx.beginPath();
-    ctx.moveTo(cx - u*5.5, y + u*18);
-    ctx.lineTo(cx - u*7, y + u*22);
-    ctx.lineTo(cx + u*7, y + u*22);
-    ctx.lineTo(cx + u*5.5, y + u*18);
-    ctx.closePath(); ctx.fill();
-
-    // Legs (skin tone, heels)
-    ctx.fillStyle = '#E8A060';
-    ctx.fillRect(cx - u*4, y + u*21.5, u*2.2, u*2);
-    ctx.fillRect(cx + u*1.8, y + u*21.5, u*2.2, u*2);
-
-    // Wild blond hair — same poof top as standard LD
-    ctx.fillStyle = '#F0B840';
-    ctx.beginPath(); ctx.arc(cx, headY - u, u * 7.5, Math.PI * 0.8, Math.PI * 2.2); ctx.fill();
-    _circle(cx - u * 5.5, headY - u * 0.5, u * 3);
-    _circle(cx + u * 5.5, headY - u * 0.5, u * 3);
-    // Orange-tan skin
-    ctx.fillStyle = '#E8A060';
-    _ellipse(cx, headY, u * 5, u * 5.5);
-    // Rosy cheeks (slightly more pronounced)
-    ctx.fillStyle = 'rgba(220,100,60,0.25)';
-    _circle(cx - u * 3.5, headY + u * 1.2, u * 2);
-    _circle(cx + u * 3.5, headY + u * 1.2, u * 2);
-    _eyes(cx, headY + u * 0.5, u);
-}
-
 // ============================================================
 // HORSES
 // ============================================================
@@ -747,7 +699,6 @@ const SPRITES = {
     axeLarry:           drawSprite_axeLarry,
     cerealLarry:        drawSprite_cerealLarry,
     investmentLarry:    drawSprite_investmentLarry,
-    femaleLarry:        drawSprite_femaleLarry,
     horse:              drawSprite_horse,
     loyalHorse:         drawSprite_loyalHorse,
     enemyHaras:         drawSprite_enemyHaras,

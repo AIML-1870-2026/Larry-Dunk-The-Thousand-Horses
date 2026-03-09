@@ -5,7 +5,7 @@
 // LDs available at the START of each level in normal play order.
 // Indexed by level number; mrRuno and zeusLarry are never capturable.
 // New order: 0 Prologue 1 Tutorial 2 C&A 3 British 4 Survivalist 5 Paraplegic
-//            6 Axe 7 Cereal 8 RivalHaras 9 Runo 10 Investment 11 Female 12 Zeus 13 Final
+//            6 Axe 7 Cereal 8 RivalHaras 9 Runo 10 Investment 11 Zeus 12 Final
 const LD_POOL_AT_LEVEL = [
     [],                                                                                                    // 0 Prologue
     [],                                                                                                    // 1 Tutorial
@@ -18,9 +18,8 @@ const LD_POOL_AT_LEVEL = [
     ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry'],       // 8 Rival Haras (rival not capturable)
     ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry'],       // 9 Mr. Runo (Runo not capturable as LD)
     ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'larryDunk'],  // 10 Investment
-    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'larryDunk'],  // 11 Female
-    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry', 'larryDunk'],  // 12 Zeus (mrRuno not capturable)
-    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry', 'larryDunk'],  // 13 Final (zeusLarry not capturable)
+    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'larryDunk'],  // 11 Zeus (mrRuno not capturable)
+    ['cainAbel', 'britishLarry', 'survivalistLarry', 'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'larryDunk'],  // 12 Final (zeusLarry not capturable)
 ];
 
 // ---- TITLE SCREEN ----
@@ -94,6 +93,8 @@ document.addEventListener('keydown', (e) => {
     }
     if (e.key === ' ' || e.key === 'Enter') {
         if (game.phase === GamePhase.CUTSCENE) advanceDialogue();
+        if (game.phase === GamePhase.VICTORY) document.getElementById('victoryScreen').click();
+        if (game.phase === GamePhase.DEFEAT)  document.getElementById('defeatScreen').click();
     }
     if (e.key === 'v' || e.key === 'V') {
         const on = toggleVoice();

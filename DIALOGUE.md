@@ -282,34 +282,11 @@ INVESTMENT LARRY: ...this acquisition is... pending regulatory approval...
 HARAS: Chip installed. Welcome to the portfolio.
 NARRATOR: His Ad Break ability remains active. The chip did not disable the ad.
 CAIN & ABEL: That advertisement was twenty-two seconds. We counted. We had time.
-HARAS: Next signal: Female Larry Dunk. Shopping mall. Reports conflict on exact location.
+HARAS: Next signal: Zeus Larry Dunk. Mount Olympus.
 
 ---
 
-## LEVEL 11: Ch.3.6 — Wrong Turn
-
-### Intro
-
-NARRATOR: A shopping mall. Female Larry Dunk is in the parking structure. Or possibly the food court. Reports conflict.
-FEMALE LARRY: I know EXACTLY where I'm going. This is NOT a wrong turn.
-HARAS: She's about to drive into the fountain.
-FEMALE LARRY: That is a DELIBERATE SHORTCUT. Absolutely intentional. Haras, I presume? I've heard about you.
-HARAS: Chip. Brain. Now.
-FEMALE LARRY: I am going to DRIVE AWAY from this situation. *swerves unpredictably*
-
-### On Victory
-
-FEMALE LARRY: ...that was... a calculated maneuver. I meant to be here.
-HARAS: Chip installed. Your bad driving is now my bad driving.
-FEMALE LARRY: ...yes... master... *parks slightly crooked*
-NARRATOR: The collection is complete. Only Zeus remains.
-HARAS: Zeus Larry Dunk. The last one. And the most dangerous.
-NARRATOR: Haras opens the portal to Mount Olympus.
-HARAS: I have a plan.
-
----
-
-## LEVEL 12: Ch.5 — The Thousand Horses
+## LEVEL 11: Ch.5 — The Thousand Horses
 
 ### Intro
 
@@ -362,7 +339,7 @@ HARAS: Find me a loyal horse.
 
 ---
 
-## LEVEL 13: Final — The One Horse
+## LEVEL 12: Final — The One Horse
 
 ### Intro
 

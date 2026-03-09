@@ -32,6 +32,7 @@ const RIGGED_SEQUENCE = ['S', 'Z', 'S', 'Z', 'I', 'S', 'Z', 'S', 'Z', 'S', 'Z'];
 
 let tetris = {
     active: false,
+    waiting: false,   // true = showing "click to begin" intro screen
     unit: null,
     rigged: false,
     board: [],
@@ -59,7 +60,7 @@ function getTetrisThreshold(unit) {
 
 // ---- ENTRY POINT ----
 function startTetrisCapture(unit, options = {}) {
-    if (game.currentLevel !== 12) playMusic('tetris');
+    if (game.currentLevel !== 11) playMusic('tetris');
     tetris.active = true;
     tetris.unit = unit;
     tetris.rigged = options.rigged || false;
@@ -128,7 +129,7 @@ function startTetrisCapture(unit, options = {}) {
             ], () => {
                 const zeus = game.units.find(u => u.type === 'zeusLarry');
                 if (zeus) zeus.alive = false;
-                loadLevel(13);
+                loadLevel(12);
             });
         } else if (unit.type === 'mrRuno') {
             unit.alive = false;
@@ -152,21 +153,11 @@ function startTetrisCapture(unit, options = {}) {
         }
     };
 
+    tetris.waiting = true;
     game.phase = GamePhase.TETRIS;
     document.getElementById('btnEndTurn').style.display = 'none';
     spawnTetrisPiece();
-    startTetrisDrop();
-
-    if (tetris.rigged) {
-        setTimeout(() => {
-            if (tetris.active) {
-                tetris.rivalArrived = true;
-                tetris.gameOver = true;
-                stopTetrisDrop();
-                setTimeout(() => tetris.onFail(), 800);
-            }
-        }, 15000);
-    }
+    // Drop + rigged timer start when player dismisses the intro screen (see _beginTetris)
 }
 
 // ---- PIECE MANAGEMENT ----
@@ -201,7 +192,12 @@ function rotatePiece() {
         Math.round(cx + (y - cy)),
         Math.round(cy - (x - cx))
     ]);
-    if (!collidesBoard(rotated)) tetris.currentPiece.cells = rotated;
+    // Try normal rotation, then wall kicks (shift left/right by 1 or 2 for I-piece)
+    const kicks = [0, -1, 1, -2, 2];
+    for (const kick of kicks) {
+        const kicked = rotated.map(([x, y]) => [x + kick, y]);
+        if (!collidesBoard(kicked)) { tetris.currentPiece.cells = kicked; return; }
+    }
 }
 
 function movePiece(dx, dy) {
@@ -312,12 +308,13 @@ function stopTetrisDrop() {
 function endTetris() {
     tetris.active = false;
     stopTetrisDrop();
-    if (game.currentLevel !== 12) playMusic('playerPhase');
+    if (game.currentLevel !== 11) playMusic('playerPhase');
     document.getElementById('btnEndTurn').style.display = 'inline-block';
 }
 
 // ---- INPUT ----
 function handleTetrisClick(e) {
+    if (tetris.waiting) { _beginTetris(); return; }
     if (tetris.gameOver) return;
     const rect = canvas.getBoundingClientRect();
     const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
@@ -325,8 +322,24 @@ function handleTetrisClick(e) {
     else movePiece(1, 0);
 }
 
+function _beginTetris() {
+    tetris.waiting = false;
+    startTetrisDrop();
+    if (tetris.rigged) {
+        setTimeout(() => {
+            if (tetris.active) {
+                tetris.rivalArrived = true;
+                tetris.gameOver = true;
+                stopTetrisDrop();
+                setTimeout(() => tetris.onFail(), 800);
+            }
+        }, 15000);
+    }
+}
+
 document.addEventListener('keydown', (e) => {
     if (game.phase !== GamePhase.TETRIS || tetris.gameOver) return;
+    if (tetris.waiting) { _beginTetris(); e.preventDefault(); return; }
     if (e.key === 'ArrowLeft'  || e.key === 'a' || e.key === 'A') movePiece(-1, 0);
     if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') movePiece(1, 0);
     if (e.key === 'ArrowDown'  || e.key === 's' || e.key === 'S') movePiece(0, 1);
@@ -649,6 +662,42 @@ function renderTetris() {
         ctx.textAlign = 'center';
         ctx.fillText('RIVAL HARAS', boardX + boardW / 2, boardY + boardH / 2 - 10);
         ctx.fillText('INCOMING', boardX + boardW / 2, boardY + boardH / 2 + 10);
+    }
+
+    // "Click to begin" intro overlay
+    if (tetris.waiting) {
+        const t = Date.now();
+        const pulse = 0.6 + 0.4 * Math.sin(t / 500);
+        ctx.fillStyle = 'rgba(0,0,0,0.78)';
+        ctx.fillRect(boardX - 2, boardY - 2, boardW + 4, boardH + 4);
+        ctx.textAlign = 'center';
+        const mx = boardX + boardW / 2;
+
+        ctx.font = 'bold 13px Courier New';
+        ctx.fillStyle = '#ffcc44';
+        ctx.fillText('CHIP IMPLANT', mx, boardY + boardH * 0.22);
+
+        ctx.font = '10px Courier New';
+        ctx.fillStyle = '#aaa';
+        const instructions = [
+            ['MOVE',      '← → / A D'],
+            ['ROTATE',    '↑ / W / Z'],
+            ['SOFT DROP', '↓ / S'],
+            ['HARD DROP', 'SPACE'],
+        ];
+        let iy = boardY + boardH * 0.35;
+        for (const [label, key] of instructions) {
+            ctx.fillStyle = '#666';
+            ctx.fillText(label, mx, iy);
+            iy += 13;
+            ctx.fillStyle = '#88aaff';
+            ctx.fillText(key, mx, iy);
+            iy += 18;
+        }
+
+        ctx.font = `bold 11px Courier New`;
+        ctx.fillStyle = `rgba(255,255,255,${pulse})`;
+        ctx.fillText('— Click or press any key to begin —', mx, boardY + boardH * 0.88);
     }
 
     ctx.textAlign = 'left';

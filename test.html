@@ -107,7 +107,7 @@ section('Unit Templates');
 const KNOWN_TYPES = [
     'haras','minion','civilian','larryDunk','cainAbel','mrRuno','zeusLarry',
     'britishLarry','survivalistLarry','paraplegicLarry','axeLarry','cerealLarry',
-    'investmentLarry','femaleLarry','horse','loyalHorse',
+    'investmentLarry','horse','loyalHorse',
     'guard','dummy','enemyHaras','robot'
 ];
 
@@ -141,7 +141,7 @@ pass(`isLarryDunk units: ${larryTypes.join(', ')}`);
 
 // Verify that player-team Larry units won't trigger Tetris (manual note — can't test runtime)
 const playerLarrys = ['mrRuno', 'larryDunk', 'britishLarry', 'cainAbel',
-    'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'femaleLarry', 'survivalistLarry'];
+    'paraplegicLarry', 'axeLarry', 'cerealLarry', 'investmentLarry', 'survivalistLarry'];
 pass(`combat.js checks defender.team === 'enemy' before Tetris — player Larrys safe`,
     `Affected in-squad types: ${playerLarrys.join(', ')}`);
 

@@ -10,6 +10,7 @@ function startCutscene(dialogues, callback) {
     game.phase = GamePhase.CUTSCENE;
     document.getElementById('dialogueBox').style.display = 'block';
     document.getElementById('actionPanel').style.display = 'none';
+    document.getElementById('unitInfo').style.display = 'none';
     showDialogueLine();
 }
 
@@ -368,7 +369,7 @@ function advanceDialogue() {
 }
 
 function backDialogue(e) {
-    if (e) e.stopPropagation();
+    if (e) { e.stopPropagation(); e.currentTarget.blur(); }
     if (game.cutsceneIndex <= 0) return;
     if (game._typewriterInterval) clearInterval(game._typewriterInterval);
     stopVoice();
@@ -385,7 +386,7 @@ function backDialogue(e) {
 }
 
 function skipAllDialogue(e) {
-    if (e) e.stopPropagation();
+    if (e) { e.stopPropagation(); e.currentTarget.blur(); }
     if (game._typewriterInterval) clearInterval(game._typewriterInterval);
     stopVoice();
     endCutscene();

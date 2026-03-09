@@ -5,7 +5,7 @@
 
 ## QUICK REFERENCE
 
-**Level sequence:** 0 Prologue → 1 Tutorial → 2 Cain&Abel → 3 British Larry → 4 Survivalist Larry → 5 Paraplegic Larry → 6 Axe Murderer → 7 Cereal Mascot → 8 Investment Group → 9 Female Larry → 10 Rival Haras → 11 Mr. Runo → 12 Zeus → 13 Final
+**Level sequence:** 0 Prologue → 1 Tutorial → 2 Cain&Abel → 3 British Larry → 4 Survivalist Larry → 5 Paraplegic Larry → 6 Axe Murderer → 7 Cereal Mascot → 8 Investment Group → 9 Rival Haras → 10 Mr. Runo → 11 Zeus → 12 Final
 
 **File load order:** constants → sprites → units → grid → combat → ai → ui → input → cutscene → levels → tetris → music → voice → main
 
@@ -33,7 +33,6 @@
 - [x] axeLarry: blue suit, bloody axe polygon, blood spatters, evil brows
 - [x] cerealLarry: golden cream (#fff0b0) chef hat + outline, orange mascot suit, yellow polka dots
 - [x] investmentLarry: charcoal power suit, dark red tie + gold pin, briefcase
-- [x] femaleLarry: pink blazer, black flared skirt, longer blond flowing hair
 - [x] horse: barrel body, arching neck trapezoid, polygon head, wide mane + forelock
 - [x] loyalHorse: identical to horse + tiny 3-dot yellow bow on mane
 - [x] enemyHaras: dark red body (#4a0000) + evil eyebrows — visually distinct from player Haras (dark blue #1a3a8a)
@@ -53,7 +52,6 @@
 - [x] Chain Kill (axeLarry): on non-Larry kill, one free attack on nearest adjacent enemy (isChain flag prevents recursion)
 - [x] Invisible (cerealLarry): invisible: true; enemy AI skips unit as target in both pre-move and post-move loops
 - [x] Ad Break (investmentLarry, player only): fake LARRY DUNK FINANCIAL SERVICES™ ad (3s countdown before skip); deferred via GamePhase.AD_BREAK + game.pendingAdBreak + showAdBreak/skipAdBreak
-- [x] Bad Driving (femaleLarry): 20% chance to land 1 tile off in random direction on move; plays banner if fires
 - [x] Eye Bullets (paraplegicLarry): range 3 — but cannot attack if any enemy is adjacent (getAttackTiles returns [] if blocked; implemented in grid.js)
 
 #### Terrain System
@@ -123,11 +121,10 @@
 - [x] 6 Axe Murderer: slaughterhouse 12×8, FOREST crates, Chain Kill boss
 - [x] 7 Cereal Mascot: TV studio 12×9, TEMPLE floor, Invisible boss
 - [x] 8 Investment Group: **two-floor** corporate office 14×9; lower lobby (OFFICE_FLOOR) connects to upper boardroom (UPPER_FLOOR) via two STAIR tiles at (4,4) and (9,4); Investment Larry at conference table (THRONE) upstairs
-- [x] 9 Female Larry: mall 12×8, WATER fountain, GYM_FLOOR shops, FOREST planters, Bad Driving boss
-- [x] 10 Rival Haras: interdimensional crossroads 12×8, PORTAL corners + CLOUD strip; rival Haras + guards + robots
-- [x] 11 Mr. Runo: gym 14×10, WALL barrier at x=10 forces 4-turn escape route; 8-turn limit, father reveal, Dr. Retina flashback at turn 4
-- [x] 12 Zeus: Mount Olympus 16×10, TEMPLE + CLOUD, rigged Tetris, rival steals Zeus → loadLevel(13)
-- [x] 13 Final: chaos, horses betray, loyal horse escape ending
+- [x] 9 Rival Haras: interdimensional crossroads 12×8, PORTAL corners + CLOUD strip; rival Haras + guards + robots
+- [x] 10 Mr. Runo: gym 14×10, WALL barrier at x=10 forces 4-turn escape route; 8-turn limit, father reveal, Dr. Retina flashback at turn 4
+- [x] 11 Zeus: Mount Olympus 16×10, TEMPLE + CLOUD, rigged Tetris, rival steals Zeus → loadLevel(12)
+- [x] 12 Final: chaos, horses betray, loyal horse escape ending
 
 #### Dialogue
 - [x] DIALOGUE.md fully synced to levels.js — verified line-by-line across all 14 levels + Between 12-13 chaos section. Dialogue trimmed and revised for comedic tone (middle manager framing, beach rename throughout L4, various line cuts across L2/L3/L5/L6/L10/L13).
@@ -150,7 +147,6 @@
 - [x] Level 8: 3 guards + 2 robots → 2 guards + 1 robot (pre two-floor redesign); now redesigned with 1 lower guard + 2 upper enemies
 - [x] Level 10 (Rival Haras): removed 2 robots
 - [x] Level 11 (Mr. Runo): HP 45→35, WALL barrier forces 4-turn escape
-- [x] femaleLarry nerfed: HP 22→16, ATK 5→4, DEF 3→2
 - [x] Levels 3–11: expanded LD slots + added compensating enemies per level (guards + robots)
 
 ---
@@ -173,23 +169,14 @@
   - `playerPhase`, `tetris` → `Koi-discovery - Plasma-corrélation.mp3`
   - `enemyPhase`, `defeat` → `Koi-discovery - Rouge-haine-les-9-âmes.mp3`
   - `ending`, `credits` → `oji - idée. (en mi bémol majeur).mp3`
-  - `level12` → `Song For Wemmbu PLAYFUL MASSACRE (2v1000 ver.).mp3` (exclusive to level 12)
-- [x] Level 12 mp3 plays through entire battle (cutscene, player turns, enemy turns, Tetris) — all phase-transition music calls guarded with `game.currentLevel !== 12`
+  - `level12` → `Song For Wemmbu PLAYFUL MASSACRE (2v1000 ver.).mp3` (exclusive to level 11/Zeus)
+- [x] Level 11 mp3 plays through entire battle (cutscene, player turns, enemy turns, Tetris) — all phase-transition music calls guarded with `game.currentLevel !== 11`
 - [x] `playMusic`/`stopMusic` wired in: main.js (title click), levels.js (loadLevel, startLevel callback, checkVictoryDefeat), input.js (endPlayerTurn), ai.js (endEnemyTurn), tetris.js (startTetrisCapture, endTetris)
 - [x] music.js added before main.js in index.html load order
 
 ### Balance
 - [x] Horse buff: horse HP 20→30, ATK 6→12, DEF 3→5, MOV 6→7; loyalHorse HP 25→38, ATK 8→15, DEF 5→7, MOV 7→8
 
----
-
-## OPEN QUESTIONS / BACKLOG
-
-- [ ] Audio: civilian refusal VO link (developer to provide)
-- [ ] Audio: "Absolute Cinema" ending clip link (developer to provide)
-- [ ] Dr. Retina universe deaths — confirm list: U1=old age, U2=choked on grape, U3=fell into volcano texting, U4=legally declared dead from boredom, U5+=TBD
-- [ ] Do rival Harases appear as visible units on earlier maps before Level 10? (currently only in Level 10 as combat encounter)
-- [ ] AI voice acting — VERY LAST FEATURE. Only after final playtest sign-off. (Haras: dramatic baritone; Larry Dunk: pompous; Narrator: deadpan; etc.)
 
 ---
 
@@ -221,7 +208,7 @@ You play as **Haras**, a megalomaniacal tech villain who invented a brain chip c
 
 ### Dr. Retina
 - Haras's former mentor. Cold and demanding. Taught tech fundamentals and robot direction.
-- Deceased in every universe — increasingly unhinged causes of death across universes.
+- Deceased in every universe
 
 ### Mr. Runo
 - Haras's father, who abandoned him with Dr. Retina.
@@ -246,7 +233,6 @@ You play as **Haras**, a megalomaniacal tech villain who invented a brain chip c
 | Axe Murderer Larry Dunk | axeLarry | Chain Kill: killing a non-Larry triggers one free attack on nearest adjacent enemy | Uncommon |
 | Cereal Mascot Larry Dunk | cerealLarry | Invisible: enemy AI cannot target or move toward this unit | Uncommon |
 | Investment Group Larry Dunk | investmentLarry | Ad Break: player must watch a fake 3s unskippable ad before attack fires | Rare, highest ATK |
-| Female Larry Dunk | femaleLarry | Bad Driving: 20% chance to land 1 tile off-target when moving | Uncommon |
 | Mr. Runo | mrRuno | Huge Biceps: massive ATK; non-capturable (chip won't stick) | Rare, permanent miss on Tetris fail |
 | Zeus Larry Dunk | zeusLarry | Lightning: range 3; accidentally broadcasts coordinates | Legendary; Tetris rigged — rival steals him |
 
@@ -261,7 +247,7 @@ When a Larry Dunk (enemy team) hits 0 HP, Tetris overlay appears instead of deat
 | Common Larry Dunks | Very Low (200) | Soft retry |
 | Cain & Abel | Very Low (100) | Soft retry (story-guaranteed) |
 | Mr. Runo | High (800) | Escapes permanently |
-| Zeus Larry Dunk | Unwinnable (rigged) | Rival Haras steals him → level 13 |
+| Zeus Larry Dunk | Unwinnable (rigged) | Rival Haras steals him → level 12 |
 
 Speed: 800ms drop interval → 150ms min, -50ms per 50 pts scored.
 
@@ -281,7 +267,7 @@ Speed: 800ms drop interval → 150ms min, -50ms per 50 pts scored.
 
 - Multi-file JS (no modules). Load order: constants → sprites → units → grid → combat → ai → ui → input → cutscene → levels → tetris → music → voice → main
 - Canvas rendering at 960×640 internal resolution, scaled to full browser window
-- Sprite keys: `haras`, `minion`, `civilian`, `larryDunk`, `cainAbel`, `mrRuno`, `zeusLarry`, `britishLarry`, `survivalistLarry`, `paraplegicLarry`, `axeLarry`, `cerealLarry`, `investmentLarry`, `femaleLarry`, `horse`, `loyalHorse`, `enemyHaras`, `guard`, `robot`, `dummy`
+- Sprite keys: `haras`, `minion`, `civilian`, `larryDunk`, `cainAbel`, `mrRuno`, `zeusLarry`, `britishLarry`, `survivalistLarry`, `paraplegicLarry`, `axeLarry`, `cerealLarry`, `investmentLarry`, `horse`, `loyalHorse`, `enemyHaras`, `guard`, `robot`, `dummy`
 - `createUnit(type, gx, gy, team)` — all templates in units.js with `isLarryDunk: true` on LD variants
 - Tetris triggered synchronously in `_resolveCombat()` when LD hits 0 HP (no setTimeout — avoids render race condition)
 - Zeus uses `team: 'neutral'`; `getAttackTiles()` excludes neutral team
