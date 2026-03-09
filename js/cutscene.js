@@ -8,7 +8,7 @@ function startCutscene(dialogues, callback) {
     game.cutsceneIndex = 0;
     game.cutsceneCallback = callback;
     game.phase = GamePhase.CUTSCENE;
-    document.getElementById('dialogueBox').style.display = 'block';
+    document.getElementById('dialogueBox').style.display = 'flex';
     document.getElementById('actionPanel').style.display = 'none';
     document.getElementById('unitInfo').style.display = 'none';
     showDialogueLine();

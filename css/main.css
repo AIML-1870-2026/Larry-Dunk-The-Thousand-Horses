@@ -178,19 +178,25 @@ canvas {
     bottom: 0; left: 0; right: 0;
     background: rgba(10, 10, 40, 0.95);
     border-top: 3px solid #6a6aaa;
-    padding: 16px 20px 16px 20px;
+    padding: 16px 20px 12px 20px;
     min-height: 120px;
     display: none;
+    flex-direction: column;
     pointer-events: auto;
     cursor: pointer;
 }
 #dialogueBox .speaker  { color: #ffcc44; font-size: 16px; font-weight: bold; margin-bottom: 6px; }
 #dialogueBox .text     { color: #ddd; font-size: 15px; line-height: 1.5; }
-#dialogueBox .continue { color: #88aacc; font-size: 12px; margin-top: 8px; animation: blink 1s infinite; letter-spacing: 0.5px; }
+
+#dlgFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+#dlgFooter .continue { color: #88aacc; font-size: 12px; animation: blink 1s infinite; letter-spacing: 0.5px; }
 
 #btnBackDialogue {
-    position: absolute;
-    bottom: 14px; left: 16px;
     background: transparent;
     border: 1px solid #666;
     color: #888;
@@ -204,8 +210,6 @@ canvas {
 #btnBackDialogue:hover { color: #ccc; border-color: #999; }
 
 #btnSkipDialogue {
-    position: absolute;
-    bottom: 14px; right: 16px;
     background: rgba(80, 40, 40, 0.6);
     border: 1px solid #884444;
     color: #cc8888;

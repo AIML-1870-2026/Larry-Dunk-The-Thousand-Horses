@@ -35,9 +35,11 @@
         <div id="dialogueBox" onclick="advanceDialogue()">
             <div class="speaker" id="dlgSpeaker"></div>
             <div class="text"    id="dlgText"></div>
-            <div class="continue">Click or [Space] to continue</div>
-            <button id="btnBackDialogue" onclick="backDialogue(event)">◀ Back</button>
-            <button id="btnSkipDialogue" onclick="skipAllDialogue(event)">Skip All ▶▶</button>
+            <div id="dlgFooter">
+                <button id="btnBackDialogue" onclick="backDialogue(event)">◀ Back</button>
+                <div class="continue">Click or [Space] to continue</div>
+                <button id="btnSkipDialogue" onclick="skipAllDialogue(event)">Skip All ▶▶</button>
+            </div>
         </div>
     </div>
 
