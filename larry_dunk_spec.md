@@ -168,9 +168,9 @@
   - `title`, `cutscene`, `victory` → `HoliznaCC0 - Deus Ex Machina.mp3`
   - `playerPhase`, `tetris` → `Koi-discovery - Plasma-corrélation.mp3`
   - `enemyPhase`, `defeat` → `Koi-discovery - Rouge-haine-les-9-âmes.mp3`
-  - `ending`, `credits` → `oji - idée. (en mi bémol majeur).mp3`
+  - `ending`, `credits` → `Geese - 100 Horses.wav` (plays entire final level + ending cutscene + credits)
   - `level12` → `Song For Wemmbu PLAYFUL MASSACRE (2v1000 ver.).mp3` (exclusive to level 11/Zeus)
-- [x] Level 11 mp3 plays through entire battle (cutscene, player turns, enemy turns, Tetris) — all phase-transition music calls guarded with `game.currentLevel !== 11`
+- [x] Level 11 (Zeus) and Level 12 (Final) music plays uninterrupted — all phase-transition calls guarded with `game.currentLevel !== 11 && game.currentLevel !== 12`
 - [x] `playMusic`/`stopMusic` wired in: main.js (title click), levels.js (loadLevel, startLevel callback, checkVictoryDefeat), input.js (endPlayerTurn), ai.js (endEnemyTurn), tetris.js (startTetrisCapture, endTetris)
 - [x] music.js added before main.js in index.html load order
 
@@ -284,5 +284,6 @@ All tracks used under Creative Commons licenses.
 | `HoliznaCC0 - Deus Ex Machina.mp3` | HoliznaCC0 | Deus Ex Machina | CC0 | Title, cutscenes, victory |
 | `Koi-discovery - Plasma-corrélation.mp3` | Koi-discovery | Plasma-corrélation | CC BY | Player phase, Tetris |
 | `Koi-discovery - Rouge-haine-les-9-âmes.mp3` | Koi-discovery | Rouge-haine-les-9-âmes | CC BY | Enemy phase, defeat |
-| `oji - idée. (en mi bémol majeur).mp3` | oji | idée. (en mi bémol majeur) | CC BY | Ending, credits |
+| `oji - idée. (en mi bémol majeur).mp3` | oji | idée. (en mi bémol majeur) | CC BY | (unused / available) |
+| `Geese - 100 Horses.wav` | Geese | 100 Horses | — | Ending cutscene + credits (final level) |
 | `Song For Wemmbu PLAYFUL MASSACRE (2v1000 ver.).mp3` | (unknown) | Song For Wemmbu — PLAYFUL MASSACRE (2v1000 ver.) | — | Level 12 exclusive (entire battle) |

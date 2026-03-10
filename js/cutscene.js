@@ -277,11 +277,12 @@ const Cinema = {
             // Music credits
             ctx.font = '10px Courier New';
             ctx.fillStyle = `rgba(110,95,55,${0.5 * pulse})`;
-            ctx.fillText('Music:', W / 2, H * 0.755);
-            ctx.fillText('HoliznaCC0 — Deus Ex Machina (CC0)', W / 2, H * 0.79);
-            ctx.fillText('Koi-discovery — Plasma-corrélation / Rouge-haine-les-9-âmes (CC BY)', W / 2, H * 0.82);
-            ctx.fillText('oji — idée. (en mi bémol majeur) (CC BY)', W / 2, H * 0.85);
-            ctx.fillText('Song For Wemmbu — PLAYFUL MASSACRE (2v1000 ver.)', W / 2, H * 0.88);
+            ctx.fillText('Music:', W / 2, H * 0.74);
+            ctx.fillText('Geese — 100 Horses', W / 2, H * 0.77);
+            ctx.fillText('HoliznaCC0 — Deus Ex Machina (CC0)', W / 2, H * 0.8);
+            ctx.fillText('Koi-discovery — Plasma-corrélation / Rouge-haine-les-9-âmes (CC BY)', W / 2, H * 0.83);
+            ctx.fillText('oji — idée. (en mi bémol majeur) (CC BY)', W / 2, H * 0.86);
+            ctx.fillText('Song For Wemmbu — PLAYFUL MASSACRE (2v1000 ver.)', W / 2, H * 0.89);
 
             // Vignette
             const vig = ctx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.72);

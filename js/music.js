@@ -16,8 +16,8 @@ const MUSIC_FILES = {
     tetris:      'music/Koi-discovery - Plasma-corrélation.mp3',
     enemyPhase:  'music/Koi-discovery - Rouge-haine-les-9-âmes.mp3',
     defeat:      'music/Koi-discovery - Rouge-haine-les-9-âmes.mp3',
-    ending:      'music/oji - idée. (en mi bémol majeur).mp3',
-    credits:     'music/oji - idée. (en mi bémol majeur).mp3',
+    ending:      'music/Geese - 100 Horses.wav',
+    credits:     'music/Geese - 100 Horses.wav',
 };
 
 // Tracks that resume from where they left off when switched back to mid-battle

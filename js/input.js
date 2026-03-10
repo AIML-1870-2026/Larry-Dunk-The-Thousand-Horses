@@ -220,7 +220,7 @@ function endPlayerTurn() {
     if (game.phase === GamePhase.TETRIS) return;
     deselectUnit();
     game.phase = GamePhase.ENEMY_TURN;
-    if (game.currentLevel !== 11) playMusic('enemyPhase');
+    if (game.currentLevel !== 11 && game.currentLevel !== 12) playMusic('enemyPhase');
     playSound('enemy_phase');
     showBanner('Enemy Phase', 1200);
     updateTopBar();

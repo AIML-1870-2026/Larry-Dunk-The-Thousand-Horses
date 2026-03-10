@@ -131,10 +131,10 @@ Score per target: `(maxHp - hp) + (haras ? 20 : 0) - distance * 2`. Attacks best
 | title, cutscene, victory | HoliznaCC0 - Deus Ex Machina |
 | playerPhase, tetris | Koi-discovery - Plasma-corrélation |
 | enemyPhase, defeat | Koi-discovery - Rouge-haine-les-9-âmes |
-| ending, credits | oji - idée. (en mi bémol majeur) |
+| ending, credits, final level (exclusive) | Geese — 100 Horses |
 | level12 (exclusive) | Song For Wemmbu — PLAYFUL MASSACRE (2v1000 ver.) |
 
-Level 11 (Zeus) music plays uninterrupted — all phase-transition calls guarded with `currentLevel !== 11`.
+Level 11 (Zeus) and Level 12 (Final) music plays uninterrupted — all phase-transition calls guarded with `currentLevel !== 11 && currentLevel !== 12`.
 
 **Voice** (`voice.js`): Web Speech API TTS. `speakLine(speaker, text)` on each dialogue line, `stopVoice()` on advance/back/skip/end. Profiles: Haras 0.55/0.78, Narrator 1.0/0.82, Larry Dunk 1.3/1.08, Mr. Runo 0.7/0.88, Dr. Retina 1.15/1.3, Zeus 0.85/0.68, Loyal Horse 0.45/0.55. Unknown Larry variants fall back to Larry Dunk.
 
@@ -145,6 +145,7 @@ Level 11 (Zeus) music plays uninterrupted — all phase-transition calls guarded
 | Koi-discovery | Plasma-corrélation | CC BY |
 | Koi-discovery | Rouge-haine-les-9-âmes | CC BY |
 | oji | idée. (en mi bémol majeur) | CC BY |
+| Geese | 100 Horses | — |
 | (unknown) | Song For Wemmbu — PLAYFUL MASSACRE (2v1000 ver.) | unverified (YouTube) |
 
 ---

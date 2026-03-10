@@ -65,7 +65,7 @@ function fillGrid(w, h, terrain) {
 
 function startLevel(intro) {
     startCutscene(intro, () => {
-        if (game.currentLevel !== 11) playMusic('playerPhase');
+        if (game.currentLevel !== 11 && game.currentLevel !== 12) playMusic('playerPhase');
         game.phase = GamePhase.PLAYER_TURN;
         showBanner('Player Phase', 1200);
     });
@@ -967,6 +967,7 @@ const LEVELS = [
             }
         },
         onVictory: function() {
+            playMusic('ending');
             const _cred = Cinema.credits();
             const ending = [
                 { speaker: 'NARRATOR', text: 'The horse carrying Haras leaps through the portal.', color: '#aaa' },
@@ -1079,7 +1080,7 @@ function loadLevel(index) {
     game.pendingAdBreak = null;
 
     resetMusicPositions();
-    playMusic(index === 11 ? 'level12' : 'cutscene');
+    playMusic(index === 11 ? 'level12' : index === 12 ? 'ending' : 'cutscene');
 
     const level = LEVELS[index];
     document.getElementById('levelName').textContent = level.name;
