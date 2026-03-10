@@ -616,6 +616,32 @@ function drawSprite_loyalHorse(x, y, sz) {
     _circle(bx - u * 4,   by - u * 9.2, u * 0.7);
 }
 
+function drawSprite_harasOnHorse(x, y, sz) {
+    const u = sz / 20, bx = x + sz / 2 + u, by = y + u * 11;
+    // Loyal horse body with bow
+    _drawHorseBody(ctx, x, y, sz, '#3a2008');
+    ctx.fillStyle = '#c8a020'; _circle(bx - u * 5.5, by - u * 9, u * 1.1);
+    ctx.fillStyle = '#b89010';
+    _circle(bx - u * 7, by - u * 9.2, u * 0.7);
+    _circle(bx - u * 4, by - u * 9.2, u * 0.7);
+
+    // Haras riding — centered on horse's back (withers area)
+    const rx = bx - u * 2, rideTop = by - u * 4.5, headY = rideTop - u * 7;
+    // Suit torso
+    ctx.fillStyle = '#1a3a8a';
+    _roundRect(rx - u * 3.5, rideTop - u * 5, u * 7, u * 5, u);
+    // Hair (dark charcoal oval behind face)
+    ctx.fillStyle = '#333333';
+    _ellipse(rx, headY - u * 2, u * 4.5, u * 5);
+    // Skin face
+    ctx.fillStyle = '#8B5E3C';
+    _ellipse(rx, headY, u * 3.8, u * 4.2);
+    // Eyes
+    ctx.fillStyle = '#111111';
+    _circle(rx - u * 1.1, headY + u * 0.4, u * 0.8);
+    _circle(rx + u * 1.1, headY + u * 0.4, u * 0.8);
+}
+
 // ============================================================
 // ENEMY UNITS
 // ============================================================
@@ -701,6 +727,7 @@ const SPRITES = {
     investmentLarry:    drawSprite_investmentLarry,
     horse:              drawSprite_horse,
     loyalHorse:         drawSprite_loyalHorse,
+    harasOnHorse:       drawSprite_harasOnHorse,
     enemyHaras:         drawSprite_enemyHaras,
     guard:              drawSprite_guard,
     robot:              drawSprite_robot,

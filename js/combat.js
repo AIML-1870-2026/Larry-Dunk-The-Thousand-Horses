@@ -71,7 +71,7 @@ function _resolveCombat(attacker, defender, isChain) {
     if (defender.hp <= 0) {
         defender.hp = 0;
 
-        if (defender.isLarryDunk && defender.team === 'enemy') {
+        if (defender.isLarryDunk && defender.team === 'enemy' && game.currentLevel !== 12) {
             // Keep alive until Tetris resolves; startTetrisCapture sets phase internally
             defender.hp = 1;
             attacker.acted = true; // mark attacker done now (finishUnitAction won't run)

@@ -7,8 +7,8 @@
 // ============================================================
 
 function checkVictoryDefeat() {
-    if (game.phase === GamePhase.TETRIS) return; // wait for Tetris to resolve first
-    const haras = game.units.find(u => u.type === 'haras' && u.team === 'player');
+    if (game.phase === GamePhase.TETRIS || game.phase === GamePhase.VICTORY || game.phase === GamePhase.DEFEAT) return;
+    const haras = game.units.find(u => (u.type === 'haras' || u.type === 'harasOnHorse') && u.team === 'player');
     if (haras && !haras.alive) {
         game.phase = GamePhase.DEFEAT;
         playSound('defeat');
@@ -894,42 +894,36 @@ const LEVELS = [
     // 12: FINAL — The One Horse
     {
         name: 'FINAL: The One Horse',
-        gridW: 16, gridH: 12,
+        gridW: 12, gridH: 9,
         objective: 'Get Haras to the escape portal! Survive the horse onslaught.',
         setup: function() {
-            game.gridW = 16; game.gridH = 12;
+            game.gridW = 12; game.gridH = 9;
             game.grid = [];
-            for (let y = 0; y < 12; y++) {
+            for (let y = 0; y < 9; y++) {
                 game.grid[y] = [];
-                for (let x = 0; x < 16; x++) {
+                for (let x = 0; x < 12; x++) {
                     game.grid[y][x] = y === 0 ? Terrain.CLOUD : Terrain.PLAIN;
                 }
             }
-            game.grid[5][15] = Terrain.PORTAL;
-            game.grid[6][15] = Terrain.PORTAL;
-            game.grid[4][8]  = Terrain.FOREST;
-            game.grid[7][8]  = Terrain.FOREST;
-            game.grid[3][12] = Terrain.MOUNTAIN;
-            game.grid[8][12] = Terrain.MOUNTAIN;
+            game.grid[3][11] = Terrain.PORTAL;
+            game.grid[4][11] = Terrain.PORTAL;
+            game.grid[5][11] = Terrain.PORTAL;
+            game.grid[3][6]  = Terrain.FOREST;
+            game.grid[5][6]  = Terrain.FOREST;
+
+            const weakHorse = () => Object.assign(createUnit('horse', 0, 0, 'enemy'), { atk: 6, mov: 4 });
 
             game.units = [
-                createUnit('haras', 1, 5, 'player'),
-                createUnit('loyalHorse', 2, 5, 'player'),
-                createUnit('larryDunk', 1, 6, 'player'),
-                createUnit('cainAbel', 2, 7, 'player'),
-                createUnit('mrRuno', 1, 4, 'player'),
-                createUnit('zeusLarry', 7, 1, 'enemy'),
-                createUnit('horse', 8, 3, 'enemy'),
-                createUnit('horse', 9, 4, 'enemy'),
-                createUnit('horse', 10, 3, 'enemy'),
-                createUnit('horse', 8, 5, 'enemy'),
-                createUnit('horse', 9, 6, 'enemy'),
-                createUnit('horse', 10, 7, 'enemy'),
-                createUnit('horse', 11, 5, 'enemy'),
-                createUnit('horse', 12, 4, 'enemy'),
-                createUnit('horse', 12, 6, 'enemy'),
-                createUnit('guard', 13, 5, 'enemy'),
-                createUnit('guard', 14, 5, 'enemy')
+                createUnit('harasOnHorse', 1, 4, 'player'),
+                createUnit('larryDunk', 1, 5, 'player'),
+                createUnit('cainAbel', 2, 5, 'player'),
+                Object.assign(createUnit('zeusLarry', 5, 1, 'enemy'), { def: 99 }),
+                Object.assign(weakHorse(), { gx: 6, gy: 2 }),
+                Object.assign(weakHorse(), { gx: 7, gy: 3 }),
+                Object.assign(weakHorse(), { gx: 6, gy: 6 }),
+                Object.assign(weakHorse(), { gx: 7, gy: 5 }),
+                Object.assign(weakHorse(), { gx: 9, gy: 2 }),
+                Object.assign(weakHorse(), { gx: 9, gy: 6 }),
             ];
 
             const intro = [
@@ -948,7 +942,7 @@ const LEVELS = [
             });
         },
         victoryCheck: function() {
-            const haras = game.units.find(u => u.type === 'haras' && u.alive);
+            const haras = game.units.find(u => (u.type === 'haras' || u.type === 'harasOnHorse') && u.alive);
             if (haras) {
                 const terrain = getTerrain(haras.gx, haras.gy);
                 if (terrain === Terrain.PORTAL) return true;
@@ -959,9 +953,11 @@ const LEVELS = [
         turnEvent: function(turn) {
             if (turn % 2 === 0 && turn <= 8) {
                 for (let i = 0; i < 2; i++) {
-                    const sy = Math.floor(Math.random() * 8) + 2;
-                    // Spawn at x=14, not x=15, so horses never block the portal tiles
-                    if (!getUnitAt(14, sy)) game.units.push(createUnit('horse', 14, sy, 'enemy'));
+                    const sy = Math.floor(Math.random() * 6) + 1;
+                    // Spawn at x=10, not x=11, so horses never block the portal tiles
+                    if (!getUnitAt(10, sy)) {
+                        game.units.push(Object.assign(createUnit('horse', 10, sy, 'enemy'), { atk: 6, mov: 4 }));
+                    }
                 }
                 showBanner('More horses!', 1000);
             }
@@ -969,6 +965,7 @@ const LEVELS = [
         onVictory: function() {
             playMusic('ending');
             const _cred = Cinema.credits();
+            const _oneHorse = Cinema.oneHorse();
             const ending = [
                 { speaker: 'NARRATOR', text: 'The horse carrying Haras leaps through the portal.', color: '#aaa' },
                 { speaker: 'NARRATOR', text: 'Behind them — 999 horses. Zeus Larry Dunk. The rivals. Even his own father.', color: '#aaa' },
@@ -978,7 +975,7 @@ const LEVELS = [
                 { speaker: 'HARAS', text: 'But you stayed.', color: '#88f' },
                 { speaker: 'NARRATOR', text: 'The horse carries Haras off into the sunset...', color: '#fc0' },
                 { speaker: 'NARRATOR', text: 'Past the conquered Larry Dunks.', color: '#fc0' },
-                { speaker: '', text: '"You only need 1 horse."', color: '#fc0', drawScene: _cred },
+                { speaker: '', text: '', color: '#fc0', drawScene: _oneHorse },
                 { speaker: '', text: 'Thank you for playing.', color: '#888', drawScene: _cred }
             ];
 

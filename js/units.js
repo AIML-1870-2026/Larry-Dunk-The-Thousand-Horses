@@ -88,6 +88,10 @@ function createUnit(type, gx, gy, team) {
             name: 'Loyal Horse', hp: 38, atk: 15, def: 7, mov: 8, range: 1,
             spriteKey: 'loyalHorse', special: 'The One Horse'
         },
+        harasOnHorse: {
+            name: 'Haras', hp: 45, atk: 10, def: 6, mov: 7, range: 2,
+            spriteKey: 'harasOnHorse', special: 'Brain Chip + Cavalry'
+        },
         guard: {
             name: 'Guard', hp: 18, atk: 6, def: 4, mov: 3, range: 1,
             spriteKey: 'guard', special: ''
